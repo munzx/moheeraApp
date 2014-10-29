@@ -46,8 +46,8 @@ module.exports = function (app, express) {
 	//use middlewear
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(bodyParser.json());
-	app.use(methodOverride()); //read about this
 	app.use(busboy());
+	app.use(methodOverride()); //read about this
 
 	//Publically accessable folders
 	app.use('/asset', express.static('./bower_components/'));

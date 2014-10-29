@@ -9,7 +9,8 @@ var usersSchema = new Schema({
 		type: String,
 		default: '',
 		required: 'Please fill the user name field',
-		trim: true
+		trim: true,
+		unique: true
 	},
 	email: {
 		type: String,
@@ -17,6 +18,7 @@ var usersSchema = new Schema({
 		required: 'Please fill the email field',
 		trim: true
 	}
-});
+}, {strict: true});
 
-mongoose.model('users', usersSchema);
+mongoose.model('user', usersSchema);
+module.exports = mongoose.model('user');

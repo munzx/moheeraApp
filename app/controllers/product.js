@@ -2,7 +2,8 @@
 
 //Dependencies
 var mongoose = require('mongoose'),
-	products = require('../models/product');
+	products = require('../models/product'),
+	users = require('../models/user');
 
 
 module.exports.index = function(req, res){

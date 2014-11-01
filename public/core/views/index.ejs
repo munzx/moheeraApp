@@ -6,7 +6,12 @@
 </head>
 <body>
 	<h1>Bism Allah</h1>
-
+	<% if(!isAuthenticated){ %>
+	Please login <a href="/login">Here</a>
+	<% } else { %>
+	Salam <%= user.id %>!! please say <%= user.message %> as we start!
+	<a href="/logout">LogOut!</a>
+	<% } %>
 
 
 	<script type="text/javascript" src="/asset/jquery/dist/jquery.min.js"></script>

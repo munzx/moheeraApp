@@ -3,7 +3,7 @@
 var express = require('express'),
 	app = express();
 
-// Initilize with config files
+// Initilize with config file
 require('./app/config/init')(app, express);
 
 //initilize routes

@@ -7,7 +7,12 @@ var logger = require('express-logger'),
 	bodyParser = require('body-parser'),
 	fs = require('fs'),
 	methodOverride = require('method-override'),
-	busboy = require('connect-busboy');
+	busboy = require('connect-busboy'),
+	session = require('express-session'),
+	cookieParser = require('cookie-parser'),
+	passport = require('passport'),
+	passportLocal = require('passport-local'),
+	passportHttp = require('passport-http');
 
 
 module.exports = function (app, express) {
@@ -24,6 +29,7 @@ module.exports = function (app, express) {
 	app.set('env','development'); //We are in development mode
 	app.disable('case sensitive routing');
 	app.enable('strict routing');
+	app.set('view engine', 'ejs');
 	app.enable('view cache');
 	//process.env.NODE_ENV = 'development'
 
@@ -43,11 +49,16 @@ module.exports = function (app, express) {
 	    app.use(errorHandler());
 	}
 
-	//use middlewear
+	//use middlewears
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(bodyParser.json());
 	app.use(busboy());
+	app.use(cookieParser()); //read cookies
+	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
 	app.use(methodOverride()); //read about this
+	app.use(passport.initialize()); //initialize passport
+	app.use(passport.session()); // persistent login sessions
+
 
 	//Publically accessable folders
 	app.use('/asset', express.static('./bower_components/'));

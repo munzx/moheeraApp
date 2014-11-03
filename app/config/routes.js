@@ -9,6 +9,7 @@ var users = require('../controllers/user'),
 
 module.exports = function (app) {
 
+	//Rename PASSPORT AUTH for the local strategy
 	var Auth = passport.authenticate('local');
 
 	//check if user is authinticated
@@ -16,7 +17,7 @@ module.exports = function (app) {
 		if(req.isAuthenticated()){
 			next();
 		} else {
-			res.send(403);
+			res.status(403).json('Access denied');
 		}
 	}
 
@@ -36,7 +37,7 @@ module.exports = function (app) {
 	});
 
 	app.post('/login', Auth, function(req, res){
-		res.redirect('/');
+		res.status(200).json('Bism Allah');
 	});
 
 	app.get('/logout', function(req, res){
@@ -44,30 +45,23 @@ module.exports = function (app) {
 		res.redirect('/');
 	});
 
-	app.get('/api/test', ensureAuthenticated, function(req, res){
-		res.json({
-			name: 'test',
-			name2: 'test2'
-		});
-	});
-
-	app.get('/api/logout', function(req, res){
-		req.logout();
-		res.redirect('/');
+	//check if user is logged in
+	app.get('/check', ensureAuthenticated, function(req, res){
+		res.status(200).json('logged in');
 	});
 
 	//Users
 	app.get('/user', users.index); //get all users
 	app.post('/user', users.create); //create a new user
-	app.put('/user/:id', users.update); //update user info by id
-	app.delete('/user/:id', users.delete); //delete user by id
+	app.put('/user/:id', ensureAuthenticated, users.update); //update user info by id
+	app.delete('/user/:id', ensureAuthenticated, users.delete); //delete user by id
 	app.get('/user/:name', users.getByName); //get a user by name
 
 	//Products
 	app.get('/product', product.index); //get all products
-	app.post('/product', product.create); //create a new product
-	app.put('/product/:id', product.update); //update a product by id
-	app.delete('/product/:id', product.delete); //delete a prodcut by id
+	app.post('/product', ensureAuthenticated, product.create); //create a new product
+	app.put('/product/:id', ensureAuthenticated, product.update); //update a product by id
+	app.delete('/product/:id', ensureAuthenticated, product.delete); //delete a prodcut by id
 	app.get('/product/:name', product.getByName); //get a product by name
 	app.get('/product/category/:category', product.categoryName); //find products by category name
 

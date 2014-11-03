@@ -5,29 +5,50 @@ var expect = require('expect.js'),
 	mongoose = require('mongoose'),
 	user = require('../models/user');
 
+var agent = superagent.agent();
 var baseUser;
 
 describe("useres test", function() {
-
+	before(function(done){
+		agent.post('http://localhost:3000/login').
+		send({ username: 'ss', password: 'ss'})
+		.end(function(err, res){
+			if(err){
+				throw err;
+			}
+			agent.saveCookies(res);
+			done();
+		});
+	});
+	it("should pass the user auth", function(done) {
+		agent.get('http://localhost:3000/check')
+		.end(function(err, res){
+			expect(res.status).to.be(200);
+			expect(res.body).to.be('logged in');
+			done();
+		});
+	});
 	it("should create a new user", function(done) {
-		superagent.post('http://localhost:3000/user')
+		agent.post('http://localhost:3000/user')
 		.send({
 			name: 'moe',
-			email: 'moe@test.com'
+			email: 'moe@test.com',
+			password: 'moe'
 		})
 		.end(function(res){
+			expect(res.status).to.be(200);
 			expect(res.body.name).to.be('moe');
 			expect(res.body.email).to.be('moe@test.com');
-			expect(res.status).to.be(200);
 			baseUser = res.body;
 			done();
 		});
 	});
 	it("should refuse to craete a duplicate user name", function(done) {
-		superagent.post('http://localhost:3000/user')
+		agent.post('http://localhost:3000/user')
 		.send({
 			name: 'moe',
-			email: 'moe@test.com'
+			email: 'moe@test.com',
+			password: 'moe'
 		})
 		.end(function(res){
 			expect(res.status).to.be(500);
@@ -35,27 +56,27 @@ describe("useres test", function() {
 		});
 	});
 	it("should get all users", function(done) {
-		superagent.get('http://localhost:3000/user')
+		agent.get('http://localhost:3000/user')
 		.end(function(res){
 			expect(res.status).to.be(200);
-			expect(res.body[0].name).to.be('moe');
 			done();
 		});
 	});
 	it("should get a user by name", function(done){
-		superagent.get('http://localhost:3000/user/moe')
+		agent.get('http://localhost:3000/user/moe')
 		.end(function(res){
+			expect(res.status).to.be(200);
 			expect(res.body.name).to.be('moe');
 			expect(res.body.name).not.to.be('moka');
-			expect(res.status).to.be(200);
 			done();
 		});
 	});
 	it("should update a user by id", function(done) {
-		superagent.put('http://localhost:3000/user/' + baseUser._id)
+		agent.put('http://localhost:3000/user/' + baseUser._id)
 		.send({
 			name: 'mohammed',
-			email: 'moe@test.com'
+			email: 'moe@test.com',
+			password: 'moe'
 		})
 		.end(function(res){
 			expect(res.status).to.be(200);
@@ -65,10 +86,11 @@ describe("useres test", function() {
 		});
 	});
 	it("should delete a user by id", function(done) {
-		superagent.del('http://localhost:3000/user/' + baseUser._id)
+		agent.del('http://localhost:3000/user/' + baseUser._id)
 		.send({
 			email: 'moe@test.com',
-			name: 'mohammed'
+			name: 'mohammed',
+			password: 'moe'
 		})
 		.end(function(res){
 			expect(res.status).to.be(200);

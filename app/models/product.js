@@ -5,25 +5,29 @@ var mongoose = require('mongoose'),
 
 var productSchema = new Schema({
 	name: {
-		type: 'string',
+		type: String,
 		default: '',
 		required: 'Fill up the product name',
 		trim: true,
 		unique: true
 	},
 	desc: {
-		type: 'string',
+		type: String,
 		default: '',
 		required: 'Fill up the product describtion',
 		trim: true
 	},
 	category: {
-		type: 'string',
+		type: String,
 		default: '',
 		required: 'Fill up the category',
 		trim: true
+	},
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
 	}
 }, {strict: true});
 
-mongoose.model('product', productSchema);
-module.exports = mongoose.model('product');
+
+module.exports = mongoose.model('product', productSchema);

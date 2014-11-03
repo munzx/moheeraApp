@@ -18,6 +18,8 @@ module.exports.index = function(req, res){
 
 module.exports.create = function(req, res){
 	var newProduct = new products(req.body);
+	newProduct.user = req.user;
+
 	newProduct.save(function(err, product){
 		if(err){
 			res.status(500).jsonp(err);

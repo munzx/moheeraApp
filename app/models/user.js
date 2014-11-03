@@ -17,8 +17,14 @@ var usersSchema = new Schema({
 		default: '',
 		required: 'Please fill the email field',
 		trim: true
+	},
+	password: {
+		type: String,
+		default: '',
+		required: 'Please provide the password',
+		trim: true
 	}
 }, {strict: true});
 
-mongoose.model('user', usersSchema);
-module.exports = mongoose.model('user');
+
+module.exports = mongoose.model('user', usersSchema);

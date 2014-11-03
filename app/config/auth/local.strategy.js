@@ -1,16 +1,20 @@
 'use strict';
 
 var passport = require('passport'),
+	mongoose = require('mongoose'),
+	user = require('../../models/user'),
 	passportLocal = require('passport-local');
 
 module.exports = function () {
 	//initilize passport local strategy
 	passport.use(new passportLocal.Strategy(function(username, password, done){
-		if(username === password){
-			done(null, {id: username,  message: 'Bism Allah'});
-		} else {
-			done(new Error('test'));
-		}
+		user.findOne({name: username, password: password}, function(err, user){
+			if(err){
+				done(err);
+			} else {
+				done(null, user);
+			}
+		});
 	}));
 
 	passport.serializeUser(function(user, done){
@@ -18,6 +22,12 @@ module.exports = function () {
 	});
 
 	passport.deserializeUser(function(id, done){
-		done(null, {id: id, message: 'Bism Allah'});
+		user.findOne({_id: id}, function(err, user){
+			if(err){
+				done(err);
+			} else {
+				done(null, user)
+			}
+		});
 	});
 }(); //initilize passport

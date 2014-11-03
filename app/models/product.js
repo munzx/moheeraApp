@@ -23,6 +23,12 @@ var productSchema = new Schema({
 		required: 'Fill up the category',
 		trim: true
 	},
+	image: {
+		type: String,
+		default: '',
+		required: 'Please provide image',
+		trim: true
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

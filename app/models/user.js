@@ -5,6 +5,18 @@ var mongoose = require('mongoose'),
 
 //Create the schema
 var usersSchema = new Schema({
+	firstName: {
+		type: String,
+		default: '',
+		required: 'Pease provide the first name',
+		trim: true
+	},
+	lastName: {
+		type: String,
+		default: '',
+		required: 'Please provide the last name',
+		trim: true
+	},
 	name: {
 		type: String,
 		default: '',
@@ -16,7 +28,16 @@ var usersSchema = new Schema({
 		type: String,
 		default: '',
 		required: 'Please fill the email field',
-		trim: true
+		trim: true,
+		unique: true,
+		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+	},
+	role: {
+		type: [{
+			type: String,
+			enum: ['user', 'admin']
+		}],
+		default: ['user']
 	},
 	password: {
 		type: String,

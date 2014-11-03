@@ -33,7 +33,8 @@ describe("product test", function() {
 		.send({
 			name: 'test',
 			desc: 'here is a test product',
-			category: 'cat'
+			category: 'cat',
+			image: 'image'
 		})
 		.end(function(res){
 			expect(res.status).to.be(200);
@@ -48,7 +49,8 @@ describe("product test", function() {
 		.send({
 			name: 'test',
 			desc: 'here is a test product',
-			category: 'cat'
+			category: 'cat',
+			image: 'image'
 		})
 		.end(function(res){
 			expect(res.status).to.be(500);
@@ -68,6 +70,7 @@ describe("product test", function() {
 		.end(function(res){
 			expect(res.status).to.be(200);
 			expect(res.body.name).to.be('test');
+			expect(res.body.image).to.be('image');
 			done();
 		});
 	});
@@ -76,7 +79,8 @@ describe("product test", function() {
 		.send({
 			name: 'updated_product',
 			desc: 'here is a test product',
-			category: 'cat'
+			category: 'cat',
+			image: 'image'
 		})
 		.end(function(res){
 			expect(res.status).to.be(200);

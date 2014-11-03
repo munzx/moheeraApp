@@ -31,6 +31,8 @@ describe("useres test", function() {
 	it("should create a new user", function(done) {
 		agent.post('http://localhost:3000/user')
 		.send({
+			firstName :'moe',
+			lastName: 'moe',
 			name: 'moe',
 			email: 'moe@test.com',
 			password: 'moe'
@@ -46,6 +48,8 @@ describe("useres test", function() {
 	it("should refuse to craete a duplicate user name", function(done) {
 		agent.post('http://localhost:3000/user')
 		.send({
+			firstName :'moe',
+			lastName: 'moe',
 			name: 'moe',
 			email: 'moe@test.com',
 			password: 'moe'
@@ -74,6 +78,8 @@ describe("useres test", function() {
 	it("should update a user by id", function(done) {
 		agent.put('http://localhost:3000/user/' + baseUser._id)
 		.send({
+			firstName :'moe',
+			lastName: 'moe',
 			name: 'mohammed',
 			email: 'moe@test.com',
 			password: 'moe'
@@ -88,6 +94,8 @@ describe("useres test", function() {
 	it("should delete a user by id", function(done) {
 		agent.del('http://localhost:3000/user/' + baseUser._id)
 		.send({
+			firstName :'moe',
+			lastName: 'moe',
 			email: 'moe@test.com',
 			name: 'mohammed',
 			password: 'moe'

@@ -9,8 +9,10 @@ module.exports.index = function (req, res){
 	users.find(function (err, user){
 		if(err){
 			res.status(500).jsonp(err);
-		} else {
+		} else if(user){
 			res.status(200).jsonp(user);
+		} else {
+			res.status(404).json('No user has been found');
 		}
 	});
 }
@@ -32,8 +34,10 @@ module.exports.getByName = function (req, res){
 	users.findOne({name: req.params.name}, function(err, user) {
 		if(err){
 			res.status(500).jsonp(err);
-		} else {
+		} else if(user){
 			res.status(200).jsonp(user);
+		} else {
+			res.status(404).json('User has not been found');
 		}
 	});
 }
@@ -43,10 +47,10 @@ module.exports.update = function(req, res){
 	users.findOneAndUpdate({_id: req.params.id}, req.body, function(err, user, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
-		} else if(numOfAffectedRows === 0) {
-			res.status(404).json('User has not been found');
-		} else {
+		} else if(user) {
 			res.status(200).jsonp(user);
+		} else {
+			res.status(404).json('User has not been found');
 		}
 	});
 }

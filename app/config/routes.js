@@ -3,7 +3,6 @@
 var users = require('../controllers/user'),
 	product = require('../controllers/product'),
 	passport = require('passport'),
-	passportHttp = require('passport-http'),
 	authLocal = require('./auth/local.strategy');
 
 

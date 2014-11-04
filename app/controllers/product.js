@@ -10,8 +10,10 @@ module.exports.index = function(req, res){
 	products.find(function(err, product){
 		if(err){
 			res.status(500).jsonp(err);
-		} else {
+		} else if(product) {
 			res.status(200).jsonp(product);
+		} else {
+			res.status(404).json('No product has been found');
 		}
 	});
 }
@@ -33,8 +35,10 @@ module.exports.getByName = function(req, res){
 	products.findOne({name: req.params.name}, function(err, product){
 		if(err){
 			res.status(500).jsonp(err);
-		} else {
+		} else if(product) {
 			res.status(200).jsonp(product);
+		} else {
+			res.status(404).json('Product has not been found');
 		}
 	});
 }
@@ -43,10 +47,10 @@ module.exports.update = function(req, res){
 	products.findOneAndUpdate({_id: req.params.id}, req.body, function(err, product, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
-		} else if(numOfAffectedRows === 0){
-			res.status(200).json('Failed to update document');
-		} else {
+		} else if(product){
 			res.status(200).jsonp(product);
+		} else {
+			res.status(200).json('Failed to update document');
 		}
 	});
 }
@@ -67,8 +71,10 @@ module.exports.categoryName = function(req, res){
 	products.find({category: req.params.category}, function(err, product){
 		if(err){
 			res.status(500).jsonp(err);
-		} else {
+		} else if(product){
 			res.status(200).jsonp(product);
+		} else {
+			res.status(404).json('No product has been found');
 		}
 	});
 }

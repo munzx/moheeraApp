@@ -11,9 +11,7 @@ var logger = require('express-logger'),
 	session = require('express-session'),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
-	passportLocal = require('passport-local'),
-	passportHttp = require('passport-http');
-
+	passportLocal = require('passport-local');
 
 module.exports = function (app, express) {
 

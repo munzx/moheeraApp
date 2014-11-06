@@ -9,19 +9,22 @@ var usersSchema = new Schema({
 		type: String,
 		default: '',
 		required: 'Pease provide the first name',
-		trim: true
+		trim: true,
+		lowercase: true
 	},
 	lastName: {
 		type: String,
 		default: '',
 		required: 'Please provide the last name',
-		trim: true
+		trim: true,
+		lowercase: true
 	},
 	name: {
 		type: String,
 		default: '',
 		required: 'Please fill the user name field',
 		trim: true,
+		lowercase: true,
 		unique: true
 	},
 	email: {
@@ -30,13 +33,13 @@ var usersSchema = new Schema({
 		required: 'Please fill the email field',
 		trim: true,
 		unique: true,
+		lowercase: true,
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	role: {
-		type: [{
-			type: String,
-			enum: ['user', 'admin']
-		}],
+		type: String,
+		lowercase: true,
+		enum: ['user', 'admin'],
 		default: ['user']
 	},
 	password: {
@@ -44,6 +47,10 @@ var usersSchema = new Schema({
 		default: '',
 		required: 'Please provide the password',
 		trim: true
+	},
+	created: {
+		type: Date,
+		default: Date.now
 	}
 }, {strict: true});
 

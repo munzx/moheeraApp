@@ -6,17 +6,17 @@ var expect = require('expect.js'),
 	user = require('../models/user');
 
 var agent = superagent.agent();
-var baseUser;
 
 describe("useres test", function() {
 	before(function(done){
-		agent.post('http://localhost:3000/login').
-		send({ username: 'ss', password: 'ss'})
+		agent.post('http://localhost:3000/login')
+		.send({ username: 'ss', password: 'ss'})
 		.end(function(err, res){
 			if(err){
 				throw err;
+			} else {
+				agent.saveCookies(res);
 			}
-			agent.saveCookies(res);
 			done();
 		});
 	});
@@ -28,31 +28,14 @@ describe("useres test", function() {
 			done();
 		});
 	});
-	it("should create a new user", function(done) {
-		agent.post('http://localhost:3000/user')
-		.send({
-			firstName :'moe',
-			lastName: 'moe',
-			name: 'moe',
-			email: 'moe@test.com',
-			password: 'moe'
-		})
-		.end(function(res){
-			expect(res.status).to.be(200);
-			expect(res.body.name).to.be('moe');
-			expect(res.body.email).to.be('moe@test.com');
-			baseUser = res.body;
-			done();
-		});
-	});
 	it("should refuse to craete a duplicate user name", function(done) {
 		agent.post('http://localhost:3000/user')
 		.send({
 			firstName :'moe',
 			lastName: 'moe',
-			name: 'moe',
-			email: 'moe@test.com',
-			password: 'moe'
+			name: 'ss',
+			email: 'e@test.com',
+			password: 'ss'
 		})
 		.end(function(res){
 			expect(res.status).to.be(500);
@@ -67,16 +50,17 @@ describe("useres test", function() {
 		});
 	});
 	it("should get a user by name", function(done){
-		agent.get('http://localhost:3000/user/moe')
+		agent.get('http://localhost:3000/user/ss')
 		.end(function(res){
+			expect(res.body.name).to.be('ss');
 			expect(res.status).to.be(200);
-			expect(res.body.name).to.be('moe');
+			expect(res.body.name).to.be('ss');
 			expect(res.body.name).not.to.be('moka');
 			done();
 		});
 	});
-	it("should update a user by id", function(done) {
-		agent.put('http://localhost:3000/user/' + baseUser._id)
+	it("should update the user info", function(done) {
+		agent.put('http://localhost:3000/user')
 		.send({
 			firstName :'moe',
 			lastName: 'moe',
@@ -91,8 +75,8 @@ describe("useres test", function() {
 			done();
 		});
 	});
-	it("should delete a user by id", function(done) {
-		agent.del('http://localhost:3000/user/' + baseUser._id)
+	it("should delete the user", function(done) {
+		agent.del('http://localhost:3000/user')
 		.send({
 			firstName :'moe',
 			lastName: 'moe',
@@ -103,6 +87,22 @@ describe("useres test", function() {
 		.end(function(res){
 			expect(res.status).to.be(200);
 			expect(res.body).to.be('User has been deleted successfully');
+			done();
+		});
+	});
+	it("should create a new user with same credentials", function(done) {
+		agent.post('http://localhost:3000/user')
+		.send({
+			firstName :'moe',
+			lastName: 'moe2',
+			name: 'ss',
+			email: 'e@test.com',
+			password: 'ss'
+		})
+		.end(function(res){
+			expect(res.status).to.be(200);
+			expect(res.body.name).to.be('ss');
+			expect(res.body.name).not.to.be('mohammed');
 			done();
 		});
 	});

@@ -44,7 +44,7 @@ module.exports.getByName = function (req, res){
 
 //update user by id
 module.exports.update = function(req, res){
-	users.findOneAndUpdate({_id: req.params.id}, req.body, function(err, user, numOfAffectedRows){
+	users.findOneAndUpdate({_id: req.user._id}, req.body, function(err, user, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(user) {
@@ -57,7 +57,7 @@ module.exports.update = function(req, res){
 
 //delete user by id
 module.exports.delete = function(req, res){
-	users.findOneAndRemove({_id: req.params.id}, function(err, numOfAffectedRows){
+	users.findOneAndRemove({_id: req.user._id}, function(err, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(numOfAffectedRows === 0) {

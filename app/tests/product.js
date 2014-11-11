@@ -5,19 +5,25 @@ superagent = require('superagent'),
 mongoose = require('mongoose'),
 product = require('../models/product');
 
-var agent = superagent.agent();
-var baseProduct;
-var baseOrder;
+
+//test variables
+var agent = superagent.agent(),
+	baseProduct,
+	baseOrder,
+	baseComment,
+	baseHeart,
+	baseCart;
 
 describe("product test", function() {
 	before(function(done){
-		agent.post('http://localhost:3000/login').
-		send({ username: 'ss', password: 'ss'})
+		agent.post('http://localhost:3000/login')
+		.send({ username: 'ss', password: 'ss'})
 		.end(function(err, res){
 			if(err){
 				throw err;
+			} else {
+				agent.saveCookies(res);
 			}
-			agent.saveCookies(res);
 			done();
 		});
 	});
@@ -34,7 +40,7 @@ describe("product test", function() {
 		.send({
 			name: 'test',
 			desc: 'here is a test product',
-			category: 'cat',
+			category: 'women',
 			image: 'image'
 		})
 		.end(function(res){
@@ -46,12 +52,29 @@ describe("product test", function() {
 			done();
 		});
 	});
+	it("Should create another new product", function(done) {
+		agent.post('http://localhost:3000/product')
+		.send({
+			name: 'test22',
+			desc: 'here is a test product',
+			category: 'women',
+			image: 'image'
+		})
+		.end(function(res){
+			expect(res.body.name).to.be('test22');
+			expect(res.status).to.be(200);
+			expect(res.body.name).to.be('test22');
+			expect(res.body.user).to.not.be.empty();
+			expect(res.body.created).not.to.be.empty();
+			done();
+		});
+	});
 	it("Should refuse to create a deuplicate product name", function(done) {
 		agent.post('http://localhost:3000/product')
 		.send({
 			name: 'test',
 			desc: 'here is a test product',
-			category: 'cat',
+			category: 'women',
 			image: 'image'
 		})
 		.end(function(res){
@@ -81,7 +104,7 @@ describe("product test", function() {
 		.send({
 			name: 'updated_product',
 			desc: 'here is a test product',
-			category: 'cat',
+			category: 'women',
 			image: 'image'
 		})
 		.end(function(res){
@@ -91,10 +114,67 @@ describe("product test", function() {
 		});
 	});
 	it("Should get products in a certain category", function(done) {
-		agent.get('http://localhost:3000/product/category/cat')
+		agent.get('http://localhost:3000/product/category/women')
 		.end(function(res){
 			expect(res.status).to.be(200);
 			expect(res.body[0].name).to.be('updated_product');
+			done();
+		});
+	});
+
+	it("Should not find any product in the cart", function(done) {
+		agent.get('http://localhost:3000/user/cart/products')
+		.end(function(res) {
+			expect(res.body).to.be.empty();
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should add a product to the cart", function(done) {
+		agent.post('http://localhost:3000/user/cart/' + baseProduct._id) //double check why it passes even if the sent data it wrong!!!!
+		.send({
+			name: 'testa',
+			desc: 'testa2',
+			category: 'men',
+			image: 'asdkasdjlhsaldhjas',
+			productId: baseProduct._id
+		})
+		.end(function(res) {
+			expect(res.body.cart[0].productId).to.be(baseProduct._id);
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should add another product to the cart", function(done) {
+		agent.post('http://localhost:3000/user/cart/' + baseProduct._id) //double check why it passes even if the sent data was wrong!!!!
+		.send(baseProduct)
+		.end(function(res) {
+			expect(res.body.cart[0].productId).to.be(baseProduct._id);
+			expect(res.status).to.be(200);
+			baseCart = res.body.cart;
+			done();
+		});
+	});
+	it("Should remove the first product in the cart", function(done) {
+		agent.del('http://localhost:3000/user/cart/' + baseCart[0]._id)
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should make sure the first product added to the cart has been removed", function(done) {
+		agent.get('http://localhost:3000/user/cart/products')
+		.end(function (res) {
+			expect(res.body[0]._id).not.to.be(baseCart[0]._id); //not the same id as the removed one
+			expect(res.body[0]._id).to.be(baseCart[1]._id); //to be thee same as the other existing id
+			done();
+		});
+	});
+	it("Should not find any orders for the product", function(done) {
+		agent.get('http://localhost:3000/product/' + baseProduct._id +'/order')
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
 			done();
 		});
 	});
@@ -113,7 +193,15 @@ describe("product test", function() {
 			done();
 		});
 	});
-	it("Should create another order", function(done) {
+	it("Should get an empty cart", function(done) {
+		agent.get('http://localhost:3000/user/cart/products')
+		.end(function(res) {
+			expect(res.body).to.be.empty();
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should refuse to create another order as the cart is empty", function(done) {
 		agent.post('http://localhost:3000/product/' + baseProduct._id + '/order')
 		.send({
 			address: 'somewhere2',
@@ -122,9 +210,8 @@ describe("product test", function() {
 			status: 'Pendding'
 		})
 		.end(function(res) {
-			expect(res.body.order[0].price).to.be('2000');
-			expect(res.body.order[1].price).to.be('4000');
-			expect(res.status).to.be(200);
+			expect(res.body).to.be('Cart is empty');
+			expect(res.status).to.be(401);
 			done();
 		});
 	});
@@ -132,6 +219,7 @@ describe("product test", function() {
 		agent.get('http://localhost:3000/product/' + baseProduct._id +'/order')
 		.end(function(res) {
 			expect(res.body[0].address).to.be('somewhere');
+			expect(res.body[0].user).not.to.be.empty();
 			expect(res.body[0].created).not.to.be.empty();
 			done();
 		});
@@ -157,7 +245,7 @@ describe("product test", function() {
 			done();
 		});
 	});
-	it("Should delete order", function(done) {
+	it("Should delete the order", function(done) {
 		agent.del('http://localhost:3000/product/' + baseProduct._id + '/order/' + baseOrder._id)
 		.end(function(res) {
 			expect(res.body).to.be('order has been deleted successfully');
@@ -165,11 +253,103 @@ describe("product test", function() {
 			done();
 		});
 	});
-	it("Should delete the product", function(done) {
+	it("Should not find any comment", function(done) {
+		agent.get('http://localhost:3000/product/' + baseProduct._id + '/comment')
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
+			done();
+		});
+	});
+	it("Should create a new comment", function(done) {
+		agent.post('http://localhost:3000/product/' + baseProduct._id + '/comment')
+		.send({ content: 'Bism Allah'})
+		.end(function(res) {
+			expect(res.body[0].content).to.be('Bism Allah');
+			expect(res.body[0].author[0].name).to.be('ss');
+			expect(res.status).to.be(200);
+			baseComment = res.body[0];
+			done();
+		});
+	});
+	it("Should delete a comment", function (done) {
+		agent.del('http://localhost:3000/product/' + baseProduct._id + '/comment/' + baseComment._id)
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should assure that comment has been removed successfully", function(done) {
+		agent.get('http://localhost:3000/product/' + baseProduct._id + '/comment')
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
+			done();
+		});
+	});
+	it("Should not find a heart for the product", function(done) {
+		agent.get('http://localhost:3000/product/' + baseProduct._id + '/heart')
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
+			done();
+		});
+	});
+	it("Should heart a product", function(done) {
+		agent.post('http://localhost:3000/product/' + baseProduct._id + '/heart')
+		.send({ rate: 5})
+		.end(function(res) {
+			expect(res.body[0].user[0].name).to.be('ss');
+			expect(res.status).to.be(200);
+			baseHeart = res.body[0];
+			done();
+		});
+	});
+	it("Should unheart a product", function(done) {
+		agent.del('http://localhost:3000/product/' + baseProduct._id + '/heart/' + baseHeart._id)
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			done();
+		});
+	});
+	it("Should assure product has been unhearted! successfully!", function(done) {
+		agent.get('http://localhost:3000/product/' + baseProduct._id + '/heart')
+		.end(function(res) {
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
+			done();
+		});
+	});
+	it("Should delete the first product", function(done) {
 		agent.del('http://localhost:3000/product/' + baseProduct._id)
 		.end(function(res){
 			expect(res.status).to.be(200);
 			expect(res.body).to.be('successfully deleted the product');
+			done();
+		});
+	});
+	it("Should assure the first product has been deleted successfully", function(done) {
+		agent.get('http://localhost:3000/product')
+		.end(function(res){
+			expect(res.status).to.be(200);
+			expect(res.body[0].name).to.be('test22');
+			baseProduct = res.body[0]; //assign the second product value to the baseProduct
+			done();
+		});
+	});
+	it("Should delete the second product", function(done) {
+		agent.del('http://localhost:3000/product/' + baseProduct._id)
+		.end(function(res){
+			expect(res.status).to.be(200);
+			expect(res.body).to.be('successfully deleted the product');
+			done();
+		});
+	});
+	it("Should assure the second product has been deleted successfully", function(done) {
+		agent.get('http://localhost:3000/product')
+		.end(function(res){
+			expect(res.status).to.be(200);
+			expect(res.body).to.be.empty();
 			done();
 		});
 	});

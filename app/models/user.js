@@ -3,8 +3,51 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+var cartSchema = new Schema({
+	name: {
+		type: String,
+		default: '',
+		required: 'Fill up the product name',
+		trim: true,
+		lowercase: true,
+		unique: true,
+		sparse: true
+	},
+	desc: {
+		type: String,
+		default: '',
+		required: 'Fill up the product describtion',
+		trim: true
+	},
+	category: {
+		type: String,
+		enum: ['men', 'women', 'kids', 'gifts', 'books'],
+		default: ['men'],
+		lowercase: true,
+		required: 'Fill up the category',
+		trim: true
+	},
+	image: {
+		type: String,
+		default: '',
+		required: 'Please provide image',
+		trim: true
+	},
+	productId: {
+		type: Schema.ObjectId,
+		ref: 'product',
+		required: 'Please provide the product id',
+		trim: true
+	},
+	created: {
+		type: Date,
+		default: Date.now
+	}
+}, {strict: true});
+
+
 //Create the schema
-var usersSchema = new Schema({
+var usersSchema = Schema({
 	firstName: {
 		type: String,
 		default: '',
@@ -25,7 +68,8 @@ var usersSchema = new Schema({
 		required: 'Please fill the user name field',
 		trim: true,
 		lowercase: true,
-		unique: true
+		unique: true,
+		sparse: true
 	},
 	email: {
 		type: String,
@@ -34,6 +78,7 @@ var usersSchema = new Schema({
 		trim: true,
 		unique: true,
 		lowercase: true,
+		sparse: true,
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	role: {
@@ -48,6 +93,7 @@ var usersSchema = new Schema({
 		required: 'Please provide the password',
 		trim: true
 	},
+	cart :[cartSchema],
 	created: {
 		type: Date,
 		default: Date.now

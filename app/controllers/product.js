@@ -2,8 +2,7 @@
 
 //Dependencies
 var mongoose = require('mongoose'),
-	products = require('../models/product'),
-	users = require('../models/user');
+	products = require('../models/product');
 
 
 module.exports.index = function(req, res){
@@ -21,7 +20,6 @@ module.exports.index = function(req, res){
 module.exports.create = function(req, res){
 	var newProduct = new products(req.body);
 	newProduct.user = req.user;
-
 	newProduct.save(function(err, product){
 		if(err){
 			res.status(500).jsonp(err);
@@ -43,8 +41,9 @@ module.exports.getByName = function(req, res){
 	});
 }
 
+//update only if the product creator has the same logged in user id which mean they are the same person
 module.exports.update = function(req, res){
-	products.findOneAndUpdate({_id: req.params.id}, req.body, function(err, product, numOfAffectedRows){
+	products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, req.body, function(err, product, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(product){
@@ -55,8 +54,9 @@ module.exports.update = function(req, res){
 	});
 }
 
+//delete only if the product creator has the same logged in user id which mean they are the same person
 module.exports.delete = function(req, res){
-	products.findOneAndRemove({_id: req.params.id}, function(err, numOfAffectedRows){
+	products.findOneAndRemove({_id: req.params.id, user: req.user._id}, function(err, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(numOfAffectedRows === 0){

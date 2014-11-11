@@ -46,16 +46,36 @@ module.exports.create = function(req, res){
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(product){
-			product.order.push(orderInfo);
-			product.save(function (err, order) {
-				if(err){
-					res.status(500).jsonp(err);
-				} else if(order){
-					res.status(200).jsonp(order);
-				} else {
-					res.status(401).jsonp('Failed to add order');
-				}
-			});
+			//Make sure the user has product in his/her cart
+			if(req.user.cart.length > 0){
+				req.user.cart = [];
+
+				//Delete all products in the user cart
+				users.findById(req.user._id, function (err, user) {
+					var cartInfo = user.cart;
+					cartInfo.forEach(function (item) {
+						item.remove();
+					});
+					user.save(function (err) {
+						if(err){
+							res.status(500).jsonp(err);
+						} else {
+							product.order.push(orderInfo);
+							product.save(function (err, order) {
+								if(err){
+									res.status(500).jsonp(err);
+								} else if(order){
+									res.status(200).jsonp(order);
+								} else {
+									res.status(401).jsonp('Failed to add order');
+								}
+							});
+						}
+					});
+				});
+			} else {
+				res.status(401).json('Cart is empty');
+			}
 		} else {
 			res.status(404).jsonp('Product has not been found');
 		}
@@ -63,8 +83,9 @@ module.exports.create = function(req, res){
 }
 
 //Update a specific product order
+//only the product owner can update the order !!!!
 module.exports.update = function(req, res){
-	products.findById(req.params.id, function (err, product) {
+	products.findOne({_id: req.params.id, user: req.user._id}, function (err, product) {
 		if(err){
 			res.status(500).jsonp(err);
 		} else if(product){
@@ -87,14 +108,11 @@ module.exports.update = function(req, res){
 
 //Delete a specific product and a specific order
 module.exports.delete = function(req, res){
-	products.findById(req.params.id, function (err, product) {
-		var order = product.order.id(req.params.orderId).remove();
-		order.save(function (err) {
-			if(err){
-				res.status(500).jsonp(err);
-			} else {
-				res.status(200).jsonp('order has been deleted successfully');
-			}
-		});
+	products.findOneAndUpdate({_id: req.params.id}, {$pull: {'order': {'_id': req.params.orderId, 'user._id': req.user._id}} }, function (err) {
+		if(err){
+			res.status(500).jsonp(err);
+		} else {
+			res.status(200).jsonp('order has been deleted successfully');
+		}	
 	});
 }

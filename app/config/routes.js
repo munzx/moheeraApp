@@ -3,6 +3,9 @@
 var users = require('../controllers/user'),
 	product = require('../controllers/product'),
 	order = require('../controllers/order'),
+	comment = require('../controllers/comment'),
+	heart = require('../controllers/heart'),
+	cart = require('../controllers/cart'),
 	passport = require('passport'),
 	authLocal = require('./auth/local.strategy');
 
@@ -75,23 +78,39 @@ module.exports = function (app) {
 	//Users
 	app.get('/user', users.index); //get all users
 	app.post('/user', users.create); //create a new user
-	app.put('/user/:id', ensureAuthenticated, isUser, users.update); //update user info by id
-	app.delete('/user/:id', ensureAuthenticated, isUser, users.delete); //delete user by id
+	app.put('/user', ensureAuthenticated, isUser, users.update); //update user info
+	app.delete('/user', ensureAuthenticated, isUser, users.delete); //delete user
 	app.get('/user/:name', users.getByName); //get a user by name
+
+
+	//Carts
+	app.get('/user/cart/products', ensureAuthenticated, isUser, cart.index); //get all products in the user cart
+	app.post('/user/cart/:productId', ensureAuthenticated, isUser, cart.addProduct); //add a product to the user cart
+	app.delete('/user/cart/:productId', ensureAuthenticated, isUser, cart.removeProduct); //remove a product from the user cart
 
 	//Products
 	app.get('/product', product.index); //get all products
 	app.post('/product', ensureAuthenticated, isUser, product.create); //create a new product
 	app.put('/product/:id', ensureAuthenticated, isUser, product.update); //update a product by id
-	app.delete('/product/:id', ensureAuthenticated, isUser, product.delete); //delete a prodcut by id
+	app.delete('/product/:id', ensureAuthenticated, isUser, product.delete); //delete a product by id
 	app.get('/product/:name', product.getByName); //get a product by name
 	app.get('/product/category/:category', product.categoryName); //find products by category name
 
 	//Orders
-	app.get('/product/:id/order', order.index); //get all orders of a product
-	app.get('/product/:id/order/:orderId', order.getById); // get a product order by id
-	app.post('/product/:id/order', order.create); //create a new product order
-	app.put('/product/:id/order/:orderId', order.update); //update a product order
-	app.delete('/product/:id/order/:orderId', order.delete); //delete a product order
+	app.get('/product/:id/order', ensureAuthenticated, isUser, order.index); //get all orders of a product
+	app.get('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.getById); // get a product order by id
+	app.post('/product/:id/order', ensureAuthenticated, isUser, order.create); //create a new product order
+	app.put('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.update); //update a product order
+	app.delete('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.delete); //delete a product order
+
+	//Comments
+	app.get('/product/:id/comment', comment.index); //get all comments of a product
+	app.post('/product/:id/comment', ensureAuthenticated, isUser, comment.create); //add a new comment
+	app.delete('/product/:id/comment/:commentId', ensureAuthenticated, isUser, comment.delete); //delete a comment
+
+	//Hearts
+	app.get('/product/:id/heart', heart.index); //get all hearts of a product
+	app.post('/product/:id/heart', ensureAuthenticated, isUser, heart.create); // heart a certain product
+	app.delete('/product/:id/heart/:heartId', ensureAuthenticated, isUser, heart.delete); //Un-heart a product! the heart id is included so admin can remove it as well
 
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html data-ng-app="moheera">
+<head>
+	<title>Moheera App</title>
+	<link rel="stylesheet" type="text/css" href="/asset/bootstrap/dist/css/bootstrap-theme.min.css">
+	<!-- App CSS file -->
+	<link rel="stylesheet" type="text/css" href="/public/dest/app.min.css">
+</head>
+<body>
+	<h1>Bism Allah</h1>
+	
+	<% if(!isAuthenticated){ %>
+	Please login <a href="/login">Here</a>
+	<% } else { %>
+	Salam <%= user.name %>!! , please say Bism Allah as we start!!
+
+
+	<div ng-controller="homepage">
+		<p> home : {{homeMsg}} </p>
+		<p> Auth: {{authMsg}}</p>
+		<p>Test : {{testMessage}}</p>
+	</div>
+
+
+
+
+	<a href="/logout">LogOut!</a>
+	<% } %>
+
+
+	<!-- JS files -->
+	<script type="text/javascript" src="/asset/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/asset/ui-router/release/angular-ui-router.js"></script>
+	<script type="text/javascript" src="/asset/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<script type="text/javascript" src="/asset/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+	<!-- App JS file -->
+	<script type="text/javascript" src="/public/dest/app.min.js"></script>
+
+</body>
+</html>

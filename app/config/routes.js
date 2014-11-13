@@ -45,7 +45,7 @@ module.exports = function (app) {
 
 	//Index page
 	app.get('/', function(req, res){
-		res.render('../public/core/views/index', {
+		res.render('../public/modules/auth/views/index', {
 			isAuthenticated: req.isAuthenticated(),
 			user: req.user
 		});
@@ -53,7 +53,7 @@ module.exports = function (app) {
 
 	//Serve login page
 	app.get('/login', function(req, res){
-		res.render('../public/core/views/login', {
+		res.render('../public/modules/auth/views/login', {
 			isAuthenticated: req.isAuthenticated(),
 			user: req.user
 		});
@@ -61,7 +61,7 @@ module.exports = function (app) {
 
 	//Check login credentials
 	app.post('/login', Auth, function(req, res){
-		res.status(200).json('Bism Allah');
+		res.redirect('/');
 	});
 
 	//Logout
@@ -81,7 +81,6 @@ module.exports = function (app) {
 	app.put('/user', ensureAuthenticated, isUser, users.update); //update user info
 	app.delete('/user', ensureAuthenticated, isUser, users.delete); //delete user
 	app.get('/user/:name', users.getByName); //get a user by name
-
 
 	//Carts
 	app.get('/user/cart/products', ensureAuthenticated, isUser, cart.index); //get all products in the user cart

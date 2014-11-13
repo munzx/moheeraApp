@@ -32,6 +32,9 @@ module.exports = function (app, express) {
 	//process.env.NODE_ENV = 'development'
 
 	if (app.get('env') === 'development') {
+		//Disable the caching
+		app.disable('view cache');
+
 		//stop Etag
 		app.disable('etag');
 

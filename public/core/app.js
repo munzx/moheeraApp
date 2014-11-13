@@ -1,1 +1,0 @@
-var moheera = angular.module('moheera', []);

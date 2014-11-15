@@ -45,7 +45,7 @@ module.exports = function (app) {
 
 	//Index page
 	app.get('/', function(req, res){
-		res.render('../public/modules/auth/views/index', {
+		res.render('../public/modules/config/view/index', {
 			isAuthenticated: req.isAuthenticated(),
 			user: req.user
 		});
@@ -53,7 +53,7 @@ module.exports = function (app) {
 
 	//Serve login page
 	app.get('/login', function(req, res){
-		res.render('../public/modules/auth/views/login', {
+		res.render('../public/modules/auth/view/login', {
 			isAuthenticated: req.isAuthenticated(),
 			user: req.user
 		});
@@ -61,13 +61,13 @@ module.exports = function (app) {
 
 	//Check login credentials
 	app.post('/login', Auth, function(req, res){
-		res.redirect('/');
+		res.status(200).json('logged');
 	});
 
 	//Logout
 	app.get('/logout', function(req, res){
 		req.logout();
-		res.redirect('/');
+		res.status(200).json('logged out');
 	});
 
 	//check if user is logged in

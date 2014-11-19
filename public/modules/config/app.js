@@ -2,7 +2,7 @@
 
 // intitiate the app and Inject all of the app module dependencies
 //configure the routes
-angular.module('moheera', ['ui.bootstrap', 'ui.router', 'authModule', 'homeModule', 'userModule'])
+angular.module('moheera', ['ui.bootstrap', 'ui.router', 'authModule', 'homeModule', 'userModule', 'ngResource'])
 .config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
 	$urlRouterProvider.otherwise('/');
 	$stateProvider
@@ -30,5 +30,17 @@ angular.module('moheera', ['ui.bootstrap', 'ui.router', 'authModule', 'homeModul
 			url: '/signup',
 			templateUrl: 'public/modules/auth/view/signup.auth.view.html',
 			controller: 'signupAuthController'
+		})
+		.state('signout', {
+			url: 'signout',
+			controller: 'signoutAuthController'
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl: 'public/modules/user/view/profile.user.view.html',
+			controller: 'profileUserControlller'
 		});
+}])
+.run(['$rootScope', function ($rootScope) {
+	$rootScope.logged = false;
 }]);

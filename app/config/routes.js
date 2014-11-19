@@ -47,7 +47,7 @@ module.exports = function (app) {
 	app.get('/', function(req, res){
 		res.render('../public/modules/config/view/index', {
 			isAuthenticated: req.isAuthenticated(),
-			user: req.user
+			userInfo: req.user
 		});
 	});
 
@@ -61,7 +61,7 @@ module.exports = function (app) {
 
 	//Check login credentials
 	app.post('/login', Auth, function(req, res){
-		res.status(200).json('logged');
+		res.status(200).json(req.user);
 	});
 
 	//Logout

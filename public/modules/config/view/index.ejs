@@ -8,22 +8,25 @@
 	<link rel="stylesheet" type="text/css" href="/public/dest/app.min.css">
 </head>
 <body>
+
 	<header ng-include="'public/modules/config/view/nav.html'"></header>
 
-	<div class="container">
 
-		<div ui-view></div>
-		
-		<% if(!isAuthenticated){ %>
-
-		<% } else { %>
-
-		<a href="/logout">LogOut!!!</a>
+	<section ng-controller="userConfigController">
+		<!-- if the user is registred then pull thier info in the server side and make it availiable --> 
+		<% if(isAuthenticated){ %>
+			<script type="text/javascript">
+				//inject the user info retrieved from the server into a window object
+				window.userInfo = <%-JSON.stringify(userInfo)%>;
+			</script>
 		<% } %>
+	</section>
 
+	<div class="container">
+		<div ui-view></div>
 	</div>
 
-	
+
 
 	<footer ng-include="'public/modules/config/view/footer.html'"></footer>
 
@@ -32,6 +35,7 @@
 
 	<!-- JS asset files -->
 	<script type="text/javascript" src="/asset/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/asset/angular-resource/angular-resource.min.js"></script>
 	<script type="text/javascript" src="/asset/ui-router/release/angular-ui-router.js"></script>
 
 	<!-- Bootstrap -->

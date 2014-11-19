@@ -41,7 +41,8 @@ gulp.task('test', function () {
 	.pipe(notify({message: 'test specs completed'}));
 });
 
-gulp.task('html', function () {
+// reload html files
+gulp.task('htmlReload', function () {
 	gulp.src(paths.htmlFiles)
 	.pipe(connect.reload());
 });
@@ -51,8 +52,8 @@ gulp.task('minifyJS', function () {
 	return gulp.src(paths.jsFiles)
 			.pipe(plumber())
 			.pipe(concat('app.js'))
-			.pipe(rename('app.min.js'))
 			.pipe(uglify())
+			.pipe(rename('app.min.js'))
 			.pipe(gulp.dest(paths.desFolder))
 			.pipe(connect.reload());
 });
@@ -69,7 +70,7 @@ gulp.task('minifyCSS', function () {
 
 
 // Build the minified files
-gulp.task('build', ['inspect', 'minifyJS', 'minifyCSS']);
+gulp.task('build', ['inspect', 'htmlReload', 'minifyJS', 'minifyCSS']);
 
 // Start nodeJS server and watch for gulp "watch" on start and end
 gulp.task('serve', function() {
@@ -87,7 +88,7 @@ gulp.task('serve', function() {
 
 // Watch change
 gulp.task('watch', function () {
-	gulp.watch(paths.htmlFiles, ['html']);
+	gulp.watch(paths.htmlFiles, ['build']);
 	gulp.watch(paths.jsFiles, ['build']);
 	gulp.watch(paths.cssFiles, ['build']);
 });

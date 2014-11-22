@@ -62,6 +62,7 @@ gulp.task('minifyCSS', function () {
 	return gulp.src(paths.cssFiles)
 			.pipe(plumber())
 			.pipe(autoprefixer('last 5 versions'))
+			.pipe(concat('app.css'))
 			.pipe(cssMinify())
 			.pipe(rename('app.min.css'))
 			.pipe(gulp.dest(paths.desFolder))

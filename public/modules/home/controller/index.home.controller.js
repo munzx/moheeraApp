@@ -1,7 +1,8 @@
 'user strict';
 
-angular.module('homeModule').controller('indexHomeController', ['registerUserConfigFactory', '$scope', function (registerUserConfigFactory, $scope) {
-	$scope.homeMsg = 'Here is the home';
-	$scope.authMsg = 'Here is the Auth message';
-	$scope.testMessage = registerUserConfigFactory;
+angular.module('homeModule').controller('indexHomeController', ['registerUserConfigFactory', '$location', '$scope', function (registerUserConfigFactory, $location, $scope) {
+	$scope.user = registerUserConfigFactory.getUser();
+	// If the user is registred redirect the user to the profile page
+	if($scope.user) $location.path('/profile');
+
 }]);

@@ -2,12 +2,19 @@
 
 // intitiate the app and Inject all of the app module dependencies
 //configure the routes
-angular.module('moheera', ['ui.bootstrap', 'ui.router', 'authModule', 'homeModule', 'userModule', 'ngResource'])
-.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
-	$urlRouterProvider.otherwise('/');
+var moheera = angular.module('moheera', ['ui.bootstrap', 'ui.router', 'ngResource', 'authModule', 'homeModule', 'userModule', 'productModule']);
+
+//RouteScopes & Routes Configurations
+moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
+	$urlRouterProvider.otherwise('notfound');
 	$stateProvider
+		.state('notfound',{
+			url: '/notfound',
+			templateUrl: 'public/modules/config/view/notfound.config.view.html',
+			controller: 'errorConfigController'
+		})
 		.state('home', {
-			url: '/',
+			url: '',
 			templateUrl: 'public/modules/home/view/index.home.view.html',
 			controller: 'indexHomeController'
 		})
@@ -37,6 +44,21 @@ angular.module('moheera', ['ui.bootstrap', 'ui.router', 'authModule', 'homeModul
 		})
 		.state('profile', {
 			url: '/profile',
+			templateUrl: 'public/modules/user/view/profile.user.view.html',
+			controller: 'profileUserControlller'
+		})
+		.state('profile.singleProduct', {
+			url: '/product/:id',
+			templateUrl: 'public/modules/product/view/single.product.view.html',
+			controller: 'profileUserControlller'
+		})
+		.state('user', {
+			url: '/:id',
+			templateUrl: 'public/modules/user/view/profile.user.view.html',
+			controller: 'profileUserControlller'
+		})
+		.state('user.singleProduct', {
+			url: '/:userId/productId',
 			templateUrl: 'public/modules/user/view/profile.user.view.html',
 			controller: 'profileUserControlller'
 		});

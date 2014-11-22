@@ -4,6 +4,6 @@ angular.module('authModule').controller('signoutAuthController', ['registerUserC
 	$http.get('/logout')
 	.success(function (data, success) {
 		registerUserConfigFactory.clearUserInfo();
-		$location.path('/');
+		$location.path('/home');
 	});
 }]);

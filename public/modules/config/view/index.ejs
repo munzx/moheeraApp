@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="moheera">
+<html ng-app="moheera">
 <head>
 	<title>Moheera App</title>
 	<!-- CSS asset files -->
@@ -12,10 +12,10 @@
 	<header ng-include="'public/modules/config/view/nav.html'"></header>
 
 
-	<section ng-controller="userConfigController">
+	<section>
 		<!-- if the user is registred then pull thier info in the server side and make it availiable --> 
 		<% if(isAuthenticated){ %>
-			<script type="text/javascript">
+			<script type="text/javascript" id="userInfoBlock">
 				//inject the user info retrieved from the server into a window object
 				window.userInfo = <%-JSON.stringify(userInfo)%>;
 			</script>

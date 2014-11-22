@@ -1,3 +1,60 @@
-<h1>Bism Allah</h1>
-<p>here is the user profile</p>
-<div ng-model="userInfo">User Data:  {{userInfo}}</div>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
+		<div class="col-md-12">
+			<img src="public/modules/user/img/profile_bg.jpg" class="img-responsive profile-center img-rounded text-center">
+		</div>
+		<div class="row">
+			<div class="col-md-3 content">
+				<img src="public/modules/user/img/logo.jpg" style="margin-bottom:-2%;" class="img-responsive profile-center img-rounded text-center">
+				<ul class="nav nav-pills nav-stacked panel">
+				  <li role="presentation"><a href="#">All</a></li>
+				  <li role="presentation" class="active"><a href="#">Men</a></li>
+				  <li role="presentation"><a href="#">Women</a></li>
+				  <li role="presentation"><a href="#">Kids</a></li>
+				</ul>
+			</div>
+			<div class="col-md-8 content">
+				<div class="row">
+					<div class="col-md-12 panel">
+						<h4>Integer pharetra</h4>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra vitae nisl ut sodales. Nunc vel eleifend lacus. Nullam mattis erat ac arcu laoreet, vel posuere velit vehicul Integer pharetra vitae nisl ut sodales.</p>
+					</div>
+
+					<div ui-view>
+						<div class="col-md-12 add-space-content panel">
+							<a href="">
+								<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-rounded text-center">	
+							</a>
+							<div class="col-md-12" style="margin-bottom:4%;background-color:#eeeeee;">
+								<div class="col-md-4" style="margin-bottom:4%;">
+									<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+								</div>
+								<div class="col-md-4" style="margin-bottom:4%;">
+									<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+								</div>
+								<div class="col-md-4" style="margin-bottom:4%;">
+									<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+								</div>
+							</div>
+							<div class="col-md-12" style="margin-bottom:4%;">
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-heart" style="font-size:20px;color:red;" aria-hidden="true"></span>
+									<span class="text-muted">300</span>
+								</button>
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-comment" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+									<span class="text-muted">300</span>
+								</button>
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,5 +1,6 @@
 body {
 	padding-top: 90px;
+	padding-bottom: 120px;
 	background-color: #EEEEEE;
 }
 
@@ -18,4 +19,8 @@ textarea {
 .add-space {
 	margin-top: 15px;
 	margin-bottom: 15px;
+}
+
+#nav {
+	opacity: 0.93;
 }

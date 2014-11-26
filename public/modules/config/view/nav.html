@@ -8,26 +8,68 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" ng-href="/">Moheera</a>
+			<a class="navbar-brand" ui-sref-active="active" ui-sref="home">Moheera</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" collapse="!navbarCollapsed">
 			<ul class="nav navbar-nav">
-				<li class="active" ui-sref-active="active" ng-show="aboutLink"><a ui-sref="about">About</a></li>
-				<li ui-sref-active="active"><a ui-sref="contact" ng-show="contactLink">Contact Us</a></li>
-				<li><a ui-sref="#" ng-show="profileLink"><span class="glyphicon glyphicon-user"><b>Profile</b></span></a></li>
-				<li><a ui-sref="#" ng-show="reportLink"><span class="glyphicon glyphicon-print"><b>Report</b></span></a></li>
-				<li><a ui-sref="#" ng-show="orderLink"><span class="glyphicon glyphicon-inbox"><b>Order</b></span></a></li>
+				<li ui-sref-active="active" ng-show="notLoggedLink">
+					<a ui-sref="about"><b>About</b></a>
+				</li>
+				<li ui-sref-active="active">
+					<a ui-sref="contact" ng-show="notLoggedLink"><b>Contact Us</b></a>
+				</li>
 				<li>
-					<a ui-sref="#" ng-show="cartLink">
-						<span class="glyphicon glyphicon-shopping-cart"><b>Cart</b><span style="font-size:10px;color:#fff;font-weight:bold;">(20)</span></span>
+					<a ui-sref="profile" class="active" ui-sref-active="active" ng-show="loggedLink">
+						<span class="glyphicon glyphicon-user"></span>
+						<b>Profile<span class="badge">22</span></b>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="profile.addProduct" ui-sref-active="active" ng-show="loggedLink">
+						<span style="font-size:16px;" class="glyphicon glyphicon-cloud-upload"></span>
+						<b>Add Product</b>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="profile.report" ng-show="loggedLink">
+						<span class="glyphicon glyphicon-print"></span>
+						<b>Report</b>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="profile.order" ng-show="loggedLink">
+						<span class="glyphicon glyphicon-inbox"></span>
+						<b>Order<span class="badge">7</span></b>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="profile.cart" ng-show="loggedLink">
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						<b>Cart</b><span class="badge">20</span>
 					</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ui-sref-active="active" ng-show="signInLink"><a ui-sref="signin">SignIn</a></li>
-				<li  ui-sref-active="active" ng-show="signUpLink"><a ui-sref="signup">SignUp</a></li>
-				<li  ui-sref-active="active" ng-show="signOutLink"><a ui-sref="signout">SignOut</a></li>
+				<li ui-sref-active="active" ng-show="notLoggedLink">
+					<a ui-sref="signin"><b>SignIn</b></a>
+				</li>
+				<li  ui-sref-active="active" ng-show="notLoggedLink">
+					<a ui-sref="signup"><b>SignUp</b></a>
+				</li>
+
+				<li class="dropdown" ng-show="loggedLink" >
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<span class="glyphicon glyphicon-cog" style="font-size:20px;"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a ui-sref="profile.setting"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+						<li class="divider"></li>
+						<li><a ui-sref="profile.userPassword"><span class="glyphicon glyphicon-asterisk"></span> Change Password</a></li>
+						<li class="divider"></li>
+						<li><a ui-sref="signout"><span class="glyphicon glyphicon-stop"></span> SignOut</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

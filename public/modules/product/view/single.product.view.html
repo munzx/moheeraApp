@@ -1,29 +1,66 @@
-<div class="col-md-12 add-space-content panel">
-	<a href="">
+<div class="row">
+	<div class="col-md-12">
+		<hr/>
+		<!-- remove product -->
+		<span ng-click="removeProduct()" class="glyphicon glyphicon-remove" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+		<!-- end remove product-->
+
+		<!-- edit product -->
+		<a href="#/profile/product/2323/edit">
+			<span class="glyphicon glyphicon-edit" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+		</a><!-- end edit product-->
+
+		<!-- product image -->
 		<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-rounded text-center">	
-	</a>
-	<div class="col-md-12" style="margin-bottom:4%;background-color:#eeeeee;">
-		<div class="col-md-4" style="margin-bottom:4%;">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
-		</div>
-		<div class="col-md-4" style="margin-bottom:4%;">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
-		</div>
-		<div class="col-md-4" style="margin-bottom:4%;">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
-		</div>
-	</div>
-	<div class="col-md-12" style="margin-bottom:4%;">
-		<button type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-heart" style="font-size:20px;color:red;" aria-hidden="true"></span>
-			<span class="text-muted">300</span>
-		</button>
-		<button type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-comment" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
-			<span class="text-muted">300</span>
-		</button>
-		<button type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
-		</button>
+		<!-- end product image -->
+
+		<!-- product other images -->
+		<div class="col-md-12" style="margin-bottom:4%;background-color:#fff;">
+			<div class="col-md-4" style="margin-bottom:4%;">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+			</div>
+			<div class="col-md-4" style="margin-bottom:4%;">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+			</div>
+			<div class="col-md-4" style="margin-bottom:4%;">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+			</div>
+		</div> <!-- end product other images -->
+
+		<!-- product likes and comments buttons -->
+		<div class="col-md-12" style="margin-bottom:4%;">
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-heart" style="font-size:20px;color:red;" aria-hidden="true"></span>
+				<span class="text-muted">300</span>
+			</button>
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-comment" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+				<span class="text-muted">300</span>
+			</button>
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+			</button>
+		</div><!-- end product likes and comments buttons -->
+
 	</div>
 </div>
+<hr />
+<!-- add comments -->
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<form class="form-horizontal" role="form" autocomplete="off">
+			<div class="form-group">
+				<textarea class="form-control" rows="3"></textarea>
+				<button ng-click="signIn()" class="btn btn-primary btn-lg btn-block text-center">Comment</button>
+			</div>
+		</form>
+	</div>
+</div> <!-- end add comments -->
+
+<!-- comments -->
+<div class="row">
+	<div class="col-md-12">
+		<span class="glyphicon glyphicon-user">SomeOne name</span>
+		<h5 style="background-color:#eeeeee;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
+	</div>
+</div> <!-- end comments -->

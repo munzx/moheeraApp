@@ -14,8 +14,8 @@ angular.module('moheera').factory('registerUserConfigFactory', ['$window', '$roo
 
 	//Clear user info from the browser and change the rootScope status to false
 	_this.clearUserInfo = function () {
-		var element = document.getElementById("userInfoBlock"); //this code dose not seem to work!
-		if(element) element.parentNode.removeChild(element); //this code dose not seem to work!
+		//var element = document.getElementById("userInfoBlock"); //this code dose not seem to work!
+		//if(element) element.parentNode.removeChild(element); //this code dose not seem to work!
 		$rootScope.logged = false;
 		_this.user = $window.userInfo = false;
 	};

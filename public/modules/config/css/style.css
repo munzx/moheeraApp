@@ -1,4 +1,6 @@
 body {
+	font-weight: 300;
+	line-height: 1.42857143;
 	padding-top: 90px;
 	padding-bottom: 120px;
 	background-color: #EEEEEE;
@@ -7,7 +9,7 @@ body {
 .form-bg {
 	background-color: #fff;
 	border: 15px solid;
-	border-radius: 15px;
+	border-radius: 0;
 	border-color: #fff;
 	margin-top: 50px;
 }

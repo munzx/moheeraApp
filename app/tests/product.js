@@ -210,7 +210,7 @@ describe("product test", function() {
 			status: 'Pendding'
 		})
 		.end(function(res) {
-			expect(res.body).to.be('Cart is empty');
+			expect(res.body.message).to.be('Cart is empty');
 			expect(res.status).to.be(401);
 			done();
 		});

@@ -2,17 +2,18 @@
 
 //Dependencies
 var mongoose = require('mongoose'),
+	errorHandler = require('./error'),
 	products = require('../models/product');
 
 
 module.exports.index = function(req, res){
 	products.find(function(err, product){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product) {
 			res.status(200).jsonp(product);
 		} else {
-			res.status(404).json('No product has been found');
+			res.status(404).json({message: 'No product has been found'});
 		}
 	});
 }
@@ -22,7 +23,7 @@ module.exports.create = function(req, res){
 	newProduct.user = req.user;
 	newProduct.save(function(err, product){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else {
 			res.status(200).jsonp(product);
 		}
@@ -32,11 +33,11 @@ module.exports.create = function(req, res){
 module.exports.getByName = function(req, res){
 	products.findOne({name: req.params.name}, function(err, product){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product) {
 			res.status(200).jsonp(product);
 		} else {
-			res.status(404).json('Product has not been found');
+			res.status(404).json({message: 'Product has not been found'});
 		}
 	});
 }
@@ -45,11 +46,11 @@ module.exports.getByName = function(req, res){
 module.exports.update = function(req, res){
 	products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, req.body, function(err, product, numOfAffectedRows){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
 			res.status(200).jsonp(product);
 		} else {
-			res.status(200).json('Failed to update document');
+			res.status(200).json({message: 'Failed to update document'});
 		}
 	});
 }
@@ -58,9 +59,9 @@ module.exports.update = function(req, res){
 module.exports.delete = function(req, res){
 	products.findOneAndRemove({_id: req.params.id, user: req.user._id}, function(err, numOfAffectedRows){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(numOfAffectedRows === 0){
-			res.status(200).json('Failed to delete document');
+			res.status(200).json({message: 'Failed to delete document'});
 		} else {
 			res.status(200).json('successfully deleted the product');
 		}
@@ -70,11 +71,11 @@ module.exports.delete = function(req, res){
 module.exports.categoryName = function(req, res){
 	products.find({category: req.params.category}, function(err, product){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
 			res.status(200).jsonp(product);
 		} else {
-			res.status(404).json('No product has been found');
+			res.status(404).json({message: 'No product has been found'});
 		}
 	});
 }

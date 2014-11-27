@@ -60,8 +60,6 @@ module.exports = function (app, express) {
 	app.use(passport.initialize()); //initialize passport
 	app.use(passport.session()); // persistent login sessions
 
-
-
 	//Publically accessable folders
 	app.use('/asset', express.static('./bower_components/'));
 	app.use('/public', express.static('./public/'));

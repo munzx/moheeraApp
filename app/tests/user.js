@@ -86,7 +86,7 @@ describe("useres test", function() {
 		})
 		.end(function(res){
 			expect(res.status).to.be(200);
-			expect(res.body).to.be('User has been deleted successfully');
+			expect(res.body.message).to.be('User has been deleted successfully');
 			done();
 		});
 	});

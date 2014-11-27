@@ -24,5 +24,9 @@ textarea {
 }
 
 #nav {
-	opacity: 0.93;
+	opacity: 0.85;
+}
+
+#footer {
+	opacity: 0.85;
 }

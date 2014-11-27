@@ -2,17 +2,18 @@
 
 // Depnedencies
 var mongoose = require('mongoose'),
+	errorHandler = require('./error'),
 	users = require('../models/user');
 
 // get all users
 module.exports.index = function (req, res){
 	users.find(function (err, user){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user){
 			res.status(200).jsonp(user);
 		} else {
-			res.status(404).json('No user has been found');
+			res.status(404).json({message: 'No user has been found'});
 		}
 	});
 }
@@ -22,7 +23,7 @@ module.exports.create = function(req, res){
 	var newUser = new users(req.body);
 	newUser.save(function(err, user){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else {
 			res.status(200).jsonp(user);
 		}
@@ -33,11 +34,11 @@ module.exports.create = function(req, res){
 module.exports.getByName = function (req, res){
 	users.findOne({name: req.params.name}, function(err, user) {
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user){
 			res.status(200).jsonp(user);
 		} else {
-			res.status(404).json('User has not been found');
+			res.status(404).json({message: 'User has not been found'});
 		}
 	});
 }
@@ -46,11 +47,11 @@ module.exports.getByName = function (req, res){
 module.exports.update = function(req, res){
 	users.findOneAndUpdate({_id: req.user._id}, req.body, function(err, user, numOfAffectedRows){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user) {
 			res.status(200).jsonp(user);
 		} else {
-			res.status(404).json('User has not been found');
+			res.status(404).json({message: 'User has not been found'});
 		}
 	});
 }
@@ -59,11 +60,11 @@ module.exports.update = function(req, res){
 module.exports.delete = function(req, res){
 	users.findOneAndRemove({_id: req.user._id}, function(err, numOfAffectedRows){
 		if(err){
-			res.status(500).jsonp(err);
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(numOfAffectedRows === 0) {
-			res.status(404).json('User has not been found');
+			res.status(404).json({message: 'User has not been found'});
 		} else {
-			res.status(200).json('User has been deleted successfully');
+			res.status(200).json({message: 'User has been deleted successfully'});
 		}
 	});
 }

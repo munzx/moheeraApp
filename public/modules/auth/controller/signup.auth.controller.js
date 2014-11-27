@@ -6,10 +6,10 @@ angular.module('authModule').controller('signupAuthController', ['registerUserCo
 
 	$scope.signUp = function () {
 		connectAuthFactory.save($scope.credentials, function (data, res) {
-			alert(data + ' / ' + res);
+			$location.path('/signin');
 		},
-		function (data) {
-			$scope.error = data.data.errors;
+		function (err) {
+			$scope.error = err.data.message;
 		});
 	}
 

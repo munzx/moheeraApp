@@ -1,5 +1,6 @@
 'use strict';
 
+//Dependencies
 var users = require('../controllers/user'),
 	product = require('../controllers/product'),
 	order = require('../controllers/order'),
@@ -43,6 +44,15 @@ module.exports = function (app) {
 		}
 	}
 
+	//Check is the user is a gues i.e not "logged in"
+	function isGuest (req, res, next) {
+		if(req.isAuthenticated()){
+			res.status(403).jsonp('You are already signed in , please sign out before signing up!');
+		} else {
+			next();
+		}
+	}
+
 	//Index page
 	app.get('/', function(req, res){
 		res.render('../public/modules/config/view/index', {
@@ -77,7 +87,7 @@ module.exports = function (app) {
 
 	//Users
 	app.get('/user', users.index); //get all users
-	app.post('/user', users.create); //create a new user
+	app.post('/user', isGuest, users.create); //create a new user
 	app.put('/user', ensureAuthenticated, isUser, users.update); //update user info
 	app.delete('/user', ensureAuthenticated, isUser, users.delete); //delete user
 	app.get('/user/:name', users.getByName); //get a user by name

@@ -38,7 +38,7 @@ describe("useres test", function() {
 			password: 'ss'
 		})
 		.end(function(res){
-			expect(res.status).to.be(500);
+			expect(res.status).to.be(403);
 			done();
 		});
 	});

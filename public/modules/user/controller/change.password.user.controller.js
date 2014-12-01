@@ -9,6 +9,10 @@ angular.module('userModule').controller('changePasswordUserController', ['$scope
 
 		connectUserFactory.update({action: "password"},{newPassword: $scope.userInfo.newPassword, currentPassword: $scope.userInfo.currentPassword}, function (response) {
 			$scope.success = true;
+			//empty form fields
+			$scope.userInfo.newPassword = '';
+			$scope.userInfo.currentPassword = '';
+			$scope.userInfo.verifyPassword = '';
 		}, function (error) {
 			$scope.error = error.data.message;
 		});

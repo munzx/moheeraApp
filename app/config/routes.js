@@ -89,6 +89,7 @@ module.exports = function (app) {
 	app.get('/user', users.index); //get all users
 	app.post('/user', isGuest, users.create); //create a new user
 	app.put('/user', ensureAuthenticated, isUser, users.update); //update user info
+	app.put('/user/password', ensureAuthenticated, isUser, users.changePassword); //update the user password
 	app.delete('/user', ensureAuthenticated, isUser, users.delete); //delete user
 	app.get('/user/:name', users.getByName); //get a user by name
 

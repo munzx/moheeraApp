@@ -7,8 +7,9 @@ var passport = require('passport'),
 
 module.exports = function () {
 	//initilize passport local strategy
+	//exculde password
 	passport.use(new passportLocal.Strategy(function(username, password, done){
-		user.findOne({name: username, password: password}, function(err, user){
+		user.findOne({name: username, password: password}, {password: 0}, function(err, user){
 			if(err){
 				done(err);
 			} else {
@@ -21,8 +22,10 @@ module.exports = function () {
 		done(null, user.id);
 	});
 
+
+	//exclude password
 	passport.deserializeUser(function(id, done){
-		user.findOne({_id: id}, function(err, user){
+		user.findOne({_id: id}, {password: 0}, function(err, user){
 			if(err){
 				done(err);
 			} else {

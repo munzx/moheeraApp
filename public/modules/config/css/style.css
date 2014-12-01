@@ -14,6 +14,18 @@ body {
 	margin-top: 50px;
 }
 
+input.pristine {
+	border-color: #fff;
+}
+
+input.ng-invalid.ng-dirty {
+	border-color: #C9302C;
+}
+
+input.ng-valid {
+	border-color: #449D44;
+}
+
 textarea {
 	resize: none;
 }

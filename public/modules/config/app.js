@@ -47,6 +47,11 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			templateUrl: 'public/modules/user/view/profile.user.view.html',
 			controller: 'profileUserControlller',
 		})
+		.state('profile.remove', {
+			url: '/remove',
+			templateUrl: 'public/modules/user/view/remove.account.user.view.html',
+			controller: 'removeAccountUserController'
+		})
 		.state('profile.setting', {
 			url:'/setting',
 			templateUrl: 'public/modules/user/view/setting.user.view.html',

@@ -15,7 +15,7 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-star"></i>
 						</span>
-						<input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+						<input type="text" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -23,7 +23,7 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-star"></i>
 						</span>
-						<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+						<input type="text" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -31,7 +31,7 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-star"></i>
 						</span>
-						<input type="text" id="name" name="name" class="form-control" data-ng-model="credentials.name" placeholder="User Name">
+						<input type="text" class="form-control" data-ng-model="credentials.name" placeholder="User Name" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -39,7 +39,7 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-envelope"></i>
 						</span>
-						<input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+						<input type="email" class="form-control" data-ng-model="credentials.email" placeholder="Email" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,12 +47,12 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-asterisk"></i>
 						</span>
-						<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+						<input type="password" class="form-control" data-ng-model="credentials.password" placeholder="Password" required>
 					</div>
 				</div>
 				<br />
 				<div class="text-center form-group">
-					<button ng-click="signUp()"  class="btn btn-lg btn-success btn-block">Sign up</button>&nbsp; or&nbsp;
+					<button ng-click="signUp()" ng-disabled="userForm.$invalid" class="btn btn-lg btn-success btn-block">Sign up</button>&nbsp; or&nbsp;
 					<a href="#/signin">Sign in</a>
 				</div>
 			</fieldset>

@@ -43,12 +43,6 @@ var userSchema = new Schema({
 		enum: ['user', 'admin'],
 		default: ['user']
 	},
-	password: {
-		type: String,
-		default: '',
-		required: 'Please provide the password',
-		trim: true
-	},
 	created: {
 		type: Date,
 		default: Date.now

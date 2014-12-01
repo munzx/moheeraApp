@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 
 // get all users
 module.exports.index = function (req, res){
-	users.find(function (err, user){
+	users.find({password: 0}, function (err, user){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user){
@@ -32,7 +32,7 @@ module.exports.create = function(req, res){
 
 // get user by name
 module.exports.getByName = function (req, res){
-	users.findOne({name: req.params.name}, function(err, user) {
+	users.findOne({name: req.params.name}, {password: 0}, function(err, user) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user){
@@ -52,6 +52,19 @@ module.exports.update = function(req, res){
 			res.status(200).jsonp(user);
 		} else {
 			res.status(404).json({message: 'User has not been found'});
+		}
+	});
+}
+
+//update the user password
+module.exports.changePassword = function(req, res){
+	users.findOneAndUpdate({_id: req.user._id, password: req.body.currentPassword}, {"password": req.body.newPassword},function(err, user){
+		if(err){
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+		} else if(user){
+			res.status(200).jsonp(user);
+		} else {
+			res.status(401).json({message: 'Current password is not correct'});
 		}
 	});
 }

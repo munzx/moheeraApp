@@ -83,12 +83,12 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			controller: 'addProductController'
 		})
 		.state('profile.editProduct', {
-			url: '/product/:id/edit',
+			url: '/product/:name/edit',
 			templateUrl: 'public/modules/product/view/edit.product.view.html',
-			controller: 'profileUserControlller'
+			controller: 'editProductController'
 		})
 		.state('profile.singleProduct', {
-			url: '/product/:id',
+			url: '/product/:name',
 			templateUrl: 'public/modules/product/view/single.product.view.html',
 			controller: 'singleProductController'
 		})

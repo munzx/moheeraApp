@@ -36,7 +36,7 @@ module.exports.create = function (req, res) {
 				if(err){
 					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 				} else if(newComment){
-					res.status(200).jsonp(newComment.comment);
+					res.status(200).jsonp(newComment.comment[newComment.comment.length-1]); //return last comment in the comment array
 				} else {
 					res.status(401).json({message: 'Failed to add comment'});
 				}

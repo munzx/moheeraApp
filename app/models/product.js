@@ -141,6 +141,12 @@ var productSchema = new Schema({
 		required: 'Please provide image',
 		trim: true
 	},
+	price: {
+		type: Number,
+		default: '0',
+		required: 'Please provide product price',
+		trim: true
+	},
 	order: [orderSchema],
 	comment : [commentSchema],
 	heart: [heartSchema],

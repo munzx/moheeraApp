@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 
 
 module.exports.index = function(req, res){
-	products.find(function(err, product){
+	products.find().sort({created: "desc"}).exec(function(err, product){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product) {

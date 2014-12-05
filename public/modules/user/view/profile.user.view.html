@@ -16,15 +16,19 @@
 			</div>
 			<div class="col-md-8 content">
 				<div class="row panel">
-					<div class="col-md-12">
+					<div class="col-md-12" style="margin-bottom:5%;">
 						<h4>Integer pharetra</h4>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra vitae nisl ut sodales. Nunc vel eleifend lacus. Nullam mattis erat ac arcu laoreet, vel posuere velit vehicul Integer pharetra vitae nisl ut sodales.</p>
 					</div>
 
 					<div ui-view>
-						<div class="row">
+						<div class="row" ng-repeat="product in userProducts" style="margin-bottom:5%">
 							<div class="col-md-12">
-								<a ng-href="#/profile/product/1">
+								<!-- Product name -->
+								<div class="col-md-12 text-center">
+									<span class="alert alert-success">{{product.name}}</span>
+								</div><!-- End Product name -->
+								<a ng-href="#/profile/product/{{product.name}}">
 									<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center text-center">	
 								</a>
 								<div class="col-md-12" style="background-color:#fff;">

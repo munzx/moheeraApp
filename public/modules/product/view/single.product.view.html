@@ -62,14 +62,14 @@
 		<div class="col-md-12" style="margin-bottom:4%;">
 
 			<!-- heart -->
-			<button type="button" class="btn btn-default" ng-click="heartProduct()">
-				<span class="glyphicon glyphicon-heart" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
-				<span class="text-muted">{{product.heart}}</span>
+			<button type="button" class="btn btn-default" ng-click="heartProduct()" ng-class="{'alert-danger': product.heart.length > 0, 'alert-default': product.heart.length == 0}">
+				<span class="glyphicon glyphicon-heart" style="font-size:20px;" aria-hidden="true"></span>
+				<span class="text-muted">{{product.heart.length}}</span>
 			</button><!-- End Heart -->
 
 			<!-- Comment -->
-			<button type="button" class="btn btn-default">
-				<span class="glyphicon glyphicon-comment" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
+			<button type="button" class="btn btn-default" ng-class="{'alert-info': product.comment.length > 0, 'alert-default': product.comment.length == 0}">
+				<span class="glyphicon glyphicon-comment" style="font-size:20px;" aria-hidden="true"></span>
 				<span class="text-muted">{{product.comment.length}}</span>
 			</button><!-- End comment -->
 

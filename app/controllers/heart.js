@@ -14,7 +14,12 @@ module.exports.index = function (req, res) {
 		} else if(product){
 			var heart = product.heart;
 			if(heart){
-				res.status(200).jsonp(heart);
+				if(_.find(heart, {_id : req.user._id}) === undefined){
+					res.status(200).jsonp(heart);
+				} else {
+					heart.isHearted = true;
+					res.status(200).jsonp(heart);
+				}
 			} else {
 				res.status(404).jsonp({message: 'No heart has been found!'});
 			}
@@ -29,18 +34,33 @@ module.exports.create = function (req, res) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
-			var heartInfo = req.body;
-			heartInfo.user = req.user;
-			product.heart.push(heartInfo);
-			product.save(function (err, newHeart) {
-				if(err){
-					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-				} else if(newHeart){
-					res.status(200).jsonp(newHeart.heart);
+			//if the product is not hearted by the user then return true else resturn false
+			var isHearted = function () {
+				if(_.find(product.heart, function (heartUser) { return heartUser._id = req.user._id; }) === undefined){
+					return true;
 				} else {
-					res.status(401).json({message: 'Failed to add heart'});
+					return false;
 				}
-			});
+			};
+
+			//check if the user has hearted the product then save or return error is its already hearted
+			if(isHearted()){
+				var heartInfo = req.body;
+				heartInfo.user = req.user;
+				product.heart.push(heartInfo);
+				product.save(function (err, newHeart) {
+					if(err){
+						res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+					} else if(newHeart){
+						res.status(200).jsonp({"heart": newHeart.heart});
+					} else {
+						res.status(401).json({message: 'Failed to add heart'});
+					}
+				});
+			} else {
+				res.status(401).json({message: product.heart});
+			}
+
 		} else {
 			res.status(404).json({message: 'No product has been found!'});
 		}
@@ -49,11 +69,13 @@ module.exports.create = function (req, res) {
 
 //Assure the heart owner only can unheart!!
 module.exports.delete = function (req, res) {
-	products.findOneAndUpdate({_id: req.params.id}, {$pull: {'heart': { '_id': req.params.heartId, 'user._id': req.user._id }} }, function (err) {
+	products.findOneAndUpdate({_id: req.params.id}, {$pull: {'heart': { 'user._id': req.user._id }} }, function (err, product) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+		} else if(product) {
+			res.status(200).jsonp({"heart": product.heart});
 		} else {
-			res.status(200).jsonp('Product has been unhearted successfully!');
+			res.status(200).jsonp('Failed to unheart product!');
 		}
 	});
 }

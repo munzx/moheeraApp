@@ -35,6 +35,10 @@ textarea {
 	margin-bottom: 15px;
 }
 
+.btn:focus {
+  outline: none;
+}
+
 #nav {
 	opacity: 0.85;
 }

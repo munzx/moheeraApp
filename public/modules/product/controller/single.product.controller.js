@@ -1,12 +1,23 @@
 'use strict';
 
-angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentFactory', 'registerUserConfigFactory', function ($scope, $stateParams, connectProductFactory, $location, connectCommentFactory, registerUserConfigFactory) {
+angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentFactory', 'registerUserConfigFactory', 'connectHeartFactory', function ($scope, $stateParams, connectProductFactory, $location, connectCommentFactory, registerUserConfigFactory, connectHeartFactory) {
 	$scope.user = registerUserConfigFactory.getUser();
 
 	$scope.productName = $stateParams.name;
 
 	connectProductFactory.get({getByName: $scope.productName}, function (response) {
 		$scope.product = response;
+		$scope.isHearted = function () {
+			if(response.heart.length > 0){
+				if(response.heart[0].user[0]._id == $scope.user._id){
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
 	}, function (err) {
 		$location.path('/notfound');
 	});
@@ -44,6 +55,18 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 		}, function (err) {
 			$scope.error = err.data.message;
 		});
+	}
+
+	$scope.heartProduct = function (productId) {
+		if($scope.isHearted() == false){
+			connectHeartFactory.save({productId: productId}, function (response) {
+				$scope.product.heart = response.heart;
+			});
+		} else {
+			connectHeartFactory.remove({productId: productId}, function (response) {
+				$scope.product.heart = response.heart;
+			});
+		}
 	}
 
 }]);

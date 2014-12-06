@@ -121,7 +121,7 @@ module.exports = function (app) {
 	//Hearts
 	app.get('/product/:id/heart', heart.index); //get all hearts of a product
 	app.post('/product/:id/heart', ensureAuthenticated, isUser, heart.create); // heart a certain product
-	app.delete('/product/:id/heart/:heartId', ensureAuthenticated, isUser, heart.delete); //Un-heart a product! the heart id is included so admin can remove it as well
+	app.delete('/product/:id/heart', ensureAuthenticated, isUser, heart.delete); //Un-heart a product! the heart id is included so admin can remove it as well
 
 	//404 Route/Page has not been found
 	app.use(function (req, res) {

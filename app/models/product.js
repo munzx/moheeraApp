@@ -65,13 +65,6 @@ var commentSchema = new Schema({
 
 var heartSchema = new Schema({
 	user: [userSchema],
-	rate: {
-		type: String,
-		enum: ['1', '2', '3', '4', '5'],
-		default: '5',
-		required: 'Please rate the product',
-		trim: true
-	},
 	created: {
 		type: Date,
 		default: Date.now

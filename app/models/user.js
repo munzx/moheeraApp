@@ -33,6 +33,20 @@ var cartSchema = new Schema({
 		required: 'Please provide image',
 		trim: true
 	},
+	quantity: {
+		type: Number,
+		default: 1,
+		min: 1,
+		max: 20,
+		required: 'Please Provide the quantity',
+		trim: true
+	},
+	price: {
+		type: Number,
+		default: 0,
+		required: 'Please provide product price',
+		trim: true
+	},
 	productId: {
 		type: Schema.ObjectId,
 		ref: 'product',

@@ -31,18 +31,21 @@
 		</div><!-- End Product name -->
 
 		<!-- product image -->
-		<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center text-center"><!-- end product image -->
+		<img src="public/modules/user/img/pic.jpg" class="img-responsive text-center"><!-- end product image -->
 
 		<!-- product other images -->
-		<div class="col-md-12" style="margin-bottom:4%;background-color:#fff;">
-			<div class="col-md-4" style="margin-bottom:4%;">
-				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+		<div class="col-md-12 col-xs-12" style="margin:4% 0;background-color:#fff;">
+			<div class="col-md-3 col-xs-3">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
 			</div>
-			<div class="col-md-4" style="margin-bottom:4%;">
-				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+			<div class="col-md-3 col-xs-3">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
 			</div>
-			<div class="col-md-4" style="margin-bottom:4%;">
-				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center img-circle text-center">
+			<div class="col-md-3 col-xs-3">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+			</div>
+			<div class="col-md-3 col-xs-3">
+				<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
 			</div>
 		</div> <!-- end product other images -->
 
@@ -68,16 +71,19 @@
 			</button><!-- End Heart -->
 
 			<!-- Comment -->
-			<button type="button" class="btn btn-default" ng-class="{'alert-info': product.comment.length > 0, 'alert-default': product.comment.length == 0}">
+			<button type="button" onclick="this.blur();"  class="btn btn-default" ng-class="{'alert-info': product.comment.length > 0, 'alert-default': product.comment.length == 0}">
 				<span class="glyphicon glyphicon-comment" style="font-size:20px;" aria-hidden="true"></span>
 				<span class="text-muted">{{product.comment.length}}</span>
 			</button><!-- End comment -->
 
 			<!-- Cart -->
-			<button type="button" class="btn btn-default">
-				<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;color:#ccc;" aria-hidden="true"></span>
-			</button>
-		</div><!-- End Cart -->
+			<button type="button" ng-click="addToCart(product)" onclick="this.blur();"  class="btn btn-default" ng-class="{'alert-warning': isInCart() == true && user.cart.length > 0, 'alert-default': user.cart.length == 0}">
+				<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;" aria-hidden="true"></span>
+			</button><!-- End Cart -->
+
+			<!-- Quantity -->
+			<span ng-class="{'alert alert-success': product.quantity > 0, 'alert alert-danger': product.quantity == 0}">{{product.quantity}} Available</span><!-- End Quantity -->
+		</div>
 
 		<!-- end product heart,cart and comments buttons -->
 

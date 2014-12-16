@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('productModule').controller('editProductController', ['$scope', '$stateParams', '$location', 'connectProductFactory', 'productCategoryFactory', function ($scope, $stateParams, $location, connectProductFactory, productCategoryFactory) {
-	$scope.categoryOptions = productCategoryFactory;
+angular.module('productModule').controller('editProductController', ['$scope', '$stateParams', '$location', 'connectProductFactory', 'categoryProductFactory', function ($scope, $stateParams, $location, connectProductFactory, categoryProductFactory) {
+	$scope.categoryOptions = categoryProductFactory;
 
 	connectProductFactory.get({getByName: $stateParams.name}, function (response) {
 		$scope.productInfo = response;

@@ -67,6 +67,16 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			templateUrl: 'public/modules/report/view/all.report.view.html',
 			controller: 'allReportController'
 		})
+		.state('profile.orderDone', {
+			url: '/order/done',
+			templateUrl: 'public/modules/order/view/done.order.view.html',
+			controller: 'allOrderController'
+		})
+		.state('profile.orderCreate', {
+			url: '/order/create',
+			templateUrl: 'public/modules/order/view/create.order.view.html',
+			controller: 'createOrderController'
+		})
 		.state('profile.singleOrder', {
 			url: '/order/:id',
 			templateUrl: 'public/modules/order/view/single.order.view.html',

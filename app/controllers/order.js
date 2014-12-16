@@ -2,18 +2,18 @@
 
 //Dependencies
 var mongoose = require('mongoose'),
-	_ = require('lodash'),
-	errorHandler = require('./error'),
-	products = require('../models/product'),
-	users = require('../models/user');
+_ = require('lodash'),
+errorHandler = require('./error'),
+products = require('../models/product'),
+users = require('../models/user');
 
-//Return with all orders for a certain product
+//Return with all orders of a certain user
 module.exports.index = function(req, res){
-	products.findById(req.params.id, function (err, product) {
+	products.find({$or: [{'user': req.user._id}, {'order.user._id': req.user._id}]}, function (err, product) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
-			res.status(200).jsonp(product.order);
+			res.status(200).jsonp(product);
 		} else {
 			res.status(404).jsonp({message: 'No order has been found'});
 		}
@@ -39,47 +39,79 @@ module.exports.getById = function (req, res) {
 
 //Create a new order for a certain product
 module.exports.create = function(req, res){
-	var orderInfo = req.body;
+	var orderInfo = req.body.info;
+	var cartProductIds = '';
 	orderInfo.user = req.user;
 
-	//find the product then add new order to it
-	products.findById(req.params.id, function (err, product) {
-		if(err){
-			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-		} else if(product){
-			//Make sure the user has product in his/her cart
-			if(req.user.cart.length > 0){
-				req.user.cart = [];
 
-				//Delete all products in the user cart
-				users.findById(req.user._id, function (err, user) {
-					var cartInfo = user.cart;
-					cartInfo.forEach(function (item) {
-						item.remove();
-					});
-					user.save(function (err) {
-						if(err){
-							res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-						} else {
-							product.order.push(orderInfo);
-							product.save(function (err, order) {
-								if(err){
-									res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-								} else if(order){
-									res.status(200).jsonp(order);
-								} else {
-									res.status(401).jsonp({message: 'Failed to add order'});
-								}
-							});
-						}
-					});
-				});
-			} else {
-				res.status(401).json({message: 'Cart is empty'});
+	//get the ids of all products in the user cart
+	var searchCartProductIds = function () {
+		var ids=[];
+		var userCart = req.user.cart;
+		userCart.forEach(function (item) {
+			ids.push(item.productId);
+		});
+		return ids;
+	}
+
+	cartProductIds = searchCartProductIds();
+
+	//find products added to the user cart
+	products.find({_id: {"$in": cartProductIds }}, function (err, product) {
+		var selectedProducts = product,
+		productIds = [],
+		cartProducts = req.user.cart,
+		cartProductsCantBeOrdered = [],
+		quantityCheck = '';
+
+		//get the products ids
+		selectedProducts.forEach(function (item) {
+			productIds.push(item._id);
+		});
+
+
+		//Check the quantity
+		selectedProducts.forEach(function (productItem) {
+			//Get all "products" references in the cart that have quantity equals or less
+			//than the products
+			var quantityCheck = _.find(cartProducts, function (item) {
+				return item.quantity <= productItem.quantity;
+			});
+
+			if(quantityCheck == undefined){
+				cartProductsCantBeOrdered.push({"name": productItem.name, "id": productItem._id});
 			}
+		});
+
+		//get the products in user cart that dosee not exist in the products
+		//(i.e if a product creator has deleted a product that a user has added it to his/her cart)
+		var difference = _.difference(parseInt(cartProductIds), parseInt(productIds));
+
+		if(cartProductsCantBeOrdered.length > 0 || difference.length > 0){
+			res.status(404).jsonp({message: cartProductsCantBeOrdered});
 		} else {
-			res.status(404).jsonp({message: 'Product has not been found'});
+			users.findById(req.user._id, function (err, user) {
+				if(err){
+					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+				} else if(user){
+					//Create orders , fill up the order info in each product document in the database
+					selectedProducts.forEach(function (productItem) {
+						productItem.order.push(orderInfo);
+						productItem.save();
+					});
+
+					//empty the user cart in the user session
+					req.user.cart = [];
+					//empty the user cart in the users database
+					user.cart = [];
+					user.save();
+					res.status(200).json({"uCart": user.cart});
+				} else {
+					res.status(500).jsonp({message: 'User has not been found'});
+				}
+			});
 		}
+
 	});
 }
 

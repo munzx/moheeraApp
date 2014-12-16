@@ -78,6 +78,12 @@ var orderSchema = new Schema({
 		required: 'Please provide location',
 		trim: true
 	},
+	mobilePhone: {
+		type: Number,
+		default: '',
+		required: 'Please provide the mobile phone number',
+		trim: true
+	},
 	quantity: {
 		type: Number,
 		default: 0,
@@ -95,6 +101,11 @@ var orderSchema = new Schema({
 		lowercase: true,
 		default: 'pendding',
 		enum: ['pendding', 'deleivered', 'canceled', 'processing'],
+		trim: true
+	},
+	remarks: {
+		type: String,
+		default: '',
 		trim: true
 	},
 	created: {
@@ -138,6 +149,12 @@ var productSchema = new Schema({
 		type: Number,
 		default: '0',
 		required: 'Please provide product price',
+		trim: true
+	},
+	quantity: {
+		type: Number,
+		default: '1',
+		required: 'Please provide the product quantity',
 		trim: true
 	},
 	order: [orderSchema],

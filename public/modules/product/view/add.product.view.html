@@ -19,6 +19,13 @@
                 </div>
                 <div class="form-group">
                     <div class="controls">
+                        <select data-ng-model="newProduct.quantity" class="form-control">
+                           <option  ng-repeat="num in count" value="{{num}}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
                         <select data-ng-model="newProduct.category" ng-options="cat for cat in categoryOptions" class="form-control">
                            <option value="">-- Select Category --</option>
                         </select>

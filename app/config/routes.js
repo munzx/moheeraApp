@@ -94,9 +94,17 @@ module.exports = function (app) {
 	app.get('/user/:name', users.getByName); //get a user by name
 
 	//Carts
+	app.put('/user/cart', ensureAuthenticated, isUser, cart.updateProduct); //update user cart (only quantity)
 	app.get('/user/cart/products', ensureAuthenticated, isUser, cart.index); //get all products in the user cart
 	app.post('/user/cart/:productId', ensureAuthenticated, isUser, cart.addProduct); //add a product to the user cart
 	app.delete('/user/cart/:productId', ensureAuthenticated, isUser, cart.removeProduct); //remove a product from the user cart
+
+	//Orders
+	app.get('/product/order', ensureAuthenticated, isUser, order.index); //get all orders of a certain user
+	app.get('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.getById); // get a product order by id
+	app.post('/product/order', ensureAuthenticated, isUser, order.create); //create a new product order
+	app.put('/product/:id/order/:orderId', ensureAuthenticated, isAdmin, order.update); //update a product order
+	app.delete('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.delete); //delete a product order
 
 	//Products
 	app.get('/product', product.index); //get all products
@@ -106,12 +114,6 @@ module.exports = function (app) {
 	app.get('/product/:name', product.getByName); //get a product by name
 	app.get('/product/category/:category', product.categoryName); //find products by category name
 
-	//Orders
-	app.get('/product/:id/order', ensureAuthenticated, isUser, order.index); //get all orders of a product
-	app.get('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.getById); // get a product order by id
-	app.post('/product/:id/order', ensureAuthenticated, isUser, order.create); //create a new product order
-	app.put('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.update); //update a product order
-	app.delete('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.delete); //delete a product order
 
 	//Comments
 	app.get('/product/:id/comment', comment.index); //get all comments of a product

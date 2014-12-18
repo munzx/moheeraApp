@@ -25,6 +25,7 @@ angular.module('orderModule').controller('singleOrderController', ['$scope', '$l
 		connectOrderFactory.update({productId: $stateParams.productId, id: $stateParams.id}, updateInfo, function (response) {
 			$scope.updateRemarks = '';
 			$scope.success = response;
+			$scope.orderInfo = response.order;
 		}, function (err) {
 			$scope.error = err.data.message;
 		});

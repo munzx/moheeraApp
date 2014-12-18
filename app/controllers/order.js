@@ -137,7 +137,7 @@ module.exports.update = function(req, res){
 				if(err){
 					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 				} else if(order){
-					res.status(200).jsonp(updatedOrder);
+					res.status(200).jsonp({product: product, order: order});
 				} else {
 					res.status(401).jsonp({message: 'Failed to update order info'});
 				}

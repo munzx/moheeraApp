@@ -24,10 +24,8 @@ angular.module('orderModule').controller('createOrderController', ['$scope', '$l
 		var orderInfo = {
 			"mobilePhone": $scope.newOrder.mobilePhone,
 			"address": $scope.newOrder.address,
-			"quantity": $scope.cartInfo().totalQuantity,
-			"price": $scope.cartInfo().totalPrice,
 			"remarks": $scope.newOrder.remarks,
-			"status": "pendding"
+			"status": "pending"
 		}
 
 		connectOrderFactory.save({"info": orderInfo}, function (response) {

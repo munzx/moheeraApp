@@ -87,13 +87,13 @@ var orderSchema = new Schema({
 	quantity: {
 		type: Number,
 		default: 0,
-		required: 'Please provide the quantity',
+		required: 'Please provide the total quantity',
 		trim: true
 	},
 	price: {
-		type: String,
-		default: '',
-		required: 'Please provide the price',
+		type: Number,
+		default: 0,
+		required: 'Please provide the total price',
 		trim: true
 	},
 	status: {
@@ -176,7 +176,7 @@ var productSchema = new Schema({
 	},
 	quantity: {
 		type: Number,
-		default: '1',
+		default: 0,
 		required: 'Please provide the product quantity',
 		trim: true
 	},

@@ -96,6 +96,14 @@ module.exports.create = function(req, res){
 				} else if(user){
 					//Create orders , fill up the order info in each product document in the database
 					selectedProducts.forEach(function (productItem) {
+						//get the product info from the product in the cart
+						//the purpose is to get the quantity that has been checked above
+						var productInfo = _.find(cartProducts, {'productId': productItem._id});
+						console.log(productInfo);
+						productItem.quantity -= productInfo.quantity;
+						orderInfo.quantity = productInfo.quantity;
+						orderInfo.price = productInfo.price * productInfo.quantity;
+
 						productItem.order.push(orderInfo);
 						productItem.save();
 					});

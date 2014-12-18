@@ -85,12 +85,10 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 		if($scope.isInCart() == false && product.quantity >= 1){
 			connectCartFactory.save({productId: product._id, product: product}, function (response) {
 				$scope.user.cart = response.cart;
-				console.log(response.cart);
 			});
 		} else {
 			connectCartFactory.remove({productId: product._id}, function (response) {
 				$scope.user.cart = response.cart;
-				console.log(response.cart);
 			});
 		}
 	}

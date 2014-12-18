@@ -99,10 +99,33 @@ var orderSchema = new Schema({
 	status: {
 		type: String,
 		lowercase: true,
-		default: 'pendding',
-		enum: ['pendding', 'deleivered', 'canceled', 'processing'],
+		default: 'pending',
+		enum: ['pending', 'delivered', 'canceled', 'processing'],
 		trim: true
 	},
+	statusHistory: [{
+		oldStatus: {
+			type: String,
+			lowercase: true,
+			default: '',
+			trim: true
+		},
+		updateRemarks: {
+			type: String,
+			lowercase: true,
+			default: '',
+			trim: true
+		},
+		created: {
+			type: Date,
+			default: Date.now
+		}
+	}],
+	statusRemarks: [{
+		type: String,
+		default: '',
+		trim: true
+	}],
 	remarks: {
 		type: String,
 		default: '',

@@ -103,7 +103,7 @@ module.exports = function (app) {
 	app.get('/product/order', ensureAuthenticated, isUser, order.index); //get all orders of a certain user
 	app.get('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.getById); // get a product order by id
 	app.post('/product/order', ensureAuthenticated, isUser, order.create); //create a new product order
-	app.put('/product/:id/order/:orderId', ensureAuthenticated, isAdmin, order.update); //update a product order
+	app.put('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.update); //update a product order
 	app.delete('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.delete); //delete a product order
 
 	//Products

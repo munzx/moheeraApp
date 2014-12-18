@@ -78,7 +78,7 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			controller: 'createOrderController'
 		})
 		.state('profile.singleOrder', {
-			url: '/order/:id',
+			url: '/product/:productId/order/:id/',
 			templateUrl: 'public/modules/order/view/single.order.view.html',
 			controller: 'singleOrderController'
 		})

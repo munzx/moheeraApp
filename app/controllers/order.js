@@ -9,7 +9,7 @@ users = require('../models/user');
 
 //Return with all orders of a certain user
 module.exports.index = function(req, res){
-	products.find({$or: [{'user': req.user._id}, {'order.user._id': req.user._id}]}, function (err, product) {
+	products.find().where('order.user._id').equals(req.user._id).or([{'user': req.user._id}]).where('order').exists().exec(function (err, product) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
@@ -27,7 +27,7 @@ module.exports.getById = function (req, res) {
 		} else if(product){
 			var order = product.order.id(req.params.orderId);
 			if(order){
-				res.status(200).jsonp(order);
+				res.status(200).jsonp({product: product, order: order});
 			} else {
 				res.status(404).json({message: 'Order has not been found'});
 			}
@@ -123,7 +123,8 @@ module.exports.update = function(req, res){
 			res.status(500).jsonp(err);
 		} else if(product){
 			var order = product.order.id(req.params.orderId);
-			order = _.extend(order, req.body);
+			order.statusHistory.push(req.body.statusHistory);
+			order.status = req.body.status;
 			product.save(function (err, updatedOrder) {
 				if(err){
 					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});

@@ -4,7 +4,8 @@
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	errorHandler = require('./error'),
-	users = require('../models/user');
+	users = require('../models/user'),
+	products = require('../models/product');
 
 
 module.exports.index = function (req, res) {
@@ -53,19 +54,27 @@ module.exports.updateProduct = function (req, res) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user){
+			//get the user cart
 			var userCart = user.cart;
-			userCart.forEach(function (item) {
-				if(item.productId == req.body.product.productId){
-					item.quantity = req.body.product.quantity;
-				}
-			});
-			user.save(function (err, cart) {
-				if(err){
-					res.status(401).jsonp({message: errorHandler.getErrorMessage(err)});
-				} else if(cart){
-					res.status(200).jsonp({"cart": userCart});
+			var cartProduct = req.body.product;
+
+			products.findById(cartProduct.productId, function (err, product) {
+				//update the quantity of the products in the user cart
+				if(product.quantity >= cartProduct.quantity && cartProduct.quantity > 0){
+					//find the product in the user cart
+					var getUserCartProduct = user.cart.id(cartProduct._id);
+					getUserCartProduct.quantity = cartProduct.quantity;
+					user.save(function (err, cart) {
+						if(err){
+							res.status(401).jsonp({message: errorHandler.getErrorMessage(err)});
+						} else if(cart){
+							res.status(200).jsonp({"cart": userCart});
+						} else {
+							res.status(500).jsonp({message: "Unknown error has occured"});
+						}
+					});
 				} else {
-					res.status(500).jsonp({message: "Unknown error has occured"});
+					res.status(404).jsonp({message: 'The available quantity is ' + product.quantity});
 				}
 			});
 		} else {

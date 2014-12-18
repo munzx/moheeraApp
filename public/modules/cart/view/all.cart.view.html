@@ -10,6 +10,12 @@
 	</div>
 </div>
 
+<div class="row" ng-show="error">
+	<div class="col-md-12">
+		<h5 class="alert alert-danger text-center" data-ng-bind="error"></h5>
+	</div>
+</div>
+
 <div class="row" ng-repeat="item in cart">
 	<div class="col-md-10 col-md-offset-1" style="margin-bottom:4%;">
 		<h4>Products</h4>

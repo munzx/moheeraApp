@@ -10,8 +10,12 @@ angular.module('cartModule').controller('allCartController', ['$scope', '$locati
 		if($scope.cart[index].quantity < 20){
 			$scope.cart[index].quantity++;
 			connectCartFactory.update({product: $scope.cart[index]}, function (response) {
+				$scope.error = false;
 				$scope.user.cart = $scope.cart;
 				registerUserConfigFactory.setUser($scope.user);
+			}, function (err) {
+				$scope.cart[index].quantity--;
+				$scope.error = err.data.message;
 			});
 		}
 	}
@@ -20,8 +24,12 @@ angular.module('cartModule').controller('allCartController', ['$scope', '$locati
 		if($scope.cart[index].quantity >= 2){
 			$scope.cart[index].quantity--;
 			connectCartFactory.update({product: $scope.cart[index]}, function (response) {
+				$scope.error = false;
 				$scope.user.cart = $scope.cart;
 				registerUserConfigFactory.setUser($scope.user);
+			}, function (err) {
+				$scope.cart[index].quantity++;
+				$scope.error = err.data.message;
 			});
 		}
 	}

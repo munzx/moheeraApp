@@ -4,6 +4,11 @@ angular.module('orderModule').controller('allOrderController', ['$scope', '$loca
 	$scope.user = registerUserConfigFactory.getUser();
 	$scope.statusOptions = statusOrderFactory.status;
 
+	$scope.showStatus = function () {
+		var order = {};
+		return order.status = 'pending';
+	}
+
 	connectOrderFactory.query(function (response) {
 		$scope.orderInfo = response;
 	}, function (err) {

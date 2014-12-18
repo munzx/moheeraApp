@@ -20,7 +20,7 @@
 				</tr>
 			</thead>
 			<tbody ng-repeat="product in orderInfo">
-					<tr ng-repeat="order in product.order | filter:getStatus | orderBy: order.created" ng-class="{'alert alert-warning': order.status=='pending', 'alert alert-danger': order.status=='canceled', 'alert alert-success': order.status=='delivered', 'alert alert-info': order.status=='processing'}">
+					<tr ng-repeat="order in product.order | statusOrderFilter:getStatus | orderBy: order.created" ng-class="{'alert alert-warning': order.status=='pending', 'alert alert-danger': order.status=='canceled', 'alert alert-success': order.status=='delivered', 'alert alert-info': order.status=='processing'}">
 						<td>{{order.status}}</td>
 						<td>{{order.created | date:'MM/dd/yyyy  HH:mm Z'}}</td>
 						<td>{{order.quantity}}</td>

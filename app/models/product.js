@@ -92,7 +92,7 @@ var orderSchema = new Schema({
 	},
 	price: {
 		type: Number,
-		default: 0,
+		default: 1,
 		required: 'Please provide the total price',
 		trim: true
 	},

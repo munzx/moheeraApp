@@ -33,16 +33,20 @@ module.exports.addProduct = function (req, res) {
 				price: req.body.product.price,
 				productId: req.params.productId
 			};
-			user.cart.push(newCart);
-			user.save(function (err, userInfo) {
-				if(err){
-					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-				} else if(newCart){
-					res.status(200).jsonp({"cart": userInfo.cart});
-				} else {
-					res.status(401).json({message: 'Failed to add new product to the cart'});
-				}
-			});
+			if(_.find(user.cart, {'productId': newCart.productId}) == undefined){
+				user.cart.push(newCart);
+				user.save(function (err, userInfo) {
+					if(err){
+						res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+					} else if(newCart){
+						res.status(200).jsonp({"cart": userInfo.cart});
+					} else {
+						res.status(401).json({message: 'Failed to add new product to the cart'});
+					}
+				});				
+			} else {
+				res.status(401).json({message: 'Product already in cart!'});
+			}
 		} else {
 			res.status(404).jsonp({message: 'User has not been found'});
 		}

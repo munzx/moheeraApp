@@ -16,10 +16,11 @@ angular.module('productModule').directive('cartIconProductDirective', ['connectC
 					if(value && scope.user){
 						if(scope.user.cart.length > 0){
 							var carts = scope.user.cart;
-
 							for(var i=0;i <= carts.length;i++){
-								if(carts[i].productId == value._id){
-									return true;
+								if(carts[i]){
+									if(carts[i].productId == value._id){
+										return true;
+									}
 								}
 							}
 						}
@@ -30,11 +31,9 @@ angular.module('productModule').directive('cartIconProductDirective', ['connectC
 				}
 				//update the 'isChecked' value
 				scope.isChecked = getStatus();
-				console.log('test: ' + scope.isChecked);
 			});
 
 			scope.addToCart = function (product) {
-				console.log('test: ' + scope.isChecked);
 				if(scope.isChecked == false && product.quantity >= 1){
 					connectCartFactory.save({productId: product._id, product: product}, function (response) {
 						scope.user.cart = response.cart;

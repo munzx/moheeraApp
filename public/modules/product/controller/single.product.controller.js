@@ -1,23 +1,12 @@
 'use strict';
 
-angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentProductFactory', 'registerUserConfigFactory', 'connectHeartProductFactory', 'connectCartFactory', '$state', function ($scope, $stateParams, connectProductFactory, $location, connectCommentProductFactory, registerUserConfigFactory, connectHeartProductFactory, connectCartFactory, $state) {
+angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentProductFactory', 'registerUserConfigFactory', 'connectCartFactory', '$state', function ($scope, $stateParams, connectProductFactory, $location, connectCommentProductFactory, registerUserConfigFactory, connectCartFactory, $state) {
 	$scope.user = registerUserConfigFactory.getUser();
 
 	$scope.productName = $stateParams.name;
 
 	connectProductFactory.get({getByName: $scope.productName}, function (response) {
 		$scope.product = response;
-		$scope.isHearted = function () {
-			if(response.heart.length > 0){
-				if(response.heart[0].user[0]._id == $scope.user._id){
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
 		//something strange ,,,, this get called more than once!!!
 		$scope.isInCart = function () {
 			if($scope.user.cart.length > 0){
@@ -67,18 +56,6 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 		}, function (err) {
 			$scope.error = err.data.message;
 		});
-	}
-
-	$scope.heartProduct = function (productId) {
-		if($scope.isHearted() == false){
-			connectHeartProductFactory.save({productId: productId}, function (response) {
-				$scope.product.heart = response.heart;
-			});
-		} else {
-			connectHeartProductFactory.remove({productId: productId}, function (response) {
-				$scope.product.heart = response.heart;
-			});
-		}
 	}
 
 	$scope.addToCart = function (product) {

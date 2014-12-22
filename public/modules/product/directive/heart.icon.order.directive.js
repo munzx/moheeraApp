@@ -6,15 +6,10 @@ angular.module('productModule').directive('heartIconProductDirective', ['registe
 		templateUrl: 'public/modules/product/view/heart.icon.product.view.html',
 		replace: true,
 		transclude: true,
-		scope:{
+		scope: {
 			product: '=heartIconProductDirective'
 		},
 		link: function (scope, elem, attrs) {
-			//the product heart is passed through the controller!!!
-			//think of the heart template as part of the page that contains it,
-			//and think of a scope object passed  eaither from the controller
-			//or the through an ng-repeat , now the heart code must be able to access
-			//the object named heart and thats what happens here!!!
 			scope.$watch('product', function (value) {
 				var user = registerUserConfigFactory.getUser();
 				var getStatus = function () {

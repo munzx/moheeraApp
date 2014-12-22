@@ -7,17 +7,6 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 
 	connectProductFactory.get({getByName: $scope.productName}, function (response) {
 		$scope.product = response;
-		//something strange ,,,, this get called more than once!!!
-		$scope.isInCart = function () {
-			if($scope.user.cart.length > 0){
-		 		for (var i=0; i < $scope.user.cart.length; i++) {
-		 			if($scope.user.cart[i].productId == response._id){
-						return true;
-					}
-				}
-	 		}
-	 		return false;
-		}
 	}, function (err) {
 		$location.path('/notfound');
 	});
@@ -56,18 +45,6 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 		}, function (err) {
 			$scope.error = err.data.message;
 		});
-	}
-
-	$scope.addToCart = function (product) {
-		if($scope.isInCart() == false && product.quantity >= 1){
-			connectCartFactory.save({productId: product._id, product: product}, function (response) {
-				$scope.user.cart = response.cart;
-			});
-		} else {
-			connectCartFactory.remove({productId: product._id}, function (response) {
-				$scope.user.cart = response.cart;
-			});
-		}
 	}
 
 }]);

@@ -71,9 +71,7 @@
 			<div comment-icon-product-directive="product"></div> <!-- End comment -->
 
 			<!-- Cart -->
-			<button type="button" ng-click="addToCart(product)" onclick="this.blur();"  class="btn btn-default" ng-class="{'alert-warning': isInCart() == true && user.cart.length > 0, 'alert-default': user.cart.length == 0}">
-				<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;" aria-hidden="true"></span>
-			</button><!-- End Cart -->
+			<div cart-icon-product-directive="product"></div> <!-- End Cart -->
 
 			<!-- Quantity -->
 			<span ng-class="{'alert alert-success': product.quantity > 0, 'alert alert-danger': product.quantity == 0}">{{product.quantity}} Available</span><!-- End Quantity -->

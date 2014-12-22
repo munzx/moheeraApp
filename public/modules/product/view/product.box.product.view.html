@@ -1,0 +1,38 @@
+<div>
+	<!-- Product name -->
+	<div class="col-md-12 text-center">
+		<span class="alert alert-success">{{product.name}}</span>
+	</div><!-- End Product name -->
+
+	<!-- product image -->
+	<a href="#/profile/product/{{product.name}}"><img src="public/modules/user/img/pic.jpg" class="img-responsive text-center"></a><!-- end product image -->
+
+	<!-- product other images -->
+	<div class="col-md-12 col-xs-12" style="margin:4% 0;background-color:#fff;">
+		<div class="col-md-3 col-xs-3">
+			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+		</div>
+		<div class="col-md-3 col-xs-3">
+			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+		</div>
+		<div class="col-md-3 col-xs-3">
+			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+		</div>
+		<div class="col-md-3 col-xs-3">
+			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+		</div>
+	</div> <!-- end product other images -->
+
+	<!-- Product price -->
+	<div class="col-md-12">
+		<div class="label label-success"><i class="glyphicon glyphicon-tag"></i>AED {{product.price}}</div>
+	</div><!-- End product price -->
+
+	<!-- Product description -->
+	<div class="col-md-12">
+		<div class="panel panel-default" style="text-align:justify;padding:1%;">
+			<span class="panel-body">{{product.desc}}</span>
+		</div>
+	</div><!-- End product description -->
+
+</div>

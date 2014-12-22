@@ -24,33 +24,8 @@
 					<div ui-view>
 						<div class="row" ng-repeat="product in userProducts" style="margin-bottom:5%">
 							<div class="col-md-12">
-								<!-- product name -->
-								<div class="col-md-12 text-center">
-									<span class="alert alert-success">{{product.name}}</span>
-								</div><!-- End Product name -->
-
-								<!-- product image -->
-								<div class="col-md-12">
-									<a ng-href="#/profile/product/{{product.name}}">
-										<img src="public/modules/user/img/pic.jpg" class="img-responsive text-center">	
-									</a>
-								</div><!-- end product image -->
-
-								<!-- product other images -->
-								<div class="col-md-12 col-xs-12" style="margin:4% 0;background-color:#fff;">
-									<div class="col-md-3 col-xs-3">
-										<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
-									</div>
-									<div class="col-md-3 col-xs-3">
-										<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
-									</div>
-									<div class="col-md-3 col-xs-3">
-										<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
-									</div>
-									<div class="col-md-3 col-xs-3">
-										<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
-									</div>
-								</div> <!-- end product other images -->
+								<!-- Product Inof -->
+								<div product-box-product-directive="product"></div><!-- End Product Inof -->
 								<div class="col-md-12" style="margin-bottom:4%;background-color:#fff;">
 									<!-- heart -->
 									<div heart-icon-product-directive="product"></div><!-- End Heart -->

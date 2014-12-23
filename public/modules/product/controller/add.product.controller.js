@@ -14,9 +14,9 @@ angular.module('productModule').controller('addProductController', ['$scope', '$
 	}
 
 	$scope.count = function () {
-		var count;
-		for(var i=1;i<20;i++){
-			count[i] = i;
+		var count = [];
+		for(var i=1;i<=20;i++){
+			count.push(i);
 		}
 		return count;
 	}

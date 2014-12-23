@@ -19,14 +19,14 @@
                 </div>
                 <div class="form-group">
                     <div class="controls">
-                        <select data-ng-model="newProduct.quantity" class="form-control">
-                           <option  ng-repeat="num in count" value="{{num}}"></option>
+                        <select data-ng-model="newProduct.quantity" ng-options="num for num in count()" class="form-control" required>
+                           <option value="">-- Select Quantity --</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="controls">
-                        <select data-ng-model="newProduct.category" ng-options="cat for cat in categoryOptions" class="form-control">
+                        <select data-ng-model="newProduct.category" ng-options="cat for cat in categoryOptions" class="form-control" required>
                            <option value="">-- Select Category --</option>
                         </select>
                     </div>

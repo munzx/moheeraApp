@@ -95,6 +95,11 @@ var usersSchema = Schema({
 		sparse: true,
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+	pageDesc: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	role: {
 		type: String,
 		lowercase: true,

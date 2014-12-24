@@ -100,6 +100,11 @@ var usersSchema = Schema({
 		default: '',
 		trim: true
 	},
+	logo: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	role: {
 		type: String,
 		lowercase: true,

@@ -2,8 +2,9 @@
 
 // Depnedencies
 var mongoose = require('mongoose'),
-	errorHandler = require('./error'),
-	users = require('../models/user');
+errorHandler = require('./error'),
+fs = require('fs'),
+users = require('../models/user');
 
 // get all users
 module.exports.index = function (req, res){
@@ -45,6 +46,8 @@ module.exports.getByName = function (req, res){
 
 //update user by id
 module.exports.update = function(req, res){
+	console.log(JSON.stringify(req.files));
+
 	users.findOneAndUpdate({_id: req.user._id}, req.body, function(err, user, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});

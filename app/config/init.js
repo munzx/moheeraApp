@@ -5,9 +5,7 @@ var logger = require('express-logger'),
 	errorHandler = require('errorhandler'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
-	fs = require('fs'),
 	methodOverride = require('method-override'),
-	busboy = require('connect-busboy'),
 	session = require('express-session'),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
@@ -53,7 +51,6 @@ module.exports = function (app, express) {
 	//use middlewears
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(bodyParser.json());
-	app.use(busboy());
 	app.use(cookieParser()); //read cookies
 	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
 	app.use(methodOverride()); //read about this

@@ -10,7 +10,8 @@ angular.module('userModule').controller('settingUserController', ['$scope', '$lo
 		// that this conntroller is child controller of the profile controller , this is
 		// done through the ui-router
 		var fd = new FormData();
-		fd.append('file', document.getElementById('file').files[0]);
+		fd.append('logo', document.getElementById('logo').files[0]);
+		fd.append('banner', document.getElementById('banner').files[0]);
 		fd.append('firstName', $scope.userInfo.firstName);
 		fd.append('lastName', $scope.userInfo.lastName);
 		fd.append('email', $scope.userInfo.email);
@@ -18,7 +19,6 @@ angular.module('userModule').controller('settingUserController', ['$scope', '$lo
 
 		connectUserFactory.update(fd, function (response) {
 			$scope.success = true;
-			console.log(response);
 		}, function (error) {
 			$scope.error = error.data.message;
 		});

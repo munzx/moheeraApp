@@ -1,5 +1,5 @@
 <div>
-	<img src="public/modules/user/img/logo.jpg" style="margin-bottom:-2%;" class="img-responsive text-center">
+	<div sidebar-logo-user-directive="user"></div>
 	<ul class="nav nav-pills nav-stacked panel">
 		<li ng-class="{'active': isActive('all')}" role="presentation"><a href="#/profile">All</a></li>
 		<li ng-class="{'active': isActive(item.value)}" role="presentation" ng-repeat="item in cats"><a href="#/{{item.profile}}/product/category/{{item.value}}">{{item.name}}</a></li>

@@ -1,7 +1,7 @@
 <div class="row">
 	<h3 class="col-md-12 text-center">Edit {{userInfo.name}} profile</h3>
 	<div class="col-md-offset-1 col-md-10">
-		<form name="userForm" class="signin form-horizontal" autocomplete="off">
+		<form name="userForm" class="signin form-horizontal" autocomplete="off"  enctype="multipart/form-data">
 			<fieldset>
 				<div data-ng-show="error" class="text-center alert alert-danger">
 					<strong data-ng-bind="error"></strong>
@@ -23,7 +23,11 @@
 				</div>
 				<div class="form-group">
 					<label for="email">Logo</label>
-					<input type="file" id="file" class="form-control" data-ng-model="userInfo.file" name="file">
+					<input type="file" id="logo" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="email">Banner</label>
+					<input type="file" id="banner" class="form-control">
 				</div>
 				<div class="form-group">
 					<label for="email">Page Description</label>

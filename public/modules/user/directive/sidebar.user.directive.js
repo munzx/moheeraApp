@@ -11,7 +11,7 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 			product: '=sidebarUserDirective'
 		},
 		link: function (scope, elem, attrs) {
-			var user = registerUserConfigFactory.getUser();
+			scope.user = registerUserConfigFactory.getUser();
 			scope.$watch('product', function (value) {
 				var cats = [];
 				if(value){
@@ -20,10 +20,10 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 							var profile;
 							//if the category is not in the "cats" array then add it
 							if(cats.indexOf(item.category) == -1){
-								if(user._id == item.user){
+								if(scope.user._id == item.user){
 									profile = 'profile';
 								} else {
-									profile = user.name;
+									profile = scope.user.name;
 								}
 								cats.push({name: item.category, value: item.category, profile: profile});
 							}

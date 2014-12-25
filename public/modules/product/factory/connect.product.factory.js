@@ -10,7 +10,16 @@ angular.module('productModule').factory('connectProductFactory', ['$resource', f
 			},
 			{
 				"update": {
-					method: 'PUT',	
+					method:"PUT",
+					withCredentials: true,
+					headers: {'Content-Type': undefined },
+					transformRequest: angular.identity
+				},
+				"save": {
+					method:"POST",
+					withCredentials: true,
+					headers: {'Content-Type': undefined },
+					transformRequest: angular.identity
 				}
 			}
 		);

@@ -39,6 +39,8 @@ angular.module('productModule').directive('cartIconProductDirective', ['connectC
 						scope.user.cart = response.cart;
 						registerUserConfigFactory.setUser(scope.user);
 						scope.isChecked = true;
+					}, function (err) {
+						console.log(err);
 					});
 				} else {
 					connectCartFactory.remove({productId: product._id}, function (response) {

@@ -2,9 +2,11 @@
 
 // Depnedencies
 var mongoose = require('mongoose'),
-errorHandler = require('./error'),
-fs = require('fs'),
-users = require('../models/user');
+	errorHandler = require('./error'),
+	fs = require('fs'),
+	_ = require('lodash'),
+	multer  = require('multer'),
+	users = require('../models/user');
 
 // get all users
 module.exports.index = function (req, res){
@@ -46,12 +48,42 @@ module.exports.getByName = function (req, res){
 
 //update user by id
 module.exports.update = function(req, res){
-	console.log(JSON.stringify(req.files));
+	//Strange behaviour happnes if req.files used directly without
+	//getting assigned to a variable first
+
+	//check if any file has been sent
+	var logoData = req.files.logo;
+	var bannerData = req.files.banner;
+
+	if(_.find(req.files, {'fieldname': 'logo'}) != -1){
+		//get the new file name
+		req.body.logo = logoData.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.logo) === false){
+			fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'banner'}) != -1){
+		//get the new file name
+		req.body.banner = bannerData.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.banner) === false){
+			fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
+		}
+	}
 
 	users.findOneAndUpdate({_id: req.user._id}, req.body, function(err, user, numOfAffectedRows){
 		if(err){
+			if(logoData){
+				fs.unlink('./public/uploads/' + logoData.name); // delete the partially written file
+			}
+			if(bannerData){
+				fs.unlink('./public/uploads/' + bannerData.name); // delete the partially written file
+			}
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user) {
+			req.files = '';
 			res.status(200).jsonp(user);
 		} else {
 			res.status(404).json({message: 'User has not been found'});

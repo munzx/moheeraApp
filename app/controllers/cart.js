@@ -29,10 +29,10 @@ module.exports.addProduct = function (req, res) {
 				name: req.body.product.name,
 				desc: req.body.product.desc,
 				category: req.body.product.category,
-				image: req.body.product.image,
 				price: req.body.product.price,
 				productId: req.params.productId
 			};
+			//Check if the user has alraedy added the product to the cart, if not proceed
 			if(_.find(user.cart, {'productId': newCart.productId}) == undefined){
 				user.cart.push(newCart);
 				user.save(function (err, userInfo) {

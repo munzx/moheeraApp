@@ -5,6 +5,7 @@ var logger = require('express-logger'),
 	errorHandler = require('errorhandler'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
+	multer  = require('multer'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
 	cookieParser = require('cookie-parser'),
@@ -51,6 +52,7 @@ module.exports = function (app, express) {
 	//use middlewears
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(bodyParser.json());
+	app.use(multer({ dest: './public/uploads/'}));
 	app.use(cookieParser()); //read cookies
 	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
 	app.use(methodOverride()); //read about this

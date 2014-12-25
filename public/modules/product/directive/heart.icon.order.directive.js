@@ -10,8 +10,8 @@ angular.module('productModule').directive('heartIconProductDirective', ['registe
 			product: '=heartIconProductDirective'
 		},
 		link: function (scope, elem, attrs) {
+			var user = registerUserConfigFactory.getUser();
 			scope.$watch('product', function (value) {
-				var user = registerUserConfigFactory.getUser();
 				var getStatus = function () {
 					if(value){
 						if(value.heart.length > 0){

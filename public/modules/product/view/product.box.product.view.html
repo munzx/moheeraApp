@@ -5,21 +5,23 @@
 	</div><!-- End Product name -->
 
 	<!-- product image -->
-	<a href="#/profile/product/{{product.name}}"><img src="public/modules/user/img/pic.jpg" class="img-responsive text-center"></a><!-- end product image -->
+	<div class="col-md-10 col-md-offset-1">
+		<a href="#/profile/product/{{product.name}}"><img ng-src="public/uploads/{{product.image1}}" class="img-responsive text-center"></a><!-- end product image -->
+	</div>
 
 	<!-- product other images -->
 	<div class="col-md-12 col-xs-12" style="margin:4% 0;background-color:#fff;">
 		<div class="col-md-3 col-xs-3">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image1}}" class="img-responsive img-rounded">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image2}}" class="img-responsive img-rounded">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image3}}" class="img-responsive img-rounded">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img src="public/modules/user/img/pic.jpg" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image4}}" class="img-responsive img-rounded">
 		</div>
 	</div> <!-- end product other images -->
 

@@ -27,12 +27,6 @@ var cartSchema = new Schema({
 		required: 'Fill up the category',
 		trim: true
 	},
-	image: {
-		type: String,
-		default: '',
-		required: 'Please provide image',
-		trim: true
-	},
 	quantity: {
 		type: Number,
 		default: 1,
@@ -101,6 +95,11 @@ var usersSchema = Schema({
 		trim: true
 	},
 	logo: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	banner: {
 		type: String,
 		default: '',
 		trim: true

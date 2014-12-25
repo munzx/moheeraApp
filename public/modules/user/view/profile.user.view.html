@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
 		<div class="col-md-12">
-			<img src="public/modules/user/img/profile_bg.jpg" class="img-responsive text-center">
+			<img src="{{banner()}}" class="img-responsive text-center">
 		</div>
 		<div class="row">
 			<div class="col-md-3 content">
@@ -18,7 +18,12 @@
 					</div>
 
 					<div ui-view>
-						<div class="row" ng-repeat="product in userProducts" style="margin-bottom:5%">
+						<div class="row" ng-hide="userProducts.length">
+							<div class="col-md-12">
+								<h4 class="alert alert-success text-center">You don't have any products added yet!</h4>
+							</div>
+						</div>
+						<div class="row" ng-show="userProducts.length" ng-repeat="product in userProducts" style="margin-bottom:5%">
 							<div class="col-md-12">
 								<!-- Product Inof -->
 								<div product-box-product-directive="product"></div><!-- End Product Inof -->
@@ -38,5 +43,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>

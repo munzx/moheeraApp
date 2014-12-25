@@ -162,10 +162,28 @@ var productSchema = new Schema({
 		required: 'Fill up the category',
 		trim: true
 	},
-	image: {
+	image1: {
 		type: String,
 		default: '',
-		required: 'Please provide image',
+		required: 'Please provide image1',
+		trim: true
+	},
+	image2: {
+		type: String,
+		default: '',
+		required: 'Please provide image2',
+		trim: true
+	},
+	image3: {
+		type: String,
+		default: '',
+		required: 'Please provide image3',
+		trim: true
+	},
+	image4: {
+		type: String,
+		default: '',
+		required: 'Please provide image4',
 		trim: true
 	},
 	price: {

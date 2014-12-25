@@ -15,8 +15,8 @@ angular.module('productModule').directive('commentIconProductDirective', ['regis
 			//and think of a scope object passed  eaither from the controller
 			//or the through an ng-repeat , now the comment code must be able to access
 			//the object named comment and thats what happens here!!!
+			var user = registerUserConfigFactory.getUser();
 			scope.$watch('product', function (value) {
-				var user = registerUserConfigFactory.getUser();
 				var getStatus = function () {
 					if(value){
 						if(value.comment.length > 0){

@@ -3,22 +3,75 @@
 //Dependencies
 var mongoose = require('mongoose'),
 	errorHandler = require('./error'),
+	_ = require('lodash'),
+	users = require('../models/user'),
 	products = require('../models/product');
 
 
 module.exports.index = function(req, res){
-	products.find().sort({created: "desc"}).exec(function(err, product){
+	users.find({name: req.params.userName}, function (err, userInfo) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-		} else if(product) {
-			res.status(200).jsonp(product);
+		} else if(userInfo){
+			products.find({user: userInfo[0]._id}).sort({created: "desc"}).exec(function(err, product){
+				if(err){
+					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+				} else if(product) {
+					console.log(product);
+					res.status(200).jsonp(product);
+				} else {
+					res.status(404).json({message: 'No product has been found'});
+				}
+			});
 		} else {
-			res.status(404).json({message: 'No product has been found'});
+			res.status(500).jsonp({message: 'User not found'});
 		}
 	});
 }
 
 module.exports.create = function(req, res){
+	//get the images
+	var image1 = req.files.image1,
+		image2 = req.files.image2,
+		image3 = req.files.image3,
+		image4 = req.files.image4;
+
+	if(_.find(req.files, {'fieldname': 'image1'}) != -1){
+		//get the new file name
+		req.body.image1 = image1.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image1) === false){
+			fs.unlink('./public/uploads/' + req.user.image1); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image2'}) != -1){
+		//get the new file name
+		req.body.image2 = image2.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image2) === false){
+			fs.unlink('./public/uploads/' + req.user.image2); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image3'}) != -1){
+		//get the new file name
+		req.body.image3 = image3.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image3) === false){
+			fs.unlink('./public/uploads/' + req.user.image3); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image4'}) != -1){
+		//get the new file name
+		req.body.image4 = image4.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image4) === false){
+			fs.unlink('./public/uploads/' + req.user.image4); // delete the partially written file
+		}
+	}
+
 	var newProduct = new products(req.body);
 	newProduct.user = req.user;
 	newProduct.save(function(err, product){
@@ -44,6 +97,48 @@ module.exports.getByName = function(req, res){
 
 //update only if the product creator has the same logged in user id which mean they are the same person
 module.exports.update = function(req, res){
+	//get the images
+	var image1 = req.files.image1,
+		image2 = req.files.image2,
+		image3 = req.files.image3,
+		image4 = req.files.image4;
+
+	if(_.find(req.files, {'fieldname': 'image1'}) != -1){
+		//get the new file name
+		req.body.image1 = image1.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image1) === false){
+			fs.unlink('./public/uploads/' + req.user.image1); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image2'}) != -1){
+		//get the new file name
+		req.body.image2 = image2.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image2) === false){
+			fs.unlink('./public/uploads/' + req.user.image2); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image3'}) != -1){
+		//get the new file name
+		req.body.image3 = image3.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image3) === false){
+			fs.unlink('./public/uploads/' + req.user.image3); // delete the partially written file
+		}
+	}
+
+	if(_.find(req.files, {'fieldname': 'image4'}) != -1){
+		//get the new file name
+		req.body.image4 = image4.name;
+		//if the user had another logo then remove it before adding the new one
+		if(_.isEmpty(req.user.image4) === false){
+			fs.unlink('./public/uploads/' + req.user.image4); // delete the partially written file
+		}
+	}
+
 	products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, req.body, function(err, product, numOfAffectedRows){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});

@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
+		<div class="col-md-12">
+			<img src="{{banner()}}" class="img-responsive text-center">
+		</div>
+		<div class="row">
+			<div class="col-md-3 content">
+				<!-- Sidebar -->
+				<div sidebar-user-directive="userProducts"></div><!-- End Sidebar -->
+			</div>
+			<div class="col-md-8 content">
+				<div class="row panel">
+					<div class="col-md-12" style="margin-bottom:2%;">
+						<h4 class="text-center">{{userInfo.name}}</h4>
+					</div>
+					<div class="col-md-12" style="margin-bottom:5%;word-wrap: break-word;">
+						<span>{{userInfo.pageDesc}}</span>
+					</div>
+
+					<div ui-view>
+						<div class="row" ng-hide="userProducts.length">
+							<div class="col-md-12">
+								<h4 class="alert alert-success text-center">No products have been found!</h4>
+							</div>
+						</div>
+						<div class="row" ng-show="userProducts.length" ng-repeat="product in userProducts" style="margin-bottom:5%">
+							<div class="col-md-12">
+								<!-- Product Inof -->
+								<div product-box-product-directive="product"></div><!-- End Product Inof -->
+								<div class="col-md-12" style="margin-bottom:4%;background-color:#fff;">
+									<!-- heart -->
+									<div heart-icon-product-directive="product"></div><!-- End Heart -->
+									<!-- Comment -->
+									<div comment-icon-product-directive="product"></div> <!-- End comment -->
+									<!-- Cart -->
+									<div cart-icon-product-directive="product"></div> <!-- End Cart -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

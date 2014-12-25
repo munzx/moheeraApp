@@ -13,18 +13,21 @@ module.exports.index = function(req, res){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(userInfo){
-			products.find({user: userInfo[0]._id}).sort({created: "desc"}).exec(function(err, product){
-				if(err){
-					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-				} else if(product) {
-					console.log(product);
-					res.status(200).jsonp(product);
-				} else {
-					res.status(404).json({message: 'No product has been found'});
-				}
-			});
+			if(userInfo.length > 0){
+				products.find({user: userInfo[0]._id}).sort({created: "desc"}).exec(function(err, product){
+					if(err){
+						res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+					} else if(product) {
+						res.status(200).jsonp({product: product, user: userInfo});
+					} else {
+						res.status(404).json({message: 'No product has been found'});
+					}
+				});
+			} else {
+				res.status(404).jsonp({message: 'User not found'});
+			}
 		} else {
-			res.status(500).jsonp({message: 'User not found'});
+			res.status(404).jsonp({message: 'User not found'});
 		}
 	});
 }

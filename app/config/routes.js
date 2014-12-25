@@ -107,7 +107,7 @@ module.exports = function (app) {
 	app.delete('/product/:id/order/:orderId', ensureAuthenticated, isUser, order.delete); //delete a product order
 
 	//Products
-	app.get('/product/:userName', product.index); //get all products of a certain user by user name
+	app.get('/product/all/:userName', product.index); //get all products of a certain user by user name
 	app.post('/product', ensureAuthenticated, isUser, product.create); //create a new product
 	app.put('/product/:id', ensureAuthenticated, isUser, product.update); //update a product by id
 	app.delete('/product/:id', ensureAuthenticated, isUser, product.delete); //delete a product by id

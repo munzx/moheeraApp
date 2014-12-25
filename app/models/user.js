@@ -41,6 +41,30 @@ var cartSchema = new Schema({
 		required: 'Please provide product price',
 		trim: true
 	},
+	image1: {
+		type: String,
+		default: 0,
+		required: 'Please provide product price',
+		trim: true
+	},
+	image2: {
+		type: String,
+		default: 0,
+		required: 'Please provide product price',
+		trim: true
+	},
+	image3: {
+		type: String,
+		default: 0,
+		required: 'Please provide product price',
+		trim: true
+	},
+	image4: {
+		type: String,
+		default: 0,
+		required: 'Please provide product price',
+		trim: true
+	},
 	productId: {
 		type: Schema.ObjectId,
 		ref: 'product',

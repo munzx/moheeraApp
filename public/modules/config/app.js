@@ -113,9 +113,9 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			controller: 'allCartController'
 		})
 		.state('user', {
-			url: '/:id',
-			templateUrl: 'public/modules/user/view/profile.user.view.html',
-			controller: 'profileUserControlller'
+			url: '/:userName',
+			templateUrl: 'public/modules/user/view/other.user.view.html',
+			controller: 'otherUserControlller'
 		})
 		.state('user.singleProduct', {
 			url: '/:userId/productId',

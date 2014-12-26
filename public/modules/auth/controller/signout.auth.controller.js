@@ -1,9 +1,9 @@
 'user strict';
 
-angular.module('authModule').controller('signoutAuthController', ['registerUserConfigFactory', '$http', '$location', function (registerUserConfigFactory, $http, $location) {
+angular.module('authModule').controller('signoutAuthController', ['registerUserConfigFactory', '$http', '$state', function (registerUserConfigFactory, $http, $state) {
 	$http.get('/logout')
 	.success(function (data, success) {
 		registerUserConfigFactory.clearUserInfo();
-		$location.path('/home');
+		$state.go('home', {}, {reload: true});
 	});
 }]);

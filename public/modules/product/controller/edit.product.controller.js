@@ -5,7 +5,6 @@ angular.module('productModule').controller('editProductController', ['$scope', '
 
 	connectProductFactory.get({getByName: $stateParams.name}, function (response) {
 		$scope.productInfo = response;
-		console.log(response);
 	}, function (err) {
 		$location.path('/notfound');
 	});

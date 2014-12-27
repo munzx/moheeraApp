@@ -9,11 +9,12 @@ users = require('../models/user');
 
 //Return with all orders of a certain user
 module.exports.index = function(req, res){
-	products.find({}).or([{'user': req.user._id}, {'order.user._id': req.user._id}]).where('order').exists().exec(function (err, product) {
+	products.find().or([{'user': req.user._id}, {'order.user._id': req.user._id}]).where('order').exists().exec(function (err, product) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
-			res.status(200).jsonp(product);
+			var getDistinct = _.uniq(product);
+			res.status(200).jsonp(getDistinct);
 		} else {
 			res.status(404).jsonp({message: 'No order has been found'});
 		}
@@ -99,7 +100,6 @@ module.exports.create = function(req, res){
 						//get the product info from the product in the cart
 						//the purpose is to get the quantity that has been checked above
 						var productInfo = _.find(cartProducts, {'productId': productItem._id});
-						console.log(productInfo);
 						productItem.quantity -= productInfo.quantity;
 						orderInfo.quantity = productInfo.quantity;
 						orderInfo.price = productInfo.price * productInfo.quantity;

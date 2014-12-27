@@ -9,9 +9,7 @@ var cartSchema = new Schema({
 		default: '',
 		required: 'Fill up the product name',
 		trim: true,
-		lowercase: true,
-		unique: true,
-		sparse: true
+		lowercase: true
 	},
 	desc: {
 		type: String,

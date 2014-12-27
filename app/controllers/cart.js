@@ -67,22 +67,28 @@ module.exports.updateProduct = function (req, res) {
 			var cartProduct = req.body.product;
 
 			products.findById(cartProduct.productId, function (err, product) {
-				//update the quantity of the products in the user cart
-				if(product.quantity >= cartProduct.quantity && cartProduct.quantity > 0){
-					//find the product in the user cart
-					var getUserCartProduct = user.cart.id(cartProduct._id);
-					getUserCartProduct.quantity = cartProduct.quantity;
-					user.save(function (err, cart) {
-						if(err){
-							res.status(401).jsonp({message: errorHandler.getErrorMessage(err)});
-						} else if(cart){
-							res.status(200).jsonp({"cart": userCart});
-						} else {
-							res.status(500).jsonp({message: "Unknown error has occured"});
-						}
-					});
+				if(err){
+					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+				} else if(product){
+					//update the quantity of the products in the user cart
+					if(product.quantity >= cartProduct.quantity && cartProduct.quantity > 0){
+						//find the product in the user cart
+						var getUserCartProduct = user.cart.id(cartProduct._id);
+						getUserCartProduct.quantity = cartProduct.quantity;
+						user.save(function (err, cart) {
+							if(err){
+								res.status(401).jsonp({message: errorHandler.getErrorMessage(err)});
+							} else if(cart){
+								res.status(200).jsonp({"cart": userCart});
+							} else {
+								res.status(500).jsonp({message: "Unknown error has occured"});
+							}
+						});
+					} else {
+						res.status(404).jsonp({message: 'The available quantity is ' + product.quantity});
+					}
 				} else {
-					res.status(404).jsonp({message: 'The available quantity is ' + product.quantity});
+					res.status(404).jsonp({message: 'Could not add more, quantity not available'});
 				}
 			});
 		} else {

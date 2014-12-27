@@ -114,7 +114,6 @@ module.exports = function (app) {
 	app.get('/product/:name', product.getByName); //get a product by name
 	app.get('/product/category/:category', product.categoryName); //find products by category name
 
-
 	//Comments
 	app.get('/product/:id/comment', comment.index); //get all comments of a product
 	app.post('/product/:id/comment', ensureAuthenticated, isUser, comment.create); //add a new comment

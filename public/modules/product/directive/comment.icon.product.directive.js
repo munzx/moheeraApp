@@ -23,7 +23,7 @@ angular.module('productModule').directive('commentIconProductDirective', ['regis
 							var comments = value.comment;
 							//to access the comment 'owner' info embedded in the product retrieved from moheera api
 							// product.comment[array].user[array].'info'
-							for(var i=0;i <= comments.length;i++){
+							for(var i=0;i < comments.length;i++){
 								if(comments[i].author[0]._id == user._id){
 									return true;
 								}

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('orderModule').controller('singleOrderController', ['$scope', '$location', 'connectOrderFactory', '$stateParams', 'statusOrderFactory', function ($scope, $location, connectOrderFactory, $stateParams, statusOrderFactory) {
+angular.module('orderModule').controller('singleOrderController', ['$scope', '$location', 'connectOrderFactory', '$stateParams', 'statusOrderFactory', 'registerUserConfigFactory', function ($scope, $location, connectOrderFactory, $stateParams, statusOrderFactory, registerUserConfigFactory) {
+	$scope.user = registerUserConfigFactory.getUser();
 	$scope.statusOptions = statusOrderFactory.status;
 
 	connectOrderFactory.get({productId: $stateParams.productId, id: $stateParams.id}, function (response) {

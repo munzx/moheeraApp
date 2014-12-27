@@ -38,12 +38,12 @@
 			</tr>
 			<tr>
 				<th>Status</th>
-				<td ng-show="orderInfo.user._id == productInfo.user._id">
+				<td ng-show="productInfo.user == user._id">
 					<select class="form-control" ng-model="orderInfo.status" ng-class="{'alert alert-warning': orderInfo.status=='pending', 'alert alert-danger': orderInfo.status=='canceled', 'alert alert-success': orderInfo.status=='delivered', 'alert alert-info': orderInfo.status=='processing'}">
 						<option ng-repeat="option in statusOptions" value="{{option}}">{{option}}</option>
 					</select>
 				</td>
-				<td ng-show="orderInfo.user._id != productInfo.user._id" class="form-control" ng-model="orderInfo.status" ng-class="{'alert alert-warning': orderInfo.status=='pending', 'alert alert-danger': orderInfo.status=='canceled', 'alert alert-success': orderInfo.status=='delivered', 'alert alert-info': orderInfo.status=='processing'}">
+				<td ng-show="productInfo.user != user._id" class="form-control" ng-model="orderInfo.status" ng-class="{'alert alert-warning': orderInfo.status=='pending', 'alert alert-danger': orderInfo.status=='canceled', 'alert alert-success': orderInfo.status=='delivered', 'alert alert-info': orderInfo.status=='processing'}">
 				{{orderInfo.status}}
 				</td>
 			</tr>

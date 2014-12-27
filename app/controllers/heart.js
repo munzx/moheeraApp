@@ -36,15 +36,17 @@ module.exports.create = function (req, res) {
 		} else if(product){
 			//if the product is not hearted by the user then return true else resturn false
 			var isHearted = function () {
-				if(_.find(product.heart, function (heartUser) { return heartUser._id = req.user._id; }) === undefined){
-					return true;
-				} else {
-					return false;
-				}
+				var hearts = product.heart;
+				hearts.forEach(function (item) {
+					if(_.find(item.user, function (heartUser) { return heartUser._id === req.user._id; }) !== undefined){
+						return true;
+					}
+				});
+				return false;
 			};
 
 			//check if the user has hearted the product then save or return error is its already hearted
-			if(isHearted()){
+			if(isHearted() === false){
 				var heartInfo = req.body;
 				heartInfo.user = req.user;
 				product.heart.push(heartInfo);
@@ -58,7 +60,7 @@ module.exports.create = function (req, res) {
 					}
 				});
 			} else {
-				res.status(401).json({message: product.heart});
+				res.status(401).json({message: 'You have already hearted the product'});
 			}
 
 		} else {

@@ -9,7 +9,7 @@ users = require('../models/user');
 
 //Return with all orders of a certain user
 module.exports.index = function(req, res){
-	products.find().where('order.user._id').equals(req.user._id).or([{'user': req.user._id}]).where('order').exists().exec(function (err, product) {
+	products.find({}).or([{'user': req.user._id}, {'order.user._id': req.user._id}]).where('order').exists().exec(function (err, product) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){

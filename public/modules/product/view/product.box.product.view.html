@@ -6,22 +6,22 @@
 
 	<!-- product image -->
 	<div class="col-md-10 col-md-offset-1">
-		<a href="#/profile/product/{{product.name}}"><img ng-src="public/uploads/{{product.image1}}" class="img-responsive text-center"></a><!-- end product image -->
+		<a href="{{productLink}}"><img ng-src="{{viewImageLink}}" class="img-responsive text-center"></a><!-- end product image -->
 	</div>
 
 	<!-- product other images -->
 	<div class="col-md-12 col-xs-12" style="margin:4% 0;background-color:#fff;">
 		<div class="col-md-3 col-xs-3">
-			<img ng-src="public/uploads/{{product.image1}}" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image1}}" ng-click="viewImage('1')" ng-class="{'img-responsive img-thumbnail': highlightImage == 1,'img-responsive img-rounded': highlightImage != 1}">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img ng-src="public/uploads/{{product.image2}}" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image2}}" ng-click="viewImage('2')" ng-class="{'img-responsive img-thumbnail': highlightImage == 2,'img-responsive img-rounded': highlightImage != 2}">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img ng-src="public/uploads/{{product.image3}}" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image3}}" ng-click="viewImage('3')" ng-class="{'img-responsive img-thumbnail': highlightImage == 3,'img-responsive img-rounded': highlightImage != 3}">
 		</div>
 		<div class="col-md-3 col-xs-3">
-			<img ng-src="public/uploads/{{product.image4}}" class="img-responsive img-rounded">
+			<img ng-src="public/uploads/{{product.image4}}" ng-click="viewImage('4')" ng-class="{'img-responsive img-thumbnail': highlightImage == 4,'img-responsive img-rounded': highlightImage != 4}">
 		</div>
 	</div> <!-- end product other images -->
 

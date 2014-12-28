@@ -69,6 +69,18 @@ var cartSchema = new Schema({
 		required: 'Please provide the product id',
 		trim: true
 	},
+	user: {
+		type: String,
+		default: 0,
+		required: 'Please provide user id',
+		trim: true
+	},
+	userName: { //save the username as we search products by name usually than that will be easier to have the name here
+		type: String,
+		default: '',
+		required: 'Please provide the user name',
+		trim: true
+	},
 	created: {
 		type: Date,
 		default: Date.now

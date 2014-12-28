@@ -34,6 +34,8 @@ module.exports.addProduct = function (req, res) {
 				image2: req.body.product.image2,
 				image3: req.body.product.image3,
 				image4: req.body.product.image4,
+				user: req.body.product.user,
+				userName: req.body.product.userName,
 				productId: req.params.productId
 			};
 			//Check if the user has alraedy added the product to the cart, if not proceed

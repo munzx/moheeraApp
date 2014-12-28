@@ -205,6 +205,12 @@ var productSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	userName: { //save the username as we search products by name usually than that will be easier to have the name here
+		type: String,
+		default: '',
+		required: 'Please provide the user name',
+		trim: true
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

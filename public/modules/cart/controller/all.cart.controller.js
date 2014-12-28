@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cartModule').controller('allCartController', ['$scope', '$location', 'connectCartFactory', '$state', 'registerUserConfigFactory', function ($scope, $location, connectCartFactory, $state, registerUserConfigFactory) {
-	$scope.user = registerUserConfigFactory.getUser()
+	$scope.user = registerUserConfigFactory.getUser();
 	connectCartFactory.query({action: 'products'}, function (response) {
 		$scope.cart = response;
 	});

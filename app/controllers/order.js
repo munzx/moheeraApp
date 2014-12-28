@@ -13,8 +13,26 @@ module.exports.index = function(req, res){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
-			var getDistinct = _.uniq(product);
-			res.status(200).jsonp(getDistinct);
+			var getProducts = product;
+			var getUserOrder = [];
+
+			//get all of the order of the selcted products
+			getProducts.forEach(function (product) {
+				getUserOrder = [];
+				product.order.forEach(function (order) {
+					//if the user is the product owner or the order creator
+					if(parseInt(order.user[0]._id) == parseInt(req.user._id) || parseInt(product.user) == parseInt(req.user._id)){
+						getUserOrder.push(order);
+					}
+				});
+				//add only the orders done by the user or for the user (if product owner than he/she should see all orders)
+				//if the user has no orders than that means pass the product only
+				//note: if the user has no order and the product was pulled from the DB than that means the user is owner
+				//check the "find query" above
+				product.order = getUserOrder;
+			});
+
+			res.status(200).jsonp(getProducts);
 		} else {
 			res.status(404).jsonp({message: 'No order has been found'});
 		}
@@ -118,9 +136,9 @@ module.exports.create = function(req, res){
 					res.status(500).jsonp({message: 'User has not been found'});
 				}
 			});
-		}
+}
 
-	});
+});
 }
 
 //Update a specific product order

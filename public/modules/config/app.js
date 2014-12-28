@@ -2,7 +2,7 @@
 
 // intitiate the app and Inject all of the app module dependencies
 //configure the routes
-var moheera = angular.module('moheera', ['ui.bootstrap', 'ui.router', 'angularChart','ngResource', 'authModule', 'homeModule', 'userModule', 'productModule', 'orderModule', 'cartModule', 'reportModule']);
+var moheera = angular.module('moheera', ['ui.bootstrap', 'ui.router', 'angularChart','ngResource', 'authModule', 'homeModule', 'userModule', 'productModule', 'orderModule', 'cartModule']);
 
 //RouteScopes & Routes Configurations
 moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
@@ -66,11 +66,6 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			url: '/account/password',
 			templateUrl: 'public/modules/user/view/change.password.user.view.html',
 			controller: 'changePasswordUserController'
-		})
-		.state('profile.report', {
-			url: '/report',
-			templateUrl: 'public/modules/report/view/all.report.view.html',
-			controller: 'allReportController'
 		})
 		.state('profile.orderDone', {
 			url: '/order/done',

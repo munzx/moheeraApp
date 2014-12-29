@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentProductFactory', 'registerUserConfigFactory', 'connectCartFactory', '$state', function ($scope, $stateParams, connectProductFactory, $location, connectCommentProductFactory, registerUserConfigFactory, connectCartFactory, $state) {
+angular.module('productModule').controller('singleProductController', ['$scope', '$stateParams', 'connectProductFactory', '$location', 'connectCommentProductFactory', 'registerUserConfigFactory', 'connectCartFactory', '$state', 'requreLoginConfigFactory', function ($scope, $stateParams, connectProductFactory, $location, connectCommentProductFactory, registerUserConfigFactory, connectCartFactory, $state, requreLoginConfigFactory) {
 	$scope.user = registerUserConfigFactory.getUser();
 
 	$scope.productName = $stateParams.name;
@@ -34,7 +34,11 @@ angular.module('productModule').controller('singleProductController', ['$scope',
 				$scope.product.comment.push(response);
 				$scope.newComment = '';
 			}, function (err) {
-				$scope.error = err.data.message;
+				if(err.status == 403){
+					requreLoginConfigFactory.open('comment');
+				} else {
+					$scope.error = err.data.message;
+				}
 			});
 		}
 	}

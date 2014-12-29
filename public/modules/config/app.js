@@ -14,7 +14,7 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			controller: 'errorConfigController'
 		})
 		.state('home', {
-			url: '',
+			url: '/',
 			templateUrl: 'public/modules/home/view/index.home.view.html',
 			controller: 'indexHomeController'
 		})
@@ -39,7 +39,7 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			controller: 'signupAuthController'
 		})
 		.state('signout', {
-			url: 'signout',
+			url: '/signout',
 			controller: 'signoutAuthController'
 		})
 		.state('profile', {

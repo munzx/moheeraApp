@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productModule').directive('heartIconProductDirective', ['registerUserConfigFactory', 'connectHeartProductFactory', function (registerUserConfigFactory, connectHeartProductFactory) {
+angular.module('productModule').directive('heartIconProductDirective', ['registerUserConfigFactory', 'connectHeartProductFactory', 'requreLoginConfigFactory', function (registerUserConfigFactory, connectHeartProductFactory, requreLoginConfigFactory) {
 	return {
 		restrict: 'A',
 		templateUrl: 'public/modules/product/view/heart.icon.product.view.html',
@@ -45,6 +45,10 @@ angular.module('productModule').directive('heartIconProductDirective', ['registe
 					connectHeartProductFactory.save({productId: productId}, function (response) {
 						scope.product.heart = response.heart;
 						scope.isChecked = true;
+					}, function (err) {
+						if(err.status == 403){
+							requreLoginConfigFactory.open('heart');
+						}
 					});
 				} else {
 					connectHeartProductFactory.remove({productId: productId}, function (response) {

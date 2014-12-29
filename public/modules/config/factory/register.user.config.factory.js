@@ -17,6 +17,7 @@ angular.module('moheera').factory('registerUserConfigFactory', ['$window', '$roo
 		//var element = document.getElementById("userInfoBlock"); //this code dose not seem to work!
 		//if(element) element.parentNode.removeChild(element); //this code dose not seem to work!
 		$rootScope.logged = false;
+		$rootScope.lastPage = '';
 		_this.user = $window.userInfo = false;
 	};
 

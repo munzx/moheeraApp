@@ -37,6 +37,7 @@ angular.module('cartModule').controller('allCartController', ['$scope', '$locati
 	$scope.removeCartProduct = function (index) {
 		connectCartFactory.remove({productId: $scope.cart[index].productId}, function (response) {
 			$scope.cart.splice(index, 1);
+			$scope.user.cart = $scope.cart; 
 		});
 	}
 

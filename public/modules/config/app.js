@@ -125,4 +125,5 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 }])
 .run(['$rootScope', function ($rootScope) {
 	$rootScope.logged = false;
+	$rootScope.lastPage = '';
 }]);

@@ -39,9 +39,9 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 						//create the html elment with the image link and assign in to "logo" variable
 						//or if the user has no logo then assign a placeholder vector image to the logo variable 
 						if(scope.user.logo){
-							logo = '<img style="margin-bottom:-2%;" class="img-responsive text-center" src="' + "public/uploads/" + scope.user.logo + '">';
+							logo = '<a href="#/'+ scope.user.name +'"><img style="margin-bottom:-2%;" class="img-responsive text-center" src="' + "public/uploads/" + scope.user.logo + '"></a>';
 						} else {
-							logo = '<span class="glyphicon glyphicon-user" style="font-size:164px;" aria-hidden="true"></span>';
+							logo = '<a href="#/'+ scope.user.name +'"><span class="glyphicon glyphicon-user" style="font-size:164px;color: #cccccc;" aria-hidden="true"></span></a>';
 						}
 						//embed the logo at the top of the sidebar
 						elem.parent().prepend(logo);

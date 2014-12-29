@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productModule').directive('cartIconProductDirective', ['connectCartFactory', 'registerUserConfigFactory', function (connectCartFactory, registerUserConfigFactory) {
+angular.module('productModule').directive('cartIconProductDirective', ['connectCartFactory', 'registerUserConfigFactory', 'requreLoginConfigFactory', function (connectCartFactory, registerUserConfigFactory, requreLoginConfigFactory) {
 	return {
 		restrict: 'A',
 		templateUrl: 'public/modules/product/view/cart.icon.product.view.html',
@@ -40,7 +40,9 @@ angular.module('productModule').directive('cartIconProductDirective', ['connectC
 						registerUserConfigFactory.setUser(scope.user);
 						scope.isChecked = true;
 					}, function (err) {
-						console.log(err);
+						if(err.status == 403){
+							requreLoginConfigFactory.open('cart');
+						}
 					});
 				} else {
 					connectCartFactory.remove({productId: product._id}, function (response) {

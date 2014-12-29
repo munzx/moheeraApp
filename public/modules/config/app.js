@@ -116,6 +116,11 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			url: '/:productName',
 			templateUrl: 'public/modules/product/view/other.single.product.view.html',
 			controller: 'otherSingleProductControlller'
+		})
+		.state('user.category', {
+			url: '/product/category/:category',
+			templateUrl: 'public/modules/user/view/other.category.user.view.html',
+			controller: 'categoryUserController'
 		});
 }])
 .run(['$rootScope', function ($rootScope) {

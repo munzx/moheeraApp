@@ -112,6 +112,7 @@ module.exports = function (app) {
 	app.put('/product/:id', ensureAuthenticated, isUser, product.update); //update a product by id
 	app.delete('/product/:id', ensureAuthenticated, isUser, product.delete); //delete a product by id
 	app.get('/product/:name', product.getByName); //get a product by name
+	app.get('/product/:userName/category', product.allUserCategory); //find all categories of products to a certian user
 	app.get('/product/category/:category', product.categoryName); //find products by category name
 
 	//Comments

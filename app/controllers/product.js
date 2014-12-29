@@ -178,3 +178,27 @@ module.exports.categoryName = function(req, res){
 		}
 	});
 }
+
+//Get all products categories of a certain user
+module.exports.allUserCategory = function (req, res) {
+	products.find({userName: req.params.userName}, function (err, product) {
+		if(err){
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+		} else if(product){
+			var allProduct = product;
+			var cats = [];
+
+			allProduct.forEach(function (item) {
+				cats.push(item.category);
+			});
+
+			users.find({name: req.params.userName}, function (err, user) {
+				if(user){
+					res.status(200).jsonp({category: cats, user: user[0]});
+				}
+			});			
+		} else {
+			res.status(404).json({message: 'Unknown error has occured'});
+		}
+	});
+}

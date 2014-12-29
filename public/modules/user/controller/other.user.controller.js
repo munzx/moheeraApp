@@ -1,23 +1,26 @@
 'use strict';
 
 angular.module('userModule').controller('otherUserControlller', ['registerUserConfigFactory', 'connectProductFactory', '$location', '$scope', '$stateParams', function (registerUserConfigFactory, connectProductFactory, $location, $scope, $stateParams) {
-	
+	var user = registerUserConfigFactory.getUser();
+
+
 	connectProductFactory.get({action: 'all', getByName: $stateParams.userName}, function (respone) {
 		$scope.userProducts = respone.product;
 		$scope.userInfo = respone.user;
 
-		//if user is not logged then redirect to the sign in page
-		if(!$scope.userInfo) $location.path('/signin');
+		//if user is trying to view his/her page then redirect to the user profile page
+		if($scope.userInfo[0]._id === user._id){
+			$location.path('/profile');
+		}
 
+		//show the user banner if found or the image placeholder if not found
 		$scope.banner = function () {
-			if($scope.userInfo.length > 0){
-				if($scope.userInfo.banner){
-					return 'public/uploads/' + $scope.userInfo.banner;
+			if($scope.userInfo){
+				if($scope.userInfo[0].banner){
+					return 'public/uploads/' + $scope.userInfo[0].banner;
 				} else {
 					return 'public/modules/config/img/banner.jpg';
 				}
-			} else {
-				return 'public/modules/config/img/banner.jpg';
 			}
 		}
 	}, function (err) {

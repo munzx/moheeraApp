@@ -1,7 +1,7 @@
 'use strict';
 
 //Get the category of products
-angular.module('userModule').directive('sidebarUserDirective', ['registerUserConfigFactory', '$stateParams', function (registerUserConfigFactory, $stateParams) {
+angular.module('userModule').directive('sidebarUserDirective', ['registerUserConfigFactory', '$stateParams', 'connectProductFactory', '$state', function (registerUserConfigFactory, $stateParams, connectProductFactory, $state) {
 	return {
 		restrict: 'A',
 		templateUrl: 'public/modules/user/view/sidebar.user.view.html',
@@ -11,25 +11,41 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 			product: '=sidebarUserDirective'
 		},
 		link: function (scope, elem, attrs) {
-			scope.user = registerUserConfigFactory.getUser();
+			//initiate needed variables
+			var cats = [];
+			var logo;
+			var user = registerUserConfigFactory.getUser();
+			//if the user is not visiting others page that means he/she is in his/her profile page
+			//so assign profile to the profile variable
+			scope.profile = ($stateParams.userName == undefined)? 'profile': $stateParams.userName;
+			//if the user is not visiting others page that means he/she is in his/her profile page
+			//so assign the user name to the userName variable
+			scope.userName = ($stateParams.userName == undefined)? user.name: $stateParams.userName;
+
 			scope.$watch('product', function (value) {
-				var cats = [];
 				if(value){
-					value.forEach(function (item) {
-						if(item){
-							var profile;
-							//if the category is not in the "cats" array then add it
-							if(cats.indexOf(item.category) == -1){
-								if(scope.user._id == item.user){
-									profile = 'profile';
-								} else {
-									profile = scope.user.name;
-								}
-								cats.push({name: item.category, value: item.category, profile: profile});
-							}
+					//get the user categories
+					connectProductFactory.get({action: 'category', userName: scope.userName}, function (respone) {
+						scope.user = respone.user || user;
+						//create the categroy list along with necessary info for the nav required
+						//by the "isActive" function in order for it to work properly
+						var categoryList = respone.category;
+						if(categoryList){
+							categoryList.forEach(function (elem) {
+								cats.push({name: elem, value: elem, profile: scope.profile});		
+							});
+							scope.cats = cats;
 						}
+						//create the html elment with the image link and assign in to "logo" variable
+						//or if the user has no logo then assign a placeholder vector image to the logo variable 
+						if(scope.user.logo){
+							logo = '<img style="margin-bottom:-2%;" class="img-responsive text-center" src="' + "public/uploads/" + scope.user.logo + '">';
+						} else {
+							logo = '<span class="glyphicon glyphicon-user" style="font-size:164px;" aria-hidden="true"></span>';
+						}
+						//embed the logo at the top of the sidebar
+						elem.parent().prepend(logo);
 					});
-					scope.cats = cats;
 				}
 			});
 

@@ -6,18 +6,18 @@ angular.module('userModule').controller('otherUserControlller', ['registerUserCo
 
 	connectProductFactory.get({action: 'all', getByName: $stateParams.userName}, function (respone) {
 		$scope.userProducts = respone.product;
-		$scope.userInfo = respone.user;
+		$scope.userInfo = respone.user[0];
 
 		//if user is trying to view his/her page then redirect to the user profile page
-		if($scope.userInfo[0]._id === user._id){
+		if($scope.userInfo._id === user._id){
 			$location.path('/profile');
 		}
 
 		//show the user banner if found or the image placeholder if not found
 		$scope.banner = function () {
 			if($scope.userInfo){
-				if($scope.userInfo[0].banner){
-					return 'public/uploads/' + $scope.userInfo[0].banner;
+				if($scope.userInfo.banner){
+					return 'public/uploads/' + $scope.userInfo.banner;
 				} else {
 					return 'public/modules/config/img/banner.jpg';
 				}

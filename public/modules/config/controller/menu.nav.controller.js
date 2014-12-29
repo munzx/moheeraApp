@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('moheera').controller('navMenu', ['$rootScope', '$scope', function ($rootScope, $scope) {
+angular.module('moheera').controller('navMenu', ['$rootScope', '$scope', 'registerUserConfigFactory', function ($rootScope, $scope, registerUserConfigFactory) {
+	//get the current user data
+	$scope.user = registerUserConfigFactory.getUser();
+
 	//initiate the menu in mobile and tables in no collapse status
 	$scope.navbarCollapsed = false;
 

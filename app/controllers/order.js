@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 _ = require('lodash'),
 errorHandler = require('./error'),
 products = require('../models/product'),
-users = require('../models/user');
+users = require('../models/user'),
+sms = require('../config/sms/config.sms.js');
 
 //Return with all orders of a certain user
 module.exports.index = function(req, res){
@@ -60,8 +61,8 @@ module.exports.getById = function (req, res) {
 module.exports.create = function(req, res){
 	var orderInfo = req.body.info;
 	var cartProductIds = '';
+	var mobilePhoneNumbers = [];
 	orderInfo.user = req.user;
-
 
 	//get the ids of all products in the user cart
 	var searchCartProductIds = function () {
@@ -88,8 +89,7 @@ module.exports.create = function(req, res){
 			productIds.push(item._id);
 		});
 
-
-		//Check the quantity
+		//Check the quantity & product owners mobile phone numbers
 		selectedProducts.forEach(function (productItem) {
 			//Get all "products" references in the cart that have quantity equals or less
 			//than the products
@@ -100,6 +100,13 @@ module.exports.create = function(req, res){
 			if(quantityCheck == undefined){
 				cartProductsCantBeOrdered.push({"name": productItem.name, "id": productItem._id});
 			}
+
+			//get this mobile number of the product owner
+			//if we get more than one product, then we will have
+			//a duplicate values , but its ok as the sms module
+			//takes care of the duplicated values
+			mobilePhoneNumbers.push(productItem.userMobilePhone);
+
 		});
 
 		//get the products in user cart that dosee not exist in the products
@@ -131,14 +138,16 @@ module.exports.create = function(req, res){
 					//empty the user cart in the users database
 					user.cart = [];
 					user.save();
+
+					//send sms to the product owner
+					sms.sendMsg(mobilePhoneNumbers);
 					res.status(200).json({"uCart": user.cart});
 				} else {
 					res.status(500).jsonp({message: 'User has not been found'});
 				}
 			});
-}
-
-});
+		}
+	});
 }
 
 //Update a specific product order

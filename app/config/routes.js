@@ -13,6 +13,9 @@ var users = require('../controllers/user'),
 
 module.exports = function (app) {
 
+
+
+
 	//Assign variable to rename the PASSPORT local authentication strategy
 	var Auth = passport.authenticate('local');
 

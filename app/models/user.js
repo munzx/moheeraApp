@@ -123,6 +123,12 @@ var usersSchema = Schema({
 		sparse: true,
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+	mobilePhone: {
+		type: String,
+		default: '',
+		unique: true,
+		sparse: true
+	},
 	pageDesc: {
 		type: String,
 		default: '',

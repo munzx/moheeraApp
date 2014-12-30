@@ -15,6 +15,7 @@ angular.module('userModule').controller('settingUserController', ['$scope', '$lo
 		fd.append('firstName', $scope.userInfo.firstName);
 		fd.append('lastName', $scope.userInfo.lastName);
 		fd.append('email', $scope.userInfo.email);
+		fd.append('mobilePhone', $scope.userInfo.mobilePhone);
 		fd.append('pageDesc', $scope.userInfo.pageDesc);
 
 		connectUserFactory.update(fd, function (response) {

@@ -211,6 +211,11 @@ var productSchema = new Schema({
 		required: 'Please provide the user name',
 		trim: true
 	},
+	userMobilePhone: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

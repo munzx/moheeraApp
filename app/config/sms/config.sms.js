@@ -26,13 +26,13 @@ module.exports.sendMsg = function (userMobilePhone) {
 			        // The second argument to the callback will contain the information
 			        // sent back by Twilio for the request. In this case, it is the
 			        // information about the text messsage you just sent:
-			        console.log('Success! The SID for this SMS message is:');
-			        console.log(message.sid);
+			        // console.log('Success! The SID for this SMS message is:');
+			        // console.log(message.sid);
 
-			        console.log('Message sent on:');
-			        console.log(message.dateCreated);
+			        // console.log('Message sent on:');
+			        // console.log(message.dateCreated);
 			    } else {
-			    	console.log(error);
+			    	// console.log(error);
 			    }
 			});
 		}

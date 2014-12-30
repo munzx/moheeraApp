@@ -79,6 +79,9 @@ module.exports.create = function(req, res){
 	newProduct.user = req.user;
 	newProduct.userName = req.user.name;
 	newProduct.userMobilePhone = req.user.mobilePhone;
+	newProduct.firstName = req.user.firstName;
+	newProduct.lastName = req.user.lastName;
+	newProduct.email = req.user.email;
 	newProduct.save(function(err, product){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});

@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	firstName: {
@@ -212,6 +212,21 @@ var productSchema = new Schema({
 		trim: true
 	},
 	userMobilePhone: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	firstName: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	lastName: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	email: {
 		type: String,
 		default: '',
 		trim: true

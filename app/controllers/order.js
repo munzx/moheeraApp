@@ -2,11 +2,12 @@
 
 //Dependencies
 var mongoose = require('mongoose'),
-_ = require('lodash'),
-errorHandler = require('./error'),
-products = require('../models/product'),
-users = require('../models/user'),
-sms = require('../config/sms/config.sms.js');
+	_ = require('lodash'),
+	errorHandler = require('./error'),
+	products = require('../models/product'),
+	users = require('../models/user'),
+	sms = require('../config/sms/config.sms.js'),
+	email = require('../config/email/config.email.js');
 
 //Return with all orders of a certain user
 module.exports.index = function(req, res){
@@ -62,11 +63,12 @@ module.exports.create = function(req, res){
 	var orderInfo = req.body.info;
 	var cartProductIds = '';
 	var mobilePhoneNumbers = [];
+	var recipientsData = [];
 	orderInfo.user = req.user;
 
 	//get the ids of all products in the user cart
 	var searchCartProductIds = function () {
-		var ids=[];
+		var ids = [];
 		var userCart = req.user.cart;
 		userCart.forEach(function (item) {
 			ids.push(item.productId);
@@ -101,11 +103,21 @@ module.exports.create = function(req, res){
 				cartProductsCantBeOrdered.push({"name": productItem.name, "id": productItem._id});
 			}
 
-			//get this mobile number of the product owner
+			//get the mobile number of the product owner
 			//if we get more than one product, then we will have
 			//a duplicate values , but its ok as the sms module
 			//takes care of the duplicated values
 			mobilePhoneNumbers.push(productItem.userMobilePhone);
+
+			//get the data of the product owner
+			//if we get more than one product, then we will have
+			//a duplicate values , but its ok as the sms module
+			//takes care of the duplicated values
+			recipientsData.push({
+				"email": productItem.email,
+				"firstName": productItem.firstName,
+				"lastName": productItem.lastName
+			});
 
 		});
 
@@ -141,6 +153,7 @@ module.exports.create = function(req, res){
 
 					//send sms to the product owner
 					sms.sendMsg(mobilePhoneNumbers);
+					email.sendEmail(recipientsData);
 					res.status(200).json({"uCart": user.cart});
 				} else {
 					res.status(500).jsonp({message: 'User has not been found'});

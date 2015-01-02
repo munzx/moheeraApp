@@ -1,1 +1,1 @@
-web: node ./app/config/init.js
+web: node server.js

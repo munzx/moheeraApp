@@ -13,7 +13,6 @@ var logger = require('express-logger'),
 	passportLocal = require('passport-local');
 
 module.exports = function (app, express) {
-
 	//Connect to mongoDB
 	mongoose.connect('mongodb://localhost/test');
 

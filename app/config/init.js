@@ -17,9 +17,8 @@ var logger = require('express-logger'),
 module.exports = function (app, express) {
 	//Environment
 	console.log(envConfig.app.title + ' Environment');
-
 	//Connect to mongoDB
-	mongoose.connect(envConfig.db || process.env.MONGOHQ_URL);
+	mongoose.connect(envConfig.db || process.env.MONGO_URL);
 
 	//Set certain behaviour for development and test environments
 	if(env === 'development' || 'test'){

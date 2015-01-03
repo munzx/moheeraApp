@@ -3,12 +3,8 @@
 module.exports = {
 	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/moheera',
 	assets: {
-		lib: {
-			css: [],
-			js: []
-		},
-		css: 'public/dist/application.min.css',
-		js: 'public/dist/application.min.js'
+		css: 'public/dist/app.min.css',
+		js: 'public/dist/app.min.js'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

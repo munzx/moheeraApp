@@ -2,7 +2,7 @@
 
 module.exports = {
 	db: 'mongodb://localhost/test',
-	port: 3001,
+	port: 3000,
 	app: {
 		title: 'moheeraApp - Test Environment'
 	},

@@ -15,12 +15,14 @@ var logger = require('express-logger'),
 	envConfig = require('./env/' + process.env.NODE_ENV) || {};
 
 module.exports = function (app, express) {
-	//Connect to mongoDB production
+	//Environment
+	console.log(envConfig.app.title + ' Environment');
+
+	//Connect to mongoDB
 	mongoose.connect(envConfig.db);
 
-	//Set certain behaviour for development
-	if(env === 'development'){
-		console.log('Development Environment');
+	//Set certain behaviour for development and test environments
+	if(env === 'development' || 'test'){
 		//stop Etag
 		app.disable('etag');
 		//Log file location

@@ -4,6 +4,12 @@ var express = require('express'),
 	app = express(),
 	port = process.env.PORT || 3000;
 
+//Set default node envoironment to development
+process.env.NODE.ENV = process.env.NODE.ENV || 'development';
+
+//Root Path
+process.env.PWD = process.cwd();
+
 // Initilize with config file
 require('./app/config/init')(app, express);
 

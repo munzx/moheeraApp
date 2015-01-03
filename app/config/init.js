@@ -29,7 +29,7 @@ module.exports = function (app, express) {
 		process.env.MONGODB_PORT = "27017";
 		process.env.MONGODB_USERNAME = "test";
 		process.env.MONGODB_PASSWORD = "";
-		process.env.MONGO_URL = "mongodb://localhost/test";
+		process.env.MONGO_URL = "mongodb://test:@localhost/test-production";
 
 		console.log(process.env.MONGO_URL);
 

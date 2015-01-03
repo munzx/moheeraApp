@@ -39,5 +39,22 @@
     "mocha": "^1.21.5",
     "nodemon": "^1.2.1",
     "superagent": "^0.20.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/munzx/moheeraApp.git"
+  },
+  "keywords": [
+    "moheera",
+    "app"
+  ],
+  "license": "moheera",
+  "bugs": {
+    "url": "https://github.com/munzx/moheeraApp/issues"
+  },
+  "homepage": "https://github.com/munzx/moheeraApp"
 }

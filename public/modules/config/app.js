@@ -13,6 +13,11 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			templateUrl: 'public/modules/config/view/notfound.config.view.html',
 			controller: 'errorConfigController'
 		})
+		.state('droppedIn', {
+			url: '',
+			templateUrl: 'public/modules/home/view/index.home.view.html',
+			controller: 'indexHomeController'
+		})
 		.state('home', {
 			url: '/',
 			templateUrl: 'public/modules/home/view/index.home.view.html',

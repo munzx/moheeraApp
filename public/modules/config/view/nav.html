@@ -52,9 +52,9 @@
 					<a ui-sref="signup"><b>SignUp</b></a>
 				</li>
 
-				<li class="dropdown" ng-show="loggedLink" >
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-						<span class="glyphicon glyphicon-cog" style="font-size:20px;"></span>
+				<li class="dropdown" dropdown ng-show="loggedLink" >
+					<a href class="dropdown-toggle" data-toggle="dropdown" is-open="status.isopen" dropdown-toggle ng-disabled="disabled">
+						<span  class="glyphicon glyphicon-cog" style="font-size:20px;"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a ui-sref="profile.setting"><span class="glyphicon glyphicon-user"></span> Account</a></li>

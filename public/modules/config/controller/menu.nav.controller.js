@@ -9,17 +9,6 @@ angular.module('moheera').controller('navMenu', ['$rootScope', '$scope', 'regist
 		$scope.navbarCollapsed = false;
 	});
 
-  $scope.status = {
-    isopen: false
-  }
-
-   $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.status.isopen = !$scope.status.isopen;
-  }
-
-
 	// Watch the user
 	$rootScope.$watch('logged', function () {
 		if($rootScope.logged){

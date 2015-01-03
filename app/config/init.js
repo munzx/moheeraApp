@@ -14,7 +14,7 @@ var logger = require('express-logger'),
 	env = process.env.NODE_ENV;
 
 module.exports = function (app, express) {
-
+	//Set certain behaviour for production and development
 	if(env === 'production'){
 		//Connect to mongoDB production
 		mongoose.connect('mongodb://localhost/moheeradb');
@@ -23,8 +23,6 @@ module.exports = function (app, express) {
 		console.log('Development Environment');
 		//Connect to mongoDB testing
 		mongoose.connect('mongodb://localhost/test');
-		//Disable the caching
-		app.disable('view cache');
 		//stop Etag
 		app.disable('etag');
 		//Log file location

@@ -12,7 +12,7 @@ var logger = require('express-logger'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
 	env = process.env.NODE_ENV,
-	envConfig = require('../config/env/' + process.env.NODE_ENV) || {};
+	envConfig = require(__dirname + '/env/' + process.env.NODE_ENV) || {};
 
 module.exports = function (app, express) {
 	//Environment

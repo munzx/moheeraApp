@@ -21,8 +21,20 @@ module.exports = function (app, express) {
 		console.log('Production Environment');
 	} else if(env === 'development'){
 		console.log('Development Environment');
+
+		//Set up mongo connection
+		process.env.NODE_ENV = 'development';
+		process.env.MONGODB_DATABASE = "test";
+		process.env.MONGODB_HOST = "172.17.0.123";
+		process.env.MONGODB_PORT = "27017";
+		process.env.MONGODB_USERNAME = "test";
+		process.env.MONGODB_PASSWORD = "";
+		process.env.MONGO_URL = "mongodb://localhost/test";
+
+		console.log(process.env.MONGO_URL);
+
 		//Connect to mongoDB testing
-		mongoose.connect('mongodb://localhost/test');
+		mongoose.connect(process.env.MONGO_URL);
 		//stop Etag
 		app.disable('etag');
 		//Log file location

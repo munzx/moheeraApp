@@ -19,7 +19,7 @@ module.exports = function (app, express) {
 	console.log(envConfig.app.title + ' Environment');
 
 	//Connect to mongoDB
-	mongoose.connect(envConfig.db);
+	mongoose.connect(envConfig.db || process.env.MONGOHQ_URL);
 
 	//Set certain behaviour for development and test environments
 	if(env === 'development' || 'test'){

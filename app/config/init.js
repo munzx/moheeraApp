@@ -10,11 +10,32 @@ var logger = require('express-logger'),
 	session = require('express-session'),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
-	passportLocal = require('passport-local');
+	passportLocal = require('passport-local'),
+	env = process.env.NODE_ENV;
 
 module.exports = function (app, express) {
-	//Connect to mongoDB
-	mongoose.connect('mongodb://localhost/test');
+
+	if(env === 'production'){
+		//Connect to mongoDB production
+		mongoose.connect('mongodb://localhost/moheeradb');
+		console.log('Production Environment');
+	} else if(env === 'development'){
+		console.log('Development Environment');
+		//Connect to mongoDB testing
+		mongoose.connect('mongodb://localhost/test');
+		//Disable the caching
+		app.disable('view cache');
+		//stop Etag
+		app.disable('etag');
+		//Log file location
+		app.use(logger({path: "log.txt"}));
+		//configure error
+	    app.use(errorHandler({
+	        dumpExceptions: true,
+	        showStack: true
+	    }));
+	    app.use(errorHandler());
+	}
 
 	//check if mongodb is connected otherwise throw an error
 	var db = mongoose.connection;
@@ -27,26 +48,6 @@ module.exports = function (app, express) {
 	app.enable('strict routing');
 	app.set('view engine', 'ejs');
 	app.enable('view cache');
-	//process.env.NODE_ENV = 'development'
-
-	if (app.get('env') === 'development') {
-		//Disable the caching
-		app.disable('view cache');
-
-		//stop Etag
-		app.disable('etag');
-
-		//Log file location
-		app.use(logger({path: "log.txt"}));
-
-		//configure error
-	    app.use(errorHandler({
-	        dumpExceptions: true,
-	        showStack: true
-	    }));
-
-	    app.use(errorHandler());
-	}
 
 	//use middlewears
 	app.use(bodyParser.urlencoded({extended: true}));

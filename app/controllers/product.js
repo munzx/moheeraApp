@@ -179,7 +179,7 @@ module.exports.delete = function(req, res){
 }
 
 module.exports.categoryName = function(req, res){
-	products.find({category: req.params.category}, function(err, product){
+	products.find({category: req.params.category, userName: req.params.userName}, function(err, product){
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){

@@ -11,14 +11,14 @@ var logger = require('express-logger'),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
-	env = process.env.NODE_ENV;
-	// envConfig = require('../config/env/' + process.env.NODE_ENV) || {};
+	env = process.env.NODE_ENV,
+	envConfig = require('./env/' + process.env.NODE_ENV) || {};
 
 module.exports = function (app, express) {
 	//Environment
-	//console.log(envConfig.app.title + ' Environment');
+	console.log(envConfig.app.title + ' Environment');
 	//Connect to mongoDB
-	mongoose.connect(process.env.MONGO_URL);
+	mongoose.connect(envConfig.db || process.env.MONGO_URL);
 
 	//Set certain behaviour for development and test environments
 	if(env === 'development' || 'test'){

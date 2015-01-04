@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/moheera',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || process.env.MONGO_URL  || 'mongodb://localhost/moheera',
 	assets: {
 		css: 'public/dist/app.min.css',
 		js: 'public/dist/app.min.js'

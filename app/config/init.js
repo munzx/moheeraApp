@@ -8,7 +8,6 @@ var logger = require('express-logger'),
 	multer  = require('multer'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
-	mongoStore = require('connect-mongo')(session),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
@@ -18,8 +17,9 @@ var logger = require('express-logger'),
 module.exports = function (app, express) {
 	//Environment
 	console.log(envConfig.app.title + ' Environment');
+	console.log(process.env.NODE_ENV);
 	//Connect to mongoDB
-	var mongoDB = mongoose.connect(envConfig.db || process.env.MONGO_URL);
+	mongoose.connect(envConfig.db || process.env.MONGO_URL);
 
 	//Set certain behaviour for development and test environments
 	if(env === 'development' || 'test'){
@@ -36,8 +36,8 @@ module.exports = function (app, express) {
 	}
 
 	//check if mongodb is connected otherwise throw an error
-	var mongoConnect = mongoose.connection;
-	mongoConnect.on('error',console.error.bind(console, 'connection Error:'));
+	var db = mongoose.connection;
+	db.on('error',console.error.bind(console, 'connection Error:'));
 
 	//Set app defaults
 	app.disable('x-powered-by'); //Dont show that this server runs express!
@@ -52,12 +52,7 @@ module.exports = function (app, express) {
 	app.use(bodyParser.json());
 	app.use(multer({ dest: './public/uploads/'}));
 	app.use(cookieParser()); //read cookies
-	app.use(session({
-	    store: new mongoStore({"db": envConfig.db || process.env.MONGO_URL}),
-	    secret: process.env.SESSION_SECRET || 'secret',
-	    saveUninitialized: false,
-	    resave: false
-	})); //use sessions for Auth
+	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
 	app.use(methodOverride()); //read about this
 	app.use(passport.initialize()); //initialize passport
 	app.use(passport.session()); // persistent login sessions

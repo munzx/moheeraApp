@@ -19,7 +19,7 @@ module.exports = function (app, express) {
 	//Environment
 	console.log(envConfig.app.title + ' Environment');
 	//Connect to mongoDB
-	mongoose.connect(envConfig.db || process.env.MONGO_URL);
+	var mongoDB = mongoose.connect(envConfig.db || process.env.MONGO_URL);
 
 	//Set certain behaviour for development and test environments
 	if(env === 'development' || 'test'){
@@ -36,8 +36,8 @@ module.exports = function (app, express) {
 	}
 
 	//check if mongodb is connected otherwise throw an error
-	var db = mongoose.connection;
-	db.on('error',console.error.bind(console, 'connection Error:'));
+	var mongoConnect = mongoose.connection;
+	mongoConnect.on('error',console.error.bind(console, 'connection Error:'));
 
 	//Set app defaults
 	app.disable('x-powered-by'); //Dont show that this server runs express!
@@ -53,7 +53,7 @@ module.exports = function (app, express) {
 	app.use(multer({ dest: './public/uploads/'}));
 	app.use(cookieParser()); //read cookies
 	app.use(session({
-	    store: new mongoStore({db: 'sessiondb'}),
+	    store: new mongoStore({"db": envConfig.db || process.env.MONGO_URL}),
 	    secret: process.env.SESSION_SECRET || 'secret',
 	    saveUninitialized: false,
 	    resave: false

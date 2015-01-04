@@ -11,6 +11,7 @@ var logger = require('express-logger'),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
+	favicon = require('serve-favicon'),
 	env = process.env.NODE_ENV,
 	envConfig = require('./env/' + process.env.NODE_ENV) || {};
 
@@ -38,6 +39,9 @@ module.exports = function (app, express) {
 	//check if mongodb is connected otherwise throw an error
 	var db = mongoose.connection;
 	db.on('error',console.error.bind(console, 'connection Error:'));
+
+	//App favicon
+	app.use(favicon('./public/modules/home/img/favicon.ico'));
 
 	//Set app defaults
 	app.disable('x-powered-by'); //Dont show that this server runs express!

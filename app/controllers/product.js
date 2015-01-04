@@ -166,13 +166,13 @@ module.exports.delete = function(req, res){
 		} else if(numOfAffectedRows === 0){
 			res.status(200).json({message: 'Failed to delete document'});
 		} else {
-			users.find().where("cart.productId", req.params.productId).pull({"cart.productId": req.params.id}).exec(function (err, user) {
-				if(err){
-					console.log(err);
-				} else {
-					console.log(user);
-				}
-			});
+			// users.find().where("cart.productId", req.params.productId).pull({"cart.productId": req.params.id}).exec(function (err, user) {
+			// 	if(err){
+			// 		console.log(err);
+			// 	} else {
+			// 		console.log(user);
+			// 	}
+			// });
 			res.status(200).json('successfully deleted the product');
 		}
 	});

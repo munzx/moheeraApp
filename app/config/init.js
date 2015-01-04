@@ -8,6 +8,7 @@ var logger = require('express-logger'),
 	multer  = require('multer'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
+	mongoStore = require('connect-mongo')(session),
 	cookieParser = require('cookie-parser'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
@@ -51,7 +52,12 @@ module.exports = function (app, express) {
 	app.use(bodyParser.json());
 	app.use(multer({ dest: './public/uploads/'}));
 	app.use(cookieParser()); //read cookies
-	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
+	app.use(session({
+	    store: new mongoStore({db: 'sessiondb'}),
+	    secret: process.env.SESSION_SECRET || 'secret',
+	    saveUninitialized: false,
+	    resave: false
+	})); //use sessions for Auth
 	app.use(methodOverride()); //read about this
 	app.use(passport.initialize()); //initialize passport
 	app.use(passport.session()); // persistent login sessions

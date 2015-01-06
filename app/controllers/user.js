@@ -55,25 +55,49 @@ module.exports.update = function(req, res){
 	var logoData = req.files.logo;
 	var bannerData = req.files.banner;
 
-	if(_.find(req.files, {'fieldname': 'logo'}) != -1){
-		//get the new file name
-		req.body.logo = logoData.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.logo) === false){
-			fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
+	multer({
+		onFileUploadData: function (file, data) {
+			console.log('uploading....');
 		}
+	});
+
+	var formData = {};
+
+	if(!_.isEmpty(req.files)){
+		if(req.files != {}){
+			if(logoData.name){
+				//get the new file name
+				req.body.logo = logoData.name;
+				//if the user had another logo then remove it before adding the new one
+				if(_.isEmpty(req.user.logo) === false){
+					fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
+				}
+			}
+
+			if(bannerData.name){
+				//get the new file name
+				req.body.banner = bannerData.name;
+				//if the user had another logo then remove it before adding the new one
+				if(_.isEmpty(req.user.banner) === false){
+					fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
+				}
+			}
+		}
+		formData.firstName = req.body.firstName;
+		formData.lastName = req.body.lastName;
+		formData.email = req.body.email;
+		formData.logo = logoData.name;
+		formData.banner = bannerData.name;
+		formData.pageDesc = req.body.pageDesc;
+	} else {
+		formData.firstName = req.body.firstName;
+		formData.lastName = req.body.lastName;
+		formData.email = req.body.email;
+		formData.pageDesc = req.body.pageDesc;
 	}
 
-	if(_.find(req.files, {'fieldname': 'banner'}) != -1){
-		//get the new file name
-		req.body.banner = bannerData.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.banner) === false){
-			fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
-		}
-	}
 
-	users.findOneAndUpdate({_id: req.user._id}, req.body, function(err, user, numOfAffectedRows){
+	users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
 		if(err){
 			if(logoData){
 				fs.unlink('./public/uploads/' + logoData.name); // delete the partially written file
@@ -83,7 +107,8 @@ module.exports.update = function(req, res){
 			}
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user) {
-			req.files = '';
+			req.files = false;
+			console.log(req.files);
 			res.status(200).jsonp(user);
 		} else {
 			res.status(404).json({message: 'User has not been found'});

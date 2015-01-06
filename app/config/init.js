@@ -54,7 +54,14 @@ module.exports = function (app, express) {
 	//use middlewears
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(bodyParser.json());
-	app.use(multer({ dest: './public/uploads/'}));
+	app.use(multer({ 
+		dest: './public/uploads/',
+		onFileUploadStart: function (file) {
+			if(!file){
+				req.files = false;
+			}
+		}
+	}));
 	app.use(cookieParser()); //read cookies
 	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
 	app.use(methodOverride()); //read about this

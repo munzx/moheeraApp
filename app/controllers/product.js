@@ -39,56 +39,58 @@ module.exports.create = function(req, res){
 		image3 = req.files.image3,
 		image4 = req.files.image4;
 
-	if(_.find(req.files, {'fieldname': 'image1'}) != -1){
-		//get the new file name
-		req.body.image1 = image1.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image1) === false){
-			fs.unlink('./public/uploads/' + req.user.image1); // delete the partially written file
+		console.log(req.files);
+
+	var formData = new products(req.body);
+
+	if(!_.isEmpty(req.files)){
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image1)){
+			//get the new file name
+			formData.image1 = image1.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image2)){
+			//get the new file name
+			formData.image2 = image2.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image3)){
+			//get the new file name
+			formData.image3 = image3.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image4)){
+			//get the new file name
+			formData.image4 = image4.name;
 		}
 	}
 
-	if(_.find(req.files, {'fieldname': 'image2'}) != -1){
-		//get the new file name
-		req.body.image2 = image2.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image2) === false){
-			fs.unlink('./public/uploads/' + req.user.image2); // delete the partially written file
-		}
-	}
+	if(image1 && image2 && image3 && image4){
+		formData.name = req.body.name;
+		formData.price = req.body.price;
+		formData.quantity = req.body.quantity;
+		formData.desc = req.body.desc;
+		formData.user = req.user;
+		formData.userName = req.user.name;
+		formData.userMobilePhone = req.user.mobilePhone;
+		formData.firstName = req.user.firstName;
+		formData.lastName = req.user.lastName;
+		formData.email = req.user.email;
 
-	if(_.find(req.files, {'fieldname': 'image3'}) != -1){
-		//get the new file name
-		req.body.image3 = image3.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image3) === false){
-			fs.unlink('./public/uploads/' + req.user.image3); // delete the partially written file
-		}
+		formData.save(function(err, product){
+			if(err){
+				res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+			} else {
+				res.status(200).jsonp(product);
+			}
+		});
+	} else {
+		res.status(400).jsonp({message: 'All product images are required'});
 	}
-
-	if(_.find(req.files, {'fieldname': 'image4'}) != -1){
-		//get the new file name
-		req.body.image4 = image4.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image4) === false){
-			fs.unlink('./public/uploads/' + req.user.image4); // delete the partially written file
-		}
-	}
-
-	var newProduct = new products(req.body);
-	newProduct.user = req.user;
-	newProduct.userName = req.user.name;
-	newProduct.userMobilePhone = req.user.mobilePhone;
-	newProduct.firstName = req.user.firstName;
-	newProduct.lastName = req.user.lastName;
-	newProduct.email = req.user.email;
-	newProduct.save(function(err, product){
-		if(err){
-			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-		} else {
-			res.status(200).jsonp(product);
-		}
-	});
 }
 
 module.exports.getByName = function(req, res){
@@ -111,44 +113,46 @@ module.exports.update = function(req, res){
 		image3 = req.files.image3,
 		image4 = req.files.image4;
 
-	if(_.find(req.files, {'fieldname': 'image1'}) != -1){
-		//get the new file name
-		req.body.image1 = image1.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image1) === false){
-			fs.unlink('./public/uploads/' + req.user.image1); // delete the partially written file
+	var formData = {};
+
+	if(!_.isEmpty(req.files)){
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image1)){
+			//get the new file name
+			formData.image1 = image1.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image2)){
+			//get the new file name
+			formData.image2 = image2.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image3)){
+			//get the new file name
+			formData.image3 = image3.name;
+		}
+
+		//if the user had another image then remove it before adding the new one
+		if(!_.isEmpty(image4)){
+			//get the new file name
+			formData.image4 = image4.name;
 		}
 	}
 
-	if(_.find(req.files, {'fieldname': 'image2'}) != -1){
-		//get the new file name
-		req.body.image2 = image2.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image2) === false){
-			fs.unlink('./public/uploads/' + req.user.image2); // delete the partially written file
-		}
-	}
+	formData.name = req.body.name;
+	formData.price = req.body.price;
+	formData.quantity = req.body.quantity;
+	formData.desc = req.body.desc;
 
-	if(_.find(req.files, {'fieldname': 'image3'}) != -1){
-		//get the new file name
-		req.body.image3 = image3.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image3) === false){
-			fs.unlink('./public/uploads/' + req.user.image3); // delete the partially written file
-		}
-	}
-
-	if(_.find(req.files, {'fieldname': 'image4'}) != -1){
-		//get the new file name
-		req.body.image4 = image4.name;
-		//if the user had another logo then remove it before adding the new one
-		if(_.isEmpty(req.user.image4) === false){
-			fs.unlink('./public/uploads/' + req.user.image4); // delete the partially written file
-		}
-	}
-
-	products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, req.body, function(err, product, numOfAffectedRows){
+	products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, formData, function(err, product, numOfAffectedRows){
 		if(err){
+			fs.unlink('./public/uploads/' + req.user.image1); // delete the partially written file
+			fs.unlink('./public/uploads/' + req.user.image2); // delete the partially written file
+			fs.unlink('./public/uploads/' + req.user.image3); // delete the partially written file
+			fs.unlink('./public/uploads/' + req.user.image4); // delete the partially written file
+
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(product){
 			res.status(200).jsonp(product);
@@ -205,7 +209,7 @@ module.exports.allUserCategory = function (req, res) {
 
 			users.find({name: req.params.userName}, function (err, user) {
 				if(user){
-					res.status(200).jsonp({category: cats, user: user[0]});
+					res.status(200).jsonp({category: _.uniq(cats), user: user[0]});
 				}
 			});			
 		} else {

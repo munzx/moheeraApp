@@ -2,11 +2,11 @@
 
 // Depnedencies
 var mongoose = require('mongoose'),
-	errorHandler = require('./error'),
-	fs = require('fs'),
-	_ = require('lodash'),
-	multer  = require('multer'),
-	users = require('../models/user');
+errorHandler = require('./error'),
+fs = require('fs'),
+_ = require('lodash'),
+multer  = require('multer'),
+users = require('../models/user');
 
 // get all users
 module.exports.index = function (req, res){
@@ -64,38 +64,35 @@ module.exports.update = function(req, res){
 	var formData = {};
 
 	if(!_.isEmpty(req.files)){
-		if(req.files != {}){
-			if(logoData.name){
-				//get the new file name
-				req.body.logo = logoData.name;
-				//if the user had another logo then remove it before adding the new one
-				if(_.isEmpty(req.user.logo) === false){
-					fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
-				}
-			}
-
-			if(bannerData.name){
-				//get the new file name
-				req.body.banner = bannerData.name;
-				//if the user had another logo then remove it before adding the new one
-				if(_.isEmpty(req.user.banner) === false){
-					fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
-				}
+		if(logoData){
+			//get the new file name
+			formData.logo = logoData.name;
+			//if the user had another logo then remove it before adding the new one
+			if(_.isEmpty(req.user.logo) === false){
+				fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
 			}
 		}
+
+		if(bannerData){
+			//get the new file name
+			formData.banner = bannerData.name;
+			//if the user had another logo then remove it before adding the new one
+			if(_.isEmpty(req.user.banner) === false){
+				fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
+			}
+		}
+		//form data required
 		formData.firstName = req.body.firstName;
 		formData.lastName = req.body.lastName;
 		formData.email = req.body.email;
-		formData.logo = logoData.name;
-		formData.banner = bannerData.name;
 		formData.pageDesc = req.body.pageDesc;
 	} else {
+		//form data without the files input fields (as the fields are empty , if we pass them they will override thier pairs in DB)
 		formData.firstName = req.body.firstName;
 		formData.lastName = req.body.lastName;
 		formData.email = req.body.email;
 		formData.pageDesc = req.body.pageDesc;
 	}
-
 
 	users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
 		if(err){

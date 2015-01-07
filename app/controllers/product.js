@@ -88,7 +88,7 @@ module.exports.create = function(req, res){
 			}
 		});
 	} else {
-		res.status(400).jsonp({message: 'All product images are required'});
+		res.status(400).jsonp({message: 'Please provide four images of the product'});
 	}
 }
 

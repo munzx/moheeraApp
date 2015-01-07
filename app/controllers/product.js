@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
 	users = require('../models/user'),
 	products = require('../models/product');
 
-
 module.exports.index = function(req, res){
 	users.find({name: req.params.userName}, function (err, userInfo) {
 		if(err){

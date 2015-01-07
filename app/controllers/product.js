@@ -48,19 +48,16 @@ module.exports.create = function(req, res){
 			//get the new file name
 			formData.image1 = image1.name;
 		}
-
 		//if the user had another image then remove it before adding the new one
 		if(!_.isEmpty(image2)){
 			//get the new file name
 			formData.image2 = image2.name;
 		}
-
 		//if the user had another image then remove it before adding the new one
 		if(!_.isEmpty(image3)){
 			//get the new file name
 			formData.image3 = image3.name;
 		}
-
 		//if the user had another image then remove it before adding the new one
 		if(!_.isEmpty(image4)){
 			//get the new file name

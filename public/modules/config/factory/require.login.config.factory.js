@@ -11,7 +11,7 @@ angular.module('moheera').factory('requreLoginConfigFactory', ['$modal', '$rootS
 				templateUrl: 'public/modules/config/view/require.login.config.view.html',
 				size: 'md',
 				controller: 'ModalInstanceConfigController'
-				//function ($scope, $modalInstance) {
+				//function ($scope, $modalInstance){
 					// switch(service){
 					// 	case 'cart':
 					// 		$scope.msg = 'to add this product to cart';

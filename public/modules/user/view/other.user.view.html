@@ -1,28 +1,30 @@
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
-		<div class="col-md-12">
-			<img src="{{banner()}}" class="img-responsive text-center">
-		</div>
 		<div class="row">
-			<div class="col-md-3 content">
+			<img ng-src="{{banner()}}" class="img-responsive text-center">
+		</div>
+		<div class="row" style="margin-top:2%;">
+			<div class="col-md-3">
 				<!-- Sidebar -->
 				<div sidebar-user-directive="userProducts"></div><!-- End Sidebar -->
 			</div>
-			<div class="col-md-8 content">
+			<div class="col-md-8 col-md-offset-1">
 				<div class="row panel">
+				
 					<div class="col-md-12" style="margin-bottom:2%;">
 						<h4 class="text-center">{{userInfo.name}}</h4>
 					</div>
+
 					<div class="col-md-12" style="margin-bottom:5%;word-wrap: break-word;">
 						<span>{{userInfo.pageDesc}}</span>
 					</div>
 
-					<div ui-view>
+					<div data-ui-view>
 						<!-- Wrapp the 'default view' in a div to avoid error as elements if were not inclused in one parent element it causes errors -->
 						<div>
 							<div class="row" ng-hide="userProducts.length">
 								<div class="col-md-12">
-									<h4 class="alert alert-success text-center">No products have been found!</h4>
+									<h4 class="alert alert-success text-center">You don't have any products added yet!</h4>
 								</div>
 							</div>
 							<div class="row" ng-show="userProducts.length" ng-repeat="product in userProducts" style="margin-bottom:5%">

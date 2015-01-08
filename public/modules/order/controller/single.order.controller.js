@@ -16,7 +16,6 @@ angular.module('orderModule').controller('singleOrderController', ['$scope', '$l
 
 
 	$scope.updateOrder = function () {
-		console.log($scope.orderInfo.status);
 		var updateInfo = {
 			status: $scope.orderInfo.status,
 			statusHistory: {

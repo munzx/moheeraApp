@@ -1,12 +1,8 @@
-.content {
-	margin-left: 2.1%;
-	margin-top: 1%;
-}
-
-.add-space-content {
-	margin-bottom: 5%;
-}
-
 .profile-center {
 	margin: 0 auto;
+}
+
+.image-center {
+	margin: 0 auto;
+	width: 100%;
 }

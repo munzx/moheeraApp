@@ -39,9 +39,9 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 						//create the html elment with the image link and assign in to "logo" variable
 						//or if the user has no logo then assign a placeholder vector image to the logo variable 
 						if(scope.user.logo){
-							logo = '<div style="background-color:#fff;"><a href="#/'+ scope.user.name +'"><img style="margin-bottom:-2%;" class="img-responsive text-center" src="' + "public/uploads/" + scope.user.logo + '"></a></div>';
+							logo = '<div class="row" style="background-color:#fff;padding-bottom:10%;"><a href="#/'+ scope.user.name +'"><img style="margin-bottom:-2%;" class="img-responsive col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1  text-center" src="' + "public/uploads/" + scope.user.logo + '"></a></div>';
 						} else {
-							logo = '<div style="background-color:#fff;"><a href="#/'+ scope.user.name +'"><span class="glyphicon glyphicon-user img-responsive text-center" style="font-size:164px;color: #cccccc;" aria-hidden="true"></span></a></div>';
+							logo = '<div class="row" style="background-color:#fff;padding-bottom:10%;"><a href="#/'+ scope.user.name +'"><span class="glyphicon glyphicon-user img-responsive text-center" style="font-size:164px;color: #cccccc;" aria-hidden="true"></span></a></div>';
 						}
 						//embed the logo at the top of the sidebar
 						elem.parent().prepend(logo);

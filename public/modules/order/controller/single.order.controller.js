@@ -9,13 +9,14 @@ angular.module('orderModule').controller('singleOrderController', ['$scope', '$l
 		$scope.productInfo = response.product;
 		//get the current status and save as old so we can get it if the status
 		//got updateed
-		$scope.oldStatus = response.order.status;
+		$scope.oldStatus = angular.copy(response.order.status);
 	}, function (err) {
 		$scope.error = err.data.message;
 	});
 
 
 	$scope.updateOrder = function () {
+		console.log($scope.orderInfo.status);
 		var updateInfo = {
 			status: $scope.orderInfo.status,
 			statusHistory: {
@@ -28,6 +29,7 @@ angular.module('orderModule').controller('singleOrderController', ['$scope', '$l
 			$scope.success = response;
 			$scope.error = false;
 			$scope.orderInfo = response.order;
+			$scope.oldStatus = angular.copy(response.order.status);
 		}, function (err) {
 			$scope.error = err.data.message;
 			$scope.success = false;

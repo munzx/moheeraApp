@@ -173,6 +173,7 @@ module.exports.update = function(req, res){
 			var order = product.order.id(req.params.orderId);
 			order.statusHistory.push(req.body.statusHistory);
 			order.status = req.body.status;
+			console.log(req.body.status);
 			product.save(function (err, updatedOrder) {
 				if(err){
 					res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});

@@ -19,7 +19,6 @@ module.exports = function (app, express) {
 	//Environment
 	console.log(envConfig.app.title + ' Environment');
 	console.log(process.env.MONGO_URL);
-	console.log(process.env.DB_USER);
 	//Connect to mongoDB
 	mongoose.connect(envConfig.db || process.env.MONGO_URL);
 

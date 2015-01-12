@@ -60,7 +60,7 @@ module.exports.sendEmail = function (recipients) {
 			var ip_pool = null;
 			var send_at = null;
 			mandrill.messages.sendTemplate({"template_name": info.template_name, "template_content": null, "message": message, "async": async, "ip_pool": ip_pool, "send_at": send_at}, function(result) {
-				console.log(result);
+				console.log('Email sent');
 		    /*
 		    [{
 		            "email": "recipient.email@example.com",

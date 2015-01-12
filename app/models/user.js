@@ -125,7 +125,6 @@ var usersSchema = Schema({
 	},
 	mobilePhone: {
 		type: String,
-		default: '',
 		unique: true,
 		sparse: true
 	},

@@ -8,7 +8,7 @@ angular.module('moheera').directive('imageLoadConfigDirective', [function () {
 		link: function (scope, elem, attrs) {
 			var element = elem[0];
 			element.onLoad = console.log('Bism Allah');
-			elem.parent().prepend('<img src="/public/modules/home/img/loading.gif"/>');
+			//elem.parent().prepend('<img src="/public/modules/home/img/loading.gif"/>');
 			console.log(attrs['ngSrc']);
 			element.complete = console.log('done');
 			console.log(elem[0]);

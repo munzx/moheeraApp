@@ -56,10 +56,11 @@ module.exports = function (app, express) {
 	app.use(bodyParser.json());
 	app.use(multer({ 
 		dest: './public/uploads/',
-		onFileUploadStart: function (file) {
-			if(!file){
-				req.files = false;
-			}
+		limits: {
+		  fieldNameSize: 100,
+		  files: 2,
+		  fileSize: 10000000000,
+		  fields: 4
 		}
 	}));
 	app.use(cookieParser()); //read cookies

@@ -52,29 +52,9 @@
 		</div>
 
 		<h4>Products</h4>
-
-		<div class="col-md-12" style="margin-bottom:4%;" ng-repeat='item in cart'>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Price</th>
-						<th>Quantity</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>{{item.name}}</td>
-						<td>Aed {{item.price}}</td>
-						<td>{{item.quantity}}</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<a ng-href="#/profile/product/{{item.name}}">
-				<img src="public/modules/user/img/pic.jpg" class="img-responsive profile-center text-center">	
-			</a>
-		</div>
+		<br />
+		<!-- Product Inof -->
+		<div ng-repeat='item in cart' product-box-product-directive="item"></div><!-- End Product Inof -->
 
 	</div>
 </div>

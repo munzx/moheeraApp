@@ -105,7 +105,6 @@ module.exports.update = function(req, res){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else if(user) {
 			req.files = false;
-			console.log(req.files);
 			res.status(200).jsonp(user);
 		} else {
 			res.status(404).json({message: 'User has not been found'});

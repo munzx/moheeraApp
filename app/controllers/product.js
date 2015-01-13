@@ -38,8 +38,6 @@ module.exports.create = function(req, res){
 		image3 = req.files.image3,
 		image4 = req.files.image4;
 
-		console.log(req.files);
-
 	var formData = new products(req.body);
 
 	if(!_.isEmpty(req.files)){

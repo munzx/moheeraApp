@@ -81,18 +81,14 @@ module.exports.update = function(req, res){
 				fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
 			}
 		}
-		//form data required
-		formData.firstName = req.body.firstName;
-		formData.lastName = req.body.lastName;
-		formData.email = req.body.email;
-		formData.pageDesc = req.body.pageDesc;
-	} else {
-		//form data without the files input fields (as the fields are empty , if we pass them they will override thier pairs in DB)
-		formData.firstName = req.body.firstName;
-		formData.lastName = req.body.lastName;
-		formData.email = req.body.email;
-		formData.pageDesc = req.body.pageDesc;
 	}
+		
+	//form data without the files input fields (as the fields are empty , if we pass them they will override thier pairs in DB)
+	formData.firstName = req.body.firstName;
+	formData.lastName = req.body.lastName;
+	formData.email = req.body.email;
+	formData.pageDesc = req.body.pageDesc;
+	formData.mobilePhone = req.body.mobilePhone;
 
 	users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
 		if(err){

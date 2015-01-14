@@ -6,16 +6,16 @@ var twilio = require('twilio'),
 
 module.exports.sendMsg = function (userMobilePhone) {
 	if(userMobilePhone){
-		var sender = function (value) {
+		var sender = function (number) {
 			// Create a new REST API client to make authenticated requests against the
 			// twilio back end
-			var client = new twilio.RestClient('ACbe81092e8a05e3e3523d0ad5e88f9cc8', 'b92f4efce480a863fd2f6a5d5569ff03');
+			var client = new twilio.RestClient('ACdf83ce68eb407b2a7f5bfc43ad3fb1b7', 'a2fd241319c3274101c8ca061078adda');
 
 			// Pass in parameters to the REST API using an object literal notation. The
 			// REST client will handle authentication and response serialzation for you.
 			client.sms.messages.create({
-				to:'+15005550006',
-				from:'+15005550006',
+				to: number, //test number: +15005550006
+				from:'+12019031427',
 				body:'CongratulationsYou!!! you have recieved a new order! , visit Moheera.com to view the order details.'
 			}, function(error, message) {
 			    // The HTTP request to Twilio will run asynchronously. This callback
@@ -33,7 +33,7 @@ module.exports.sendMsg = function (userMobilePhone) {
 			        // console.log('Message sent on:');
 			        // console.log(message.dateCreated);
 			    } else {
-			    	// console.log(error);
+			    	console.log(error);
 			    }
 			});
 		}
@@ -42,8 +42,10 @@ module.exports.sendMsg = function (userMobilePhone) {
 		var numbers = _.uniq(userMobilePhone);
 
 		//send the message to every mobile number
-		for(var i=1;i <= numbers.length;i++){
-			sender(numbers[i]);
+		for(var i=0;i < numbers.length;i++){
+			var mp = numbers[i].substring(1);
+			console.log(mp);
+			sender('+971'+mp);
 		}
 
 	}

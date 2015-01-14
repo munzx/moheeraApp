@@ -16,7 +16,7 @@ module.exports.sendMsg = function (userMobilePhone) {
 			client.sms.messages.create({
 				to:'+15005550006',
 				from:'+15005550006',
-				body:'CongratulationsYou!!! have recieved a new order! , visit Moheera.com to view the order details.'
+				body:'CongratulationsYou!!! you have recieved a new order! , visit Moheera.com to view the order details.'
 			}, function(error, message) {
 			    // The HTTP request to Twilio will run asynchronously. This callback
 			    // function will be called when a response is received from Twilio
@@ -28,6 +28,7 @@ module.exports.sendMsg = function (userMobilePhone) {
 			        // information about the text messsage you just sent:
 			        // console.log('Success! The SID for this SMS message is:');
 			        // console.log(message.sid);
+			        console.log('Message has been sent');
 
 			        // console.log('Message sent on:');
 			        // console.log(message.dateCreated);

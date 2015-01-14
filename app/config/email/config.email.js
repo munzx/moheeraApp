@@ -1,7 +1,7 @@
 'use strict';
 
 var mandrillConnect = require('mandrill-api/mandrill'),
-_ = require('lodash');
+	_ = require('lodash');
 
 module.exports.sendEmail = function (recipients) {
 	if(recipients){

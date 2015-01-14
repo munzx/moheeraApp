@@ -5,17 +5,25 @@
 		</div>
 		<div class="row" style="margin-top:2%;">
 			<div class="col-md-3">
+				<!-- Show in smal and extra small only -->
+				<div class="row visible-sm visible-xs">
+					<div class="col-sm-12 col-xs-12" style="background-color:#fff;padding-bottom:5%;">
+						<h4 class="text-center">{{userInfo.name}}</h4>
+						<span>{{userInfo.pageDesc}}</span>
+					</div>
+				</div><!-- End show in smal and extra small only -->
+
 				<!-- Sidebar -->
 				<div sidebar-user-directive="userProducts"></div><!-- End Sidebar -->
 			</div>
 			<div class="col-md-8 col-md-offset-1">
 				<div class="row panel">
 				
-					<div class="col-md-12" style="margin-bottom:2%;">
+					<div class="col-md-12 hidden-sm hidden-xs" style="margin-bottom:2%;">
 						<h4 class="text-center">{{userInfo.name}}</h4>
 					</div>
 
-					<div class="col-md-12" style="margin-bottom:5%;word-wrap: break-word;">
+					<div class="col-md-12 hidden-sm hidden-xs" style="margin-bottom:5%;word-wrap: break-word;">
 						<span>{{userInfo.pageDesc}}</span>
 					</div>
 

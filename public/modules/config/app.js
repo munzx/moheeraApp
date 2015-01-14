@@ -4,7 +4,7 @@
 //configure the routes
 var moheera = angular.module('moheera', ['ui.bootstrap', 'ui.router','ngResource', 'authModule', 'homeModule', 'userModule', 'productModule', 'orderModule', 'cartModule']);
 
-//RouteScopes & Routes Configurations
+//RouteScopes & Routes Configurations 
 moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
 	$urlRouterProvider.otherwise('notfound');
 	$stateProvider

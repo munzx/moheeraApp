@@ -58,9 +58,8 @@ module.exports = function (app, express) {
 		dest: './public/uploads/',
 		limits: {
 		  fieldNameSize: 100,
-		  files: 2,
-		  fileSize: 10000000000,
-		  fields: 4
+		  files: 4,
+		  fileSize: 10000000000
 		}
 	}));
 	app.use(cookieParser()); //read cookies

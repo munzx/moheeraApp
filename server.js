@@ -19,5 +19,5 @@ require('./app/config/routes')(app);
 
 //Create server in listen on default port if exists or 3000
 app.listen(port, function () {
-	console.log('Bism Allah , Server runs on port 3000');
+	console.log('Bism Allah , Server runs on port ' + port);
 });

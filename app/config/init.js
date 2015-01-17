@@ -2,13 +2,14 @@
 
 //Module dependencies
 var logger = require('express-logger'),
+	fs = require('fs'),
 	errorHandler = require('errorhandler'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
 	multer  = require('multer'),
 	methodOverride = require('method-override'),
-	session = require('express-session'),
 	cookieParser = require('cookie-parser'),
+	cookieSession = require('cookie-session'),
 	passport = require('passport'),
 	passportLocal = require('passport-local'),
 	favicon = require('serve-favicon'),
@@ -59,11 +60,15 @@ module.exports = function (app, express) {
 		limits: {
 		  fieldNameSize: 100,
 		  files: 4,
-		  fileSize: 10000000000
+		  fileSize: 1048576
+		},
+		onFileSizeLimit: function (file) {
+		  console.log('File has exceeded size limit: ', file.originalname);
+		  fs.unlink('./' + file.path) // delete the partially written file
 		}
 	}));
-	app.use(cookieParser()); //read cookies
-	app.use(session({ secret: process.env.SESSION_SECRET || 'secret', saveUninitialized: false, resave: false})); //use sessions for Auth
+	//app.use(cookieParser()); //read cookies
+	app.use(cookieSession({ secret: process.env.SESSION_SECRET || 'secret', name: 'moheera'})); //use sessions for Auth
 	app.use(methodOverride()); //read about this
 	app.use(passport.initialize()); //initialize passport
 	app.use(passport.session()); // persistent login sessions

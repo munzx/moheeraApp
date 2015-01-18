@@ -156,7 +156,7 @@ var productSchema = new Schema({
 	},
 	category: {
 		type: String,
-		enum: ['men', 'women', 'kids', 'gifts', 'books'],
+		enum: ['men', 'women', 'kid', 'gift', 'book'],
 		default: ['men'],
 		lowercase: true,
 		required: 'Fill up the category',

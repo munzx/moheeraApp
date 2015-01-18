@@ -39,7 +39,9 @@
 								<div class="col-md-12">
 									<!-- Product Inof -->
 									<div product-box-product-directive="product"></div><!-- End Product Inof -->
-									<div class="col-md-12" style="margin-bottom:4%;background-color:#fff;">
+									<!-- Quantity -->
+									<div class="col-xs-12 col-sm-12 col-md-4 col-md-push-8" ng-class="{'alert alert-success': product.quantity > 0, 'alert alert-danger': product.quantity == 0}">{{product.quantity}} Available</div><!-- End Quantity -->
+									<div class="col-xs-12 col-sm-12  col-md-8 col-md-pull-4" style="margin-bottom:4%;background-color:#fff;">
 										<!-- heart -->
 										<div heart-icon-product-directive="product"></div><!-- End Heart -->
 										<!-- Comment -->

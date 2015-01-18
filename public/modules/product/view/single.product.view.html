@@ -28,22 +28,18 @@
 		<!-- Product Inof -->
 		<div product-box-product-directive="product"></div><!-- End Product Inof -->
 
-		<!-- product heart,cart and comments buttons -->
-		<div class="col-md-12" style="margin-bottom:4%;">
+		<!-- Quantity -->
+		<div class="col-xs-12 col-sm-12 col-md-4 col-md-push-8" ng-class="{'alert alert-success': product.quantity > 0, 'alert alert-danger': product.quantity == 0}">{{product.quantity}} Available</div><!-- End Quantity -->
 
+		<!-- product heart,cart and comments buttons -->
+		<div class="col-xs-12 col-sm-12  col-md-8 col-md-pull-4" style="margin-bottom:4%;">
 			<!-- heart -->
 			<div heart-icon-product-directive="product"></div><!-- End Heart -->
-
 			<!-- Comment -->
 			<div comment-icon-product-directive="product"></div> <!-- End comment -->
-
 			<!-- Cart -->
 			<div cart-icon-product-directive="product"></div> <!-- End Cart -->
-
-			<!-- Quantity -->
-			<span ng-class="{'alert alert-success': product.quantity > 0, 'alert alert-danger': product.quantity == 0}">{{product.quantity}} Available</span><!-- End Quantity -->
 		</div>
-
 		<!-- end product heart,cart and comments buttons -->
 
 	</div>

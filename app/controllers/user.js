@@ -52,60 +52,67 @@ module.exports.update = function(req, res){
 	//getting assigned to a variable first
 
 	//check if any file has been sent
-	var logoData = req.files.logo;
-	var bannerData = req.files.banner;
+	var logoData = req.files.logo,
+		bannerData = req.files.banner,
+		imageUploadError = false;
 
-	multer({
-		onFileUploadData: function (file, data) {
-			console.log('uploading....');
-		}
-	});
 
 	var formData = {};
 
 	if(!_.isEmpty(req.files)){
 		if(logoData){
-			//get the new file name
-			formData.logo = logoData.name;
-			//if the user had another logo then remove it before adding the new one
-			if(_.isEmpty(req.user.logo) === false){
-				fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
+			if(!logoData.truncated){
+				//get the new file name
+				formData.logo = logoData.name;
+				//if the user had another logo then remove it before adding the new one
+				if(_.isEmpty(req.user.logo) === false){
+					fs.unlink('./public/uploads/' + req.user.logo); // delete the partially written file
+				}
+			} else {
+				imageUploadError = true;
 			}
 		}
-
 		if(bannerData){
-			//get the new file name
-			formData.banner = bannerData.name;
-			//if the user had another logo then remove it before adding the new one
-			if(_.isEmpty(req.user.banner) === false){
-				fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
+			if(!bannerData.truncated){
+				//get the new file name
+				formData.banner = bannerData.name;
+				//if the user had another logo then remove it before adding the new one
+				if(_.isEmpty(req.user.banner) === false){
+					fs.unlink('./public/uploads/' + req.user.banner); // delete the partially written file
+				}
+			} else {
+				imageUploadError = true;
 			}
 		}
 	}
-		
-	//form data without the files input fields (as the fields are empty , if we pass them they will override thier pairs in DB)
-	formData.firstName = req.body.firstName;
-	formData.lastName = req.body.lastName;
-	formData.email = req.body.email;
-	formData.pageDesc = req.body.pageDesc;
-	formData.mobilePhone = req.body.mobilePhone;
 
-	users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
-		if(err){
-			if(logoData){
-				fs.unlink('./public/uploads/' + logoData.name); // delete the partially written file
+	if(imageUploadError){
+		res.status(400).jsonp({message: 'Please upload images of max size of 1MB'});
+	} else {
+		//form data without the files input fields (as the fields are empty , if we pass them they will override thier pairs in DB)
+		formData.firstName = req.body.firstName;
+		formData.lastName = req.body.lastName;
+		formData.email = req.body.email;
+		formData.pageDesc = req.body.pageDesc;
+		formData.mobilePhone = req.body.mobilePhone;
+
+		users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
+			if(err){
+				if(logoData){
+					fs.unlink('./public/uploads/' + logoData.name); // delete the partially written file
+				}
+				if(bannerData){
+					fs.unlink('./public/uploads/' + bannerData.name); // delete the partially written file
+				}
+				res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+			} else if(user) {
+				req.files = false;
+				res.status(200).jsonp(user);
+			} else {
+				res.status(404).json({message: 'User has not been found'});
 			}
-			if(bannerData){
-				fs.unlink('./public/uploads/' + bannerData.name); // delete the partially written file
-			}
-			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
-		} else if(user) {
-			req.files = false;
-			res.status(200).jsonp(user);
-		} else {
-			res.status(404).json({message: 'User has not been found'});
-		}
-	});
+		});
+	}
 }
 
 //update the user password

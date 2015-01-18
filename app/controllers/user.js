@@ -93,8 +93,8 @@ module.exports.update = function(req, res){
 		formData.firstName = req.body.firstName;
 		formData.lastName = req.body.lastName;
 		formData.email = req.body.email;
-		formData.pageDesc = req.body.pageDesc;
-		formData.mobilePhone = req.body.mobilePhone;
+		if(formData.pageDesc){formData.pageDesc = req.body.pageDesc};
+		if(req.body.mobilePhone){ formData.mobilePhone = req.body.mobilePhone};
 
 		users.findOneAndUpdate({_id: req.user._id}, formData, function(err, user, numOfAffectedRows){
 			if(err){

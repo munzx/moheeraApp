@@ -41,7 +41,7 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 						if(scope.user.logo){
 							logo = '<div class="row" style="background-color:#fff;padding-bottom:8%;">
 										<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
-											<a href="#/'+ scope.user.name +'">
+											<a href="/'+ scope.user.name +'">
 												<img style="margin-bottom:-2%;" class="img-responsive box-center" src="' + "public/uploads/" + scope.user.logo + '">
 											</a>
 										</div>
@@ -49,7 +49,7 @@ angular.module('userModule').directive('sidebarUserDirective', ['registerUserCon
 						} else {
 							logo = '<div class="row" style="background-color:#fff;padding-bottom:5%;padding-top:5%;">
 										<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-											<a href="#/'+ scope.user.name +'">
+											<a href="/'+ scope.user.name +'">
 												<span class="glyphicon glyphicon-user img-responsive text-center" style="font-size:164px;color: #cccccc;" aria-hidden="true"></span>
 											</a>
 										</div>

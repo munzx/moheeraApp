@@ -19,9 +19,9 @@ angular.module('productModule').directive('productBoxProductDirective', ['regist
 					//highlight the image viewed
 					scope.highlightImage = 1;
 					if(user._id == value.user){
-						scope.productLink = '#/profile/product/' + value.name;
+						scope.productLink = '/profile/product/' + value.name;
 					} else {
-						scope.productLink = '#/' + value.userName + '/' + value.name;
+						scope.productLink = '/' + value.userName + '/' + value.name;
 					}
 
 					//show the image that been clicked and highlight it

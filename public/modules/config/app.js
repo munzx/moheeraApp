@@ -5,7 +5,7 @@
 var moheera = angular.module('moheera', ['ui.bootstrap', 'ui.router','ngResource', 'authModule', 'homeModule', 'userModule', 'productModule', 'orderModule', 'cartModule']);
 
 //RouteScopes & Routes Configurations 
-moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
+moheera.config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function ($urlRouterProvider, $stateProvider, $locationProvider) {
 	$urlRouterProvider.otherwise('notfound');
 	$stateProvider
 		.state('notfound',{
@@ -127,6 +127,7 @@ moheera.config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProv
 			templateUrl: 'public/modules/user/view/other.category.user.view.html',
 			controller: 'categoryUserController'
 		});
+		$locationProvider.html5Mode(true).hashPrefix('!');
 }])
 .run(['$rootScope', function ($rootScope) {
 	$rootScope.logged = false;

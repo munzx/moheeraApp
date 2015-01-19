@@ -124,6 +124,9 @@ module.exports = function (app) {
 
 	//404 Route/Page has not been found
 	app.use(function (req, res) {
-		res.status(404).json('Route/Page has not been found');
+		res.render('../public/modules/config/view/index', {
+			isAuthenticated: req.isAuthenticated(),
+			userInfo: req.user
+		});
 	});
 }

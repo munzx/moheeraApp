@@ -1,6 +1,7 @@
 'use strict';
 
-var mandrillConnect = require('mandrill-api/mandrill.js'),
+var mandrill = require('mandrill-api/mandrill.js'),
+	mandrillClient = new mandrill.Mandrill('GaPcAziEdCK77u1876Sb8g'),
 	_ = require('lodash');
 
 module.exports.sendEmail = function (recipients) {
@@ -12,7 +13,6 @@ module.exports.sendEmail = function (recipients) {
 
 		//emails sender
 		var sender = function (data) {
-			mandrillConnect = new mandrillConnect.Mandrill('GaPcAziEdCK77u1876Sb8g');
 			var info = {
 				template_name: "moheeraOrder",
 				name: "Moheera Team",
@@ -59,7 +59,7 @@ module.exports.sendEmail = function (recipients) {
 			var async = false;
 			var ip_pool = null;
 			var send_at = null;
-			mandrillConnect.messages.sendTemplate({"template_name": info.template_name, "template_content": null, "message": message, "async": async, "ip_pool": ip_pool, "send_at": send_at}, function(result) {
+			mandrillClient.messages.sendTemplate({"template_name": info.template_name, "template_content": null, "message": message, "async": async, "ip_pool": ip_pool, "send_at": send_at}, function(result) {
 				console.log('Email sent');
 		    /*
 		    [{

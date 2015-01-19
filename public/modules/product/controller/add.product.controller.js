@@ -3,6 +3,10 @@
 angular.module('productModule').controller('addProductController', ['$scope', '$location', 'connectProductFactory', 'categoryProductFactory', '$state', function ($scope, $location, connectProductFactory, categoryProductFactory, $state) {
 	$scope.categoryOptions = categoryProductFactory;
 
+	$scope.showImageUploadThumbnail = function (id) {
+		document.getElementById(id).click();
+	}
+
 	$scope.addProduct = function () {
 
 		var fd = new FormData();

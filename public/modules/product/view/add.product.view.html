@@ -38,23 +38,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="controls">
-                        <input type="file" data-ng-model="newProduct.image1" accept="image/*" id="image1" class="form-control" placeholder="Image">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="controls">
-                        <input type="file" data-ng-model="newProduct.image2" accept="image/*" id="image2" class="form-control" placeholder="Image">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="controls">
-                        <input type="file" data-ng-model="newProduct.image3" accept="image/*" id="image3" class="form-control" placeholder="Image">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="controls">
-                        <input type="file" data-ng-model="newProduct.image4" accept="image/*" id="image4" class="form-control" placeholder="Image">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="/public/modules/config/img/1.jpg" class="img-responsive" ng-click="showImageUploadThumbnail('image1')">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image1" watch-image-config-directive accept="image/*" id="image1" class="form-control" placeholder="Image">
+                        </div>
+                        <div class="col-md-3">
+                        <img src="/public/modules/config/img/2.jpg" class="img-responsive" ng-click="showImageUploadThumbnail('image2')">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image2" accept="image/*" id="image2" class="form-control" placeholder="Image">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="/public/modules/config/img/3.jpg" class="img-responsive" ng-click="showImageUploadThumbnail('image3')">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image3" accept="image/*" id="image3" class="form-control" placeholder="Image">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="/public/modules/config/img/4.jpg" class="img-responsive" ng-click="showImageUploadThumbnail('image4')">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image4" accept="image/*" id="image4" class="form-control" placeholder="Image">
+                        </div>                        
                     </div>
                 </div>
                 <div class="form-group">

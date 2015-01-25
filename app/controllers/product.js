@@ -160,6 +160,7 @@ module.exports.update = function(req, res){
 		formData.price = req.body.price;
 		formData.quantity = req.body.quantity;
 		formData.desc = req.body.desc;
+		formData.category = req.body.category;
 
 		products.findOneAndUpdate({_id: req.params.id, user: req.user._id}, formData, function(err, product, numOfAffectedRows){
 			if(err){

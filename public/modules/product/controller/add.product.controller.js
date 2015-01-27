@@ -8,6 +8,8 @@ angular.module('productModule').controller('addProductController', ['$scope', '$
 	}
 
 	$scope.addProduct = function () {
+		//Show the loading gif
+		$scope.loading = true;
 
 		var fd = new FormData();
 		fd.append('image1', document.getElementById('image1').files[0]);
@@ -24,7 +26,9 @@ angular.module('productModule').controller('addProductController', ['$scope', '$
 		connectProductFactory.save(fd, function (response) {
 			//go to profile page , use the state and pass empty parameter to reload the controller
 			$state.go('profile', {}, {reload: true});
+			$scope.loading = false;
 		}, function (err) {
+			$scope.loading = false;
 			console.log(err);
 			$scope.error = err.data.message;
 		});

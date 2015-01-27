@@ -1,5 +1,8 @@
 <div class="row" style="background-color:#fff;">
-    <div class="col-md-12 ">
+    <div class="col-md-12 text-center" style="margin:10% 0;" ng-show="loading">
+        <img src="public/modules/home/img/loading.gif">
+    </div>
+    <div class="col-md-12" ng-hide="loading">
         <form name="newProduct" class="form" method="post" id="info" novalidate>
             <h4 class="text-center">New Product</h4>
             <fieldset>
@@ -40,19 +43,19 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <img  id='image1Preview' src="/public/modules/config/img/1.jpg" class="img-responsive">
-                            <input style="display: none;" type="file" data-ng-model="newProduct.image1" watch-image-config-directive accept="image/*" id="image1" class="form-control" placeholder="Image">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image1" watch-image-config-directive accept="image/*" id="image1" class="form-control" placeholder="Image" required>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                         <img id='image2Preview' src="/public/modules/config/img/2.jpg" class="img-responsive">
-                            <input style="display: none;" type="file" data-ng-model="newProduct.image2" watch-image-config-directive accept="image/*" id="image2" class="form-control" placeholder="Image">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image2" watch-image-config-directive accept="image/*" id="image2" class="form-control" placeholder="Image" required>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <img id='image3Preview' src="/public/modules/config/img/3.jpg" class="img-responsive">
-                            <input style="display: none;" type="file" data-ng-model="newProduct.image3" watch-image-config-directive accept="image/*" id="image3" class="form-control" placeholder="Image">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image3" watch-image-config-directive accept="image/*" id="image3" class="form-control" placeholder="Image" required>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <img id='image4Preview' src="/public/modules/config/img/4.jpg" class="img-responsive">
-                            <input style="display: none;" type="file" data-ng-model="newProduct.image4" watch-image-config-directive accept="image/*" id="image4" class="form-control" placeholder="Image">
+                            <input style="display: none;" type="file" data-ng-model="newProduct.image4" watch-image-config-directive accept="image/*" id="image4" class="form-control" placeholder="Image" required>
                         </div>                        
                     </div>
                 </div>

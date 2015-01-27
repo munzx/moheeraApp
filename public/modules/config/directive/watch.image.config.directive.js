@@ -28,7 +28,6 @@ angular.module('moheera').directive('watchImageConfigDirective', ['$modal', '$ro
 					document.getElementById(scope.id + 'Preview').setAttribute('src', loadingGif);
 				}
 
-				console.log(reader);
 				reader.onabort = function (image) {
 					document.getElementById(scope.id + 'Preview').setAttribute('src', path);	
 				}

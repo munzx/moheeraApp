@@ -4,8 +4,7 @@
 	</div>
 </div>
 
-<div ng-show="productByCategory.length" class="row" ng-repeat="product in productByCategory" style="margin-bottom:5%">
-	<div class="col-md-12">
+<div ng-show="productByCategory.length" ng-repeat="product in productByCategory" style="margin-bottom:5%">
 		<!-- Product Inof -->
 		<div product-box-product-directive="product"></div><!-- End Product Inof -->
 		<div class="col-md-12" style="padding-bottom:2%;background-color:#fff;">
@@ -16,5 +15,4 @@
 			<!-- Cart -->
 			<div cart-icon-product-directive="product"></div> <!-- End Cart -->
 		</div>
-	</div>
 </div>
